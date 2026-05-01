@@ -1,0 +1,73 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* ─── Preloader ──────────────────────────────────────────────── */
+#preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.45s ease;
+}
+
+@keyframes preloader-slide {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(300%); }
+}
+
+.preloader-bar {
+    animation: preloader-slide 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* ─── Scroll animations ──────────────────────────────────────── */
+[data-animate] {
+    opacity: 0;
+    transition-property: opacity, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 600ms;
+}
+
+[data-animate="fade-up"]    { transform: translateY(28px); }
+[data-animate="fade-left"]  { transform: translateX(-28px); }
+[data-animate="fade-right"] { transform: translateX(28px); }
+[data-animate="zoom-in"]    { transform: scale(0.94); }
+
+[data-animate].is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* ─── Hero entrance (CSS, no JS needed) ─────────────────────── */
+@keyframes hero-enter {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.hero-enter {
+    animation: hero-enter 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Brand colors */
+    --color-brand-50: #f0faf4;
+    --color-brand-100: #dcf4e6;
+    --color-brand-200: #bbe8ce;
+    --color-brand-300: #88d5ad;
+    --color-brand-400: #51bb85;
+    --color-brand-500: #2da065;
+    --color-brand-600: #1a7a4a;
+    --color-brand-700: #166040;
+    --color-brand-800: #134d34;
+    --color-brand-900: #10402b;
+    --color-brand-950: #082318;
+}

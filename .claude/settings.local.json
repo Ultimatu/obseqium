@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer require *)",
+      "Bash(php artisan *)",
+      "Bash(composer show *)",
+      "Read(//Users/user/.claude/**)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/admin/login)",
+      "mcp__laravel-boost__search-docs",
+      "Bash(vendor/bin/pint --dirty --format agent)",
+      "mcp__laravel-boost__database-query",
+      "Bash(grep -rn 'fn \\($r\\)' /Users/user/WORKSPACE/PERSO/FREELANCE/ehounou-site/app/Filament/)",
+      "Bash(grep -rn 'fn \\(\\\\$r\\)' /Users/user/WORKSPACE/PERSO/FREELANCE/ehounou-site/app/Filament/)",
+      "Bash(grep -rn 'fn \\(\\\\$s\\)' /Users/user/WORKSPACE/PERSO/FREELANCE/ehounou-site/app/Filament/)",
+      "Bash(grep -rn 'fn \\(\\\\$r\\)\\\\|fn \\(\\\\$s\\)' /Users/user/WORKSPACE/PERSO/FREELANCE/ehounou-site/app/Filament/)",
+      "Bash(xargs perl *)",
+      "mcp__laravel-boost__database-schema",
+      "Bash(sips -g all \"/Users/user/WORKSPACE/PERSO/FREELANCE/ehounou-site/public/logos/Obsequium vert.png\")",
+      "Bash(xargs ls *)"
+    ]
+  }
+}
