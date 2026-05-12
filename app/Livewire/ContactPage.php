@@ -27,6 +27,9 @@ class ContactPage extends Component
     #[Validate('required|string|min:3|max:150')]
     public string $subject = '';
 
+    #[Validate('nullable|in:presentiel,visio,client')]
+    public string $meeting_format = '';
+
     #[Validate('required|string|min:10|max:2000')]
     public string $message = '';
 
@@ -42,10 +45,11 @@ class ContactPage extends Component
             'phone' => $this->phone,
             'company' => $this->company,
             'subject' => $this->subject,
+            'meeting_format' => $this->meeting_format ?: null,
             'message' => $this->message,
         ]);
 
-        $this->reset(['name', 'email', 'phone', 'company', 'subject', 'message']);
+        $this->reset(['name', 'email', 'phone', 'company', 'subject', 'meeting_format', 'message']);
         $this->sent = true;
     }
 

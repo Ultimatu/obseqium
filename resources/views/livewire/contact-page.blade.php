@@ -100,6 +100,39 @@
                     </div>
 
                     <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Format de rencontre souhaité</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            @foreach([
+                                ['presentiel', 'Présentiel', 'Rendez-vous dans nos locaux', 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z'],
+                                ['visio',       'Visio',      'Appel vidéo à distance',       'M15 10l4.553-2.069A1 1 0 0121 8.867v6.266a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'],
+                                ['client',      'Chez vous',  'Déplacement chez le client',   'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'],
+                            ] as [$value, $label, $desc, $path])
+                            <label
+                                wire:click="$set('meeting_format', '{{ $value }}')"
+                                class="relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 cursor-pointer transition-all
+                                    {{ $meeting_format === $value
+                                        ? 'border-brand-500 bg-brand-50 text-brand-700'
+                                        : 'border-gray-200 bg-white text-gray-600 hover:border-brand-300 hover:bg-brand-50/50' }}">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center
+                                    {{ $meeting_format === $value ? 'bg-brand-100' : 'bg-gray-100' }}">
+                                    <svg class="w-5 h-5 {{ $meeting_format === $value ? 'text-brand-600' : 'text-gray-500' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $path }}"/>
+                                    </svg>
+                                </div>
+                                <span class="font-semibold text-sm">{{ $label }}</span>
+                                <span class="text-xs text-center leading-tight {{ $meeting_format === $value ? 'text-brand-600' : 'text-gray-400' }}">{{ $desc }}</span>
+                                @if($meeting_format === $value)
+                                <div class="absolute top-2 right-2 w-5 h-5 bg-brand-500 rounded-full flex items-center justify-center">
+                                    <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                @endif
+                            </label>
+                            @endforeach
+                        </div>
+                        @error('meeting_format') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Message <span class="text-red-500">*</span></label>
                         <textarea wire:model="message" rows="6" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition resize-none"></textarea>
                         @error('message') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror

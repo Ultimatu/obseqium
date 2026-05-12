@@ -2,16 +2,18 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\MaintenanceLog;
 use App\Models\SiteSetting;
 use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
-use Filament\Support\Icons\Heroicon;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 
 class SiteSettingsPage extends Page
 {
@@ -169,13 +171,137 @@ class SiteSettingsPage extends Page
                             ->label('Description courte (footer)')
                             ->rows(2),
                     ]),
+
+                Section::make('Devis & Documents PDF')
+                    ->description('Informations légales et visuels utilisés sur les PDF de devis et factures.')
+                    ->icon(Heroicon::OutlinedDocumentText)
+                    ->columns(['default' => 1, 'sm' => 2])
+                    ->schema([
+                        FileUpload::make('quote_logo')
+                            ->label('Logo (PDF)')
+                            ->image()
+                            ->disk('public')
+                            ->directory('documents')
+                            ->hint('Format recommandé : PNG transparent, 400 × 120 px')
+                            ->columnSpanFull(),
+
+                        FileUpload::make('quote_signature')
+                            ->label('Signature du cabinet')
+                            ->image()
+                            ->disk('public')
+                            ->directory('documents')
+                            ->hint('Image de votre signature manuscrite (PNG fond transparent)')
+                            ->columnSpanFull(),
+
+                        TextInput::make('quote_legal_name')
+                            ->label('Raison sociale')
+                            ->prefixIcon(Heroicon::OutlinedBuildingOffice2)
+                            ->placeholder('OBSAQUIM SAS'),
+
+                        TextInput::make('quote_siret')
+                            ->label('N° SIRET')
+                            ->prefixIcon(Heroicon::OutlinedIdentification)
+                            ->placeholder('123 456 789 00012'),
+
+                        TextInput::make('quote_vat')
+                            ->label('N° TVA intracommunautaire')
+                            ->prefixIcon(Heroicon::OutlinedReceiptPercent)
+                            ->placeholder('FR 12 345678900'),
+
+                        TextInput::make('quote_ape')
+                            ->label('Code APE / NAF')
+                            ->prefixIcon(Heroicon::OutlinedTag)
+                            ->placeholder('7490B'),
+
+                        TextInput::make('quote_capital')
+                            ->label('Capital social')
+                            ->prefixIcon(Heroicon::OutlinedBanknotes)
+                            ->placeholder('10 000 €'),
+
+                        TextInput::make('quote_iban')
+                            ->label('IBAN')
+                            ->prefixIcon(Heroicon::OutlinedCreditCard)
+                            ->placeholder('FR76 3000 4000 0100 0000 0000 000')
+                            ->columnSpanFull(),
+
+                        TextInput::make('quote_bank_name')
+                            ->label('Banque')
+                            ->prefixIcon(Heroicon::OutlinedBuildingLibrary)
+                            ->placeholder('BNP Paribas'),
+
+                        TextInput::make('quote_currency')
+                            ->label('Devise (symbole)')
+                            ->prefixIcon(Heroicon::OutlinedCurrencyDollar)
+                            ->placeholder('XOF')
+                            ->hint('Symbole affiché sur les devis et factures PDF.')
+                            ->default('XOF'),
+
+                        TextInput::make('quote_validity_days')
+                            ->label('Validité du devis (jours)')
+                            ->numeric()
+                            ->default(30)
+                            ->prefixIcon(Heroicon::OutlinedCalendarDays),
+
+                        Section::make('Numérotation des références')
+                            ->description('Définit le format de génération automatique des numéros de devis. Aperçu : PREFIX-AAAA-MM-0001')
+                            ->compact()
+                            ->columnSpanFull()
+                            ->schema([
+                                TextInput::make('quote_ref_prefix')
+                                    ->label('Préfixe')
+                                    ->placeholder('DEV')
+                                    ->default('DEV')
+                                    ->maxLength(10)
+                                    ->prefixIcon(Heroicon::OutlinedTag),
+
+                                TextInput::make('quote_ref_padding')
+                                    ->label('Nombre de chiffres (padding)')
+                                    ->numeric()
+                                    ->default(4)
+                                    ->minValue(1)
+                                    ->maxValue(8)
+                                    ->prefixIcon(Heroicon::OutlinedHashtag)
+                                    ->helperText('Ex: 4 → 0001, 5 → 00001'),
+
+                                Toggle::make('quote_ref_include_year')
+                                    ->label('Inclure l\'année')
+                                    ->default(true)
+                                    ->inline(false),
+
+                                Toggle::make('quote_ref_include_month')
+                                    ->label('Inclure le mois')
+                                    ->default(false)
+                                    ->inline(false),
+                            ])->columns(['default' => 1, 'sm' => 2]),
+
+                        Textarea::make('quote_terms')
+                            ->label('Conditions générales de vente')
+                            ->rows(8)
+                            ->placeholder("Article 1 — Objet\nLes présentes conditions générales de vente s'appliquent à toutes les prestations de services conclues par le cabinet...\n\nArticle 2 — Prix\nLes prix sont indiqués en euros hors taxes...")
+                            ->hint('Ces conditions apparaîtront en bas du PDF de devis.')
+                            ->columnSpanFull(),
+                    ]),
             ]);
     }
 
     public function save(): void
     {
         $data = $this->form->getState();
+
+        $wasActive = (bool) SiteSetting::get('maintenance_mode', false);
+        $isActive = (bool) ($data['maintenance_mode'] ?? false);
+
         SiteSetting::setMany($data);
+
+        if (! $wasActive && $isActive) {
+            MaintenanceLog::create([
+                'started_at' => now(),
+                'started_by' => auth()->id(),
+                'message' => $data['maintenance_message'] ?? null,
+            ]);
+        } elseif ($wasActive && ! $isActive) {
+            MaintenanceLog::closeCurrent(auth()->id());
+        }
 
         Notification::make()
             ->title('Paramètres sauvegardés')

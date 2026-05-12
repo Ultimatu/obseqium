@@ -2,15 +2,23 @@
 
 namespace App\Filament\Resources\FormationRegistrations\Tables;
 
+use App\Filament\Exports\FormationRegistrationExporter;
+use App\Mail\AttestationMail;
 use App\Models\FormationRegistration;
+use App\Models\SiteSetting;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
+use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class FormationRegistrationsTable
 {
@@ -79,8 +87,45 @@ class FormationRegistrationsTable
                         'status' => 'cancelled',
                         'cancelled_at' => now(),
                     ])),
+                Action::make('send_attestation')
+                    ->label('Envoyer attestation')
+                    ->icon(Heroicon::OutlinedAcademicCap)
+                    ->color('info')
+                    ->visible(fn (FormationRegistration $record) => in_array($record->status, ['confirmed', 'completed']))
+                    ->requiresConfirmation()
+                    ->modalHeading('Générer et envoyer l\'attestation')
+                    ->modalDescription(fn (FormationRegistration $record) => 'Envoyer l\'attestation PDF à '.($record->user?->email ?? $record->guest_email).' ?')
+                    ->action(function (FormationRegistration $record): void {
+                        $registration = $record->load(['session.formation', 'user']);
+                        $settings = SiteSetting::getAllCached();
+
+                        $pdf = Pdf::loadView('pdfs.attestation', [
+                            'registration' => $registration,
+                            'session' => $registration->session,
+                            'formation' => $registration->session->formation,
+                            'settings' => $settings,
+                        ])->setPaper('a4');
+
+                        $path = 'attestations/'.$registration->id.'-'.now()->format('YmdHis').'.pdf';
+                        $fullPath = 'public/'.$path;
+                        Storage::put($fullPath, $pdf->output());
+                        $registration->update(['attestation_path' => $path]);
+
+                        $recipient = $registration->user?->email ?? $registration->guest_email;
+                        $name = $registration->user?->name ?? $registration->guest_name;
+                        Mail::to($recipient, $name)->send(new AttestationMail($registration));
+
+                        Notification::make()
+                            ->title('Attestation envoyée')
+                            ->body('PDF généré et email envoyé à '.$recipient.'.')
+                            ->success()
+                            ->send();
+                    }),
                 EditAction::make(),
             ])
-            ->toolbarActions([BulkActionGroup::make([DeleteBulkAction::make()])]);
+            ->toolbarActions([
+                ExportAction::make()->exporter(FormationRegistrationExporter::class)->label('Exporter'),
+                BulkActionGroup::make([DeleteBulkAction::make()]),
+            ]);
     }
 }

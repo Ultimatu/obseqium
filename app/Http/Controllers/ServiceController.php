@@ -20,6 +20,12 @@ class ServiceController
     {
         $service = Service::where('slug', $slug)->where('is_active', true)->firstOrFail();
 
-        return view('pages.services.show', compact('service'));
+        $relatedServices = Service::active()
+            ->where('id', '!=', $service->id)
+            ->when($service->type, fn ($q, $type) => $q->where('type', $type))
+            ->limit(3)
+            ->get();
+
+        return view('pages.services.show', compact('service', 'relatedServices'));
     }
 }

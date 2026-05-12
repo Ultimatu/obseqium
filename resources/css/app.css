@@ -58,16 +58,16 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
-    /* Brand colors */
-    --color-brand-50: #f0faf4;
-    --color-brand-100: #dcf4e6;
-    --color-brand-200: #bbe8ce;
-    --color-brand-300: #88d5ad;
-    --color-brand-400: #51bb85;
-    --color-brand-500: #2da065;
-    --color-brand-600: #1a7a4a;
-    --color-brand-700: #166040;
-    --color-brand-800: #134d34;
-    --color-brand-900: #10402b;
-    --color-brand-950: #082318;
+    /* Brand colors — extrait du logo Obsequium (#a3bb4e) */
+    --color-brand-50:  #f9fbf4;
+    --color-brand-100: #f2f6e4;
+    --color-brand-200: #e4edc5;
+    --color-brand-300: #cfdba3;
+    --color-brand-400: #bace74;
+    --color-brand-500: #a3bb4e;
+    --color-brand-600: #7c9131;
+    --color-brand-700: #617029;
+    --color-brand-800: #46511f;
+    --color-brand-900: #323a18;
+    --color-brand-950: #1f2310;
 }

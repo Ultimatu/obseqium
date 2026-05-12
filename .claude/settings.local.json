@@ -16,7 +16,17 @@
       "Bash(xargs perl *)",
       "mcp__laravel-boost__database-schema",
       "Bash(sips -g all \"/Users/user/WORKSPACE/PERSO/FREELANCE/ehounou-site/public/logos/Obsequium vert.png\")",
-      "Bash(xargs ls *)"
+      "Bash(xargs ls *)",
+      "Bash(php --version)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(k,v\\) for k,v in d.get\\('require',{}\\).items\\(\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(k,v\\) for k,v in d.get\\('require-dev',{}\\).items\\(\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(k,v\\) for k,v in {**d.get\\('dependencies',{}\\), **d.get\\('devDependencies',{}\\)}.items\\(\\)]\")",
+      "Bash(grep -v \"^$\")",
+      "Bash(awk '{print $3}')",
+      "Bash(awk '{print $4, $3}')",
+      "Bash(xargs cat *)",
+      "Bash(xargs -I{} basename {})",
+      "Bash(npm run *)"
     ]
   }
 }

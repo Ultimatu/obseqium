@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Appointments\Tables;
 
+use App\Filament\Exports\AppointmentExporter;
 use App\Models\Appointment;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -108,6 +110,9 @@ class AppointmentsTable
                     ->action(fn (Appointment $record) => $record->update(['status' => 'completed'])),
                 EditAction::make(),
             ])
-            ->toolbarActions([BulkActionGroup::make([DeleteBulkAction::make()])]);
+            ->toolbarActions([
+                ExportAction::make()->exporter(AppointmentExporter::class)->label('Exporter'),
+                BulkActionGroup::make([DeleteBulkAction::make()]),
+            ]);
     }
 }

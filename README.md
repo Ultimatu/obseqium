@@ -1,58 +1,177 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Obsequium QHSE — Site vitrine
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Site vitrine du cabinet conseil & formation QHSE, construit avec Laravel 13, Filament v5 et Livewire v4.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Stack technique
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Couche | Technologie |
+|---|---|
+| Backend | PHP 8.4 · Laravel 13 |
+| Admin | Filament v5 |
+| Frontend interactif | Livewire v4 · Alpine.js |
+| CSS | Tailwind CSS v4 |
+| Build | Vite 8 |
+| Tests | PHPUnit 12 |
+| Formatage | Laravel Pint |
+| PDF | barryvdh/laravel-dompdf |
+| Permissions | spatie/laravel-permission |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Prérequis
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP >= 8.4
+- Composer
+- Node.js >= 22 · npm >= 10
+- Base de données (SQLite en dev, MySQL/PostgreSQL en prod)
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Installation
 
 ```bash
-composer require laravel/boost --dev
+# 1. Cloner et installer les dépendances
+composer install
+npm install
 
-php artisan boost:install
+# 2. Configurer l'environnement
+cp .env.example .env
+php artisan key:generate
+
+# 3. Base de données
+php artisan migrate --seed
+
+# 4. Compiler les assets
+npm run build
+
+# 5. Lancer le serveur (dev)
+composer run dev
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## Variables d'environnement clés
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```env
+APP_NAME="Cabinet QHSE"
+APP_URL=https://votre-domaine.fr
 
-## Code of Conduct
+# Base de données
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_DATABASE=obsequium
+DB_USERNAME=...
+DB_PASSWORD=...
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Mail
+MAIL_MAILER=smtp
+MAIL_HOST=...
+MAIL_FROM_ADDRESS=contact@votre-domaine.fr
 
-## Security Vulnerabilities
+# reCAPTCHA v3 (optionnel — formulaire de devis)
+# Clés sur https://www.google.com/recaptcha/admin
+RECAPTCHA_SITE_KEY=
+RECAPTCHA_SECRET_KEY=
+RECAPTCHA_THRESHOLD=0.5
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## Espace d'administration
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Accessible sur `/admin`. Créer un compte admin :
+
+```bash
+php artisan make:filament-user
+```
+
+### Modules back-office
+
+| Module | Description |
+|---|---|
+| Contacts | Demandes de contact, assignation, statut lu/non lu |
+| Devis | Demandes de devis multi-étapes |
+| Rendez-vous | Réservations en ligne |
+| Services | Services proposés par le cabinet |
+| Formations | Catalogue formations + sessions + inscriptions |
+| Blog | Articles, catégories, tags |
+| Équipe | Membres de l'équipe |
+| Références | Clients et références |
+| Témoignages | Avis clients |
+| Newsletter | Abonnés |
+| Utilisateurs | Comptes admin |
+| Paramètres du site | Configuration générale, maintenance |
+| Historique maintenance | Audit des périodes de maintenance |
+
+---
+
+## Pages publiques
+
+| Route | Description |
+|---|---|
+| `/` | Accueil |
+| `/a-propos` | Présentation du cabinet |
+| `/services` | Liste des services |
+| `/formations` | Catalogue formations |
+| `/references` | Références clients |
+| `/blog` | Articles & actualités |
+| `/contact` | Formulaire de contact |
+| `/devis` | Demande de devis (multi-étapes, reCAPTCHA v3) |
+| `/rendez-vous` | Prise de rendez-vous |
+| `/mentions-legales` | Mentions légales |
+| `/confidentialite` | Politique de confidentialité |
+
+---
+
+## Mode maintenance
+
+Le mode maintenance se gère depuis **Admin → Paramètres du site**. Chaque activation/désactivation est tracée dans le modèle `MaintenanceLog` (Admin → Historique maintenance).
+
+Options disponibles :
+- Message personnalisé affiché aux visiteurs
+- Liste d'IP autorisées à bypasser
+- Token de bypass URL (`?bypass=TOKEN`)
+
+L'espace admin reste accessible en permanence.
+
+---
+
+## Pages d'erreur personnalisées
+
+Pages Blade autonomes (CSS inline, sans dépendance Vite) pour : `403`, `404`, `419`, `429`, `500`, `503`.
+
+---
+
+## Commandes utiles
+
+```bash
+# Lancer le serveur de développement complet (PHP + queue + logs + Vite)
+composer run dev
+
+# Tests
+php artisan test --compact
+
+# Formater le code
+vendor/bin/pint
+
+# Vider les caches
+php artisan optimize:clear
+
+# Lister les routes
+php artisan route:list --except-vendor
+```
+
+---
+
+## Déploiement
+
+Le projet est compatible [Laravel Cloud](https://cloud.laravel.com/).
+
+```bash
+composer install --no-dev --optimize-autoloader
+npm run build
+php artisan migrate --force
+php artisan optimize
+```

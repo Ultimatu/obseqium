@@ -1,48 +1,142 @@
 <x-layouts.app title="Accueil">
 
-    <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-brand-950 via-brand-800 to-brand-600 text-white overflow-hidden">
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.04\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <div class="hero-enter inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 text-sm font-medium mb-6" style="animation-delay:0.1s">
-                        <span class="w-2 h-2 bg-brand-300 rounded-full animate-pulse"></span>
-                        {{ $siteSettings->get('hero_badge', 'Cabinet expert en QHSE') }}
+    <!-- Hero Carousel -->
+    <section
+        class="relative text-white overflow-hidden"
+        x-data="{
+            current: 0,
+            total: {{ $heroSlides->count() }},
+            timer: null,
+            init() {
+                this.startTimer();
+            },
+            startTimer() {
+                clearInterval(this.timer);
+                this.timer = setInterval(() => this.next(), 6000);
+            },
+            next() { this.current = (this.current + 1) % this.total; this.startTimer(); },
+            prev() { this.current = (this.current - 1 + this.total) % this.total; this.startTimer(); },
+            goTo(i) { this.current = i; this.startTimer(); }
+        }"
+    >
+        {{-- ── Background slides ─────────────────────────────────── --}}
+        @foreach($heroSlides as $i => $slide)
+        <div
+            class="absolute inset-0 bg-linear-to-br {{ $slide->gradient }} transition-opacity duration-1000"
+            x-bind:style="{ opacity: current === {{ $i }} ? '1' : '0', 'z-index': current === {{ $i }} ? '1' : '0' }"
+        >
+            @if($slide->image)
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('{{ Storage::url($slide->image) }}')"></div>
+            <div class="absolute inset-0 bg-linear-to-r from-black/80 via-black/60 to-black/30"></div>
+            @endif
+            {{-- SVG dot pattern --}}
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.04\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+        </div>
+        @endforeach
+
+        {{-- ── Slide content ─────────────────────────────────────── --}}
+        <div class="relative py-24 lg:py-36" style="z-index:2">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+                    {{-- Left: text (changes per slide) --}}
+                    <div>
+                        @foreach($heroSlides as $i => $slide)
+                        <div
+                            class="transition-all duration-700"
+                            x-bind:style="{ opacity: current === {{ $i }} ? '1' : '0', transform: current === {{ $i }} ? 'translateY(0)' : 'translateY(20px)', position: current === {{ $i }} ? 'relative' : 'absolute', 'pointer-events': current === {{ $i }} ? 'auto' : 'none' }"
+                            @if($i > 0) style="position:absolute;opacity:0;pointer-events:none" @endif
+                        >
+                            <div class="hero-enter inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
+                                <span class="w-2 h-2 bg-brand-300 rounded-full animate-pulse"></span>
+                                {{ $slide->badge }}
+                            </div>
+                            <h1 class="hero-enter text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                                {{ $slide->title }}
+                            </h1>
+                            <p class="hero-enter text-lg text-brand-100 leading-relaxed mb-8 max-w-xl">
+                                {{ $slide->description }}
+                            </p>
+                            <div class="hero-enter flex flex-wrap gap-4">
+                                <a href="{{ $slide->cta_primary_href }}" class="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold px-6 py-3 rounded-xl transition-colors shadow-lg">
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    {{ $slide->cta_primary_label }}
+                                </a>
+                                <a href="{{ $slide->cta_secondary_href }}" class="inline-flex items-center gap-2 border border-white/30 hover:bg-white/10 font-semibold px-6 py-3 rounded-xl transition-colors">
+                                    {{ $slide->cta_secondary_label }}
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
-                    <h1 class="hero-enter text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6" style="animation-delay:0.25s">
-                        {{ $siteSettings->get('hero_title', 'Votre partenaire QHSE de confiance') }}
-                    </h1>
-                    <p class="hero-enter text-lg text-brand-100 leading-relaxed mb-8 max-w-xl" style="animation-delay:0.4s">
-                        {{ $siteSettings->get('hero_description', 'Conseil, formation et accompagnement sur mesure pour répondre à tous vos enjeux qualité, hygiène, sécurité et environnement.') }}
-                    </p>
-                    <div class="hero-enter flex flex-wrap gap-4" style="animation-delay:0.55s">
-                        <a href="{{ route('quotes.request') }}" class="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold px-6 py-3 rounded-xl transition-colors shadow-lg">
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                            Demander un devis gratuit
-                        </a>
-                        <a href="{{ route('services.index') }}" class="inline-flex items-center gap-2 border border-white/30 hover:bg-white/10 font-semibold px-6 py-3 rounded-xl transition-colors">
-                            Découvrir nos services
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                        </a>
+
+                    {{-- Right: stats (static) --}}
+                    <div class="grid grid-cols-2 gap-4">
+                        @foreach([
+                            [$siteSettings->get('stat_clients', '150+'), 'Clients accompagnés'],
+                            [$siteSettings->get('stat_formations', '500+'), 'Formations dispensées'],
+                            [$siteSettings->get('stat_years', '15+'), "Années d'expérience"],
+                            [$siteSettings->get('stat_satisfaction', '98%'), 'Taux de satisfaction'],
+                        ] as $idx => [$stat, $label])
+                        <div class="hero-enter bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20" style="animation-delay:{{ 0.6 + $idx * 0.1 }}s">
+                            <div class="text-3xl font-bold text-white mb-1">{{ $stat }}</div>
+                            <div class="text-brand-200 text-sm">{{ $label }}</div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    @foreach([
-                        [$siteSettings->get('stat_clients', '150+'), 'Clients accompagnés'],
-                        [$siteSettings->get('stat_formations', '500+'), 'Formations dispensées'],
-                        [$siteSettings->get('stat_years', '15+'), "Années d'expérience"],
-                        [$siteSettings->get('stat_satisfaction', '98%'), 'Taux de satisfaction'],
-                    ] as $idx => [$stat, $label])
-                    <div class="hero-enter bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20" style="animation-delay:{{ 0.6 + $idx * 0.1 }}s">
-                        <div class="text-3xl font-bold text-white mb-1">{{ $stat }}</div>
-                        <div class="text-brand-200 text-sm">{{ $label }}</div>
-                    </div>
+            </div>
+
+            {{-- ── Navigation ─────────────────────────────────────── --}}
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-5" style="z-index:3">
+
+                {{-- Prev --}}
+                <button @click="prev()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/15 hover:bg-white/30 transition-colors" aria-label="Précédent">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+
+                {{-- Dots --}}
+                <div class="flex items-center gap-2">
+                    @foreach($heroSlides as $i => $slide)
+                    <button
+                        @click="goTo({{ $i }})"
+                        class="rounded-full transition-all duration-300"
+                        x-bind:class="current === {{ $i }} ? 'w-6 h-2 bg-white' : 'w-2 h-2 bg-white/40 hover:bg-white/70'"
+                        aria-label="Slide {{ $i + 1 }}"
+                    ></button>
                     @endforeach
                 </div>
+
+                {{-- Next --}}
+                <button @click="next()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/15 hover:bg-white/30 transition-colors" aria-label="Suivant">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            {{-- Progress bar --}}
+            <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-white/10" style="z-index:3">
+                @foreach($heroSlides as $i => $slide)
+                <div
+                    class="absolute top-0 left-0 h-full bg-white/50 transition-none"
+                    x-bind:class="current === {{ $i }} ? 'hero-progress' : ''"
+                    x-bind:style="current === {{ $i }} ? '' : 'width:0'"
+                ></div>
+                @endforeach
             </div>
         </div>
     </section>
+
+    <style>
+    .hero-progress {
+        width: 0;
+        animation: heroProgress 6s linear forwards;
+    }
+    @keyframes heroProgress {
+        from { width: 0; }
+        to   { width: 100%; }
+    }
+    </style>
 
     <!-- ═══ SERVICES ══════════════════════════════════════════════════ -->
     <section class="py-20 bg-gray-50">
@@ -61,7 +155,9 @@
                    data-animate="fade-up" data-delay="0"
                    style="background-color: var(--color-brand-600);"
                    class="group relative overflow-hidden rounded-2xl p-8 text-white transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:brightness-110">
-                    <div class="text-4xl mb-5">🔍</div>
+                    <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center mb-5">
+                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
                     <h3 class="text-xl font-bold text-white mb-3">Conseil & Audit</h3>
                     <p class="text-white/80 text-sm leading-relaxed mb-6">Analyse de vos pratiques, identification des écarts réglementaires et rédaction de plans d'action concrets pour mettre votre organisation en conformité.</p>
                     <div class="flex items-center gap-2 text-white/90 font-semibold text-sm">
@@ -76,7 +172,9 @@
                    data-animate="fade-up" data-delay="100"
                    style="background-color: var(--color-brand-700);"
                    class="group relative overflow-hidden rounded-2xl p-8 text-white transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:brightness-110">
-                    <div class="text-4xl mb-5">🎓</div>
+                    <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center mb-5">
+                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+                    </div>
                     <h3 class="text-xl font-bold text-white mb-3">Formation & Sensibilisation</h3>
                     <p class="text-white/80 text-sm leading-relaxed mb-6">Programmes de formation sur mesure dispensés par des experts certifiés — présentiel, distanciel ou blended — pour tous les niveaux de votre organisation.</p>
                     <div class="flex items-center gap-2 text-white/90 font-semibold text-sm">
@@ -91,7 +189,9 @@
                    data-animate="fade-up" data-delay="200"
                    style="background-color: var(--color-brand-800);"
                    class="group relative overflow-hidden rounded-2xl p-8 text-white transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:brightness-110">
-                    <div class="text-4xl mb-5">🤝</div>
+                    <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center mb-5">
+                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
                     <h3 class="text-xl font-bold text-white mb-3">Accompagnement & Certification</h3>
                     <p class="text-white/80 text-sm leading-relaxed mb-6">Suivi opérationnel de A à Z pour l'obtention et le maintien de vos certifications ISO 9001, ISO 14001, ISO 45001 et référentiels sectoriels.</p>
                     <div class="flex items-center gap-2 text-white/90 font-semibold text-sm">
@@ -182,7 +282,7 @@
                         <img src="{{ Storage::url($formation->cover_image) }}" alt="{{ $formation->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     </div>
                     @else
-                    <div class="aspect-video bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center">
+                    <div class="aspect-video bg-linear-to-br from-brand-50 to-brand-100 flex items-center justify-center">
                         <svg class="w-12 h-12 text-brand-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     </div>
                     @endif
@@ -211,14 +311,24 @@
             <!-- Teaser statique formations -->
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 @foreach([
-                    ['🛡️', 'Sécurité au travail', 'Prévention des risques, document unique, DUERP', '7h – 14h'],
-                    ['🌿', 'Management environnemental', 'ISO 14001, bilan carbone, éco-conception', '14h – 21h'],
-                    ['✅', 'Systèmes qualité', 'ISO 9001, audits internes, revues de processus', '14h – 35h'],
-                    ['🔬', 'Hygiène & alimentaire', 'HACCP, BPH, traçabilité, IFS/BRC', '7h – 21h'],
+                    ['shield', 'Sécurité au travail', 'Prévention des risques, document unique, DUERP', '7h – 14h'],
+                    ['leaf', 'Management environnemental', 'ISO 14001, bilan carbone, éco-conception', '14h – 21h'],
+                    ['badge-check', 'Systèmes qualité', 'ISO 9001, audits internes, revues de processus', '14h – 35h'],
+                    ['beaker', 'Hygiène & alimentaire', 'HACCP, BPH, traçabilité, IFS/BRC', '7h – 21h'],
                 ] as $idx => [$icon, $title, $desc, $duration])
                 <div data-animate="fade-up" data-delay="{{ $idx * 80 }}"
                      class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:border-brand-200 hover:shadow-md transition-all cursor-default">
-                    <div class="text-3xl mb-4">{{ $icon }}</div>
+                    <div class="w-11 h-11 bg-brand-50 rounded-xl flex items-center justify-center mb-4">
+                        @if($icon === 'shield')
+                        <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        @elseif($icon === 'leaf')
+                        <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                        @elseif($icon === 'badge-check')
+                        <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                        @else
+                        <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                        @endif
+                    </div>
                     <h3 class="font-semibold text-gray-900 mb-2">{{ $title }}</h3>
                     <p class="text-gray-500 text-sm leading-relaxed mb-4">{{ $desc }}</p>
                     <span class="inline-flex items-center gap-1 bg-brand-50 text-brand-700 text-xs font-medium px-2.5 py-1 rounded-full">
@@ -321,7 +431,7 @@
                         <img src="{{ Storage::url($post->cover_image) }}" alt="{{ $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                     </div>
                     @else
-                    <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                    <div class="aspect-video bg-linear-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                         <svg class="w-10 h-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
                     </div>
                     @endif
@@ -354,7 +464,7 @@
                 ] as $idx => [$cat, $title, $excerpt])
                 <div data-animate="fade-up" data-delay="{{ $idx * 100 }}"
                      class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-                    <div class="aspect-video bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center">
+                    <div class="aspect-video bg-linear-to-br from-brand-50 to-brand-100 flex items-center justify-center">
                         <svg class="w-10 h-10 text-brand-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
                     </div>
                     <div class="p-5">

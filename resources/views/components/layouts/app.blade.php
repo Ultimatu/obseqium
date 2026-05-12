@@ -5,11 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? config('app.name') }} — {{ $siteSettings->get('brand_name', 'Cabinet QHSE') }}</title>
+    @php
+        $pageTitle    = ($title ?? config('app.name')) . ' — ' . $siteSettings->get('brand_name', 'Cabinet QHSE');
+        $pageDesc     = $metaDescription ?? $siteSettings->get('hero_description', '');
+        $pageImage    = $ogImage ?? asset('logos/Logo-Obsequium%20Fond%20blanc.png');
+        $canonicalUrl = $canonicalUrl ?? url()->current();
+    @endphp
 
-    @if (!empty($metaDescription))
-        <meta name="description" content="{{ $metaDescription }}">
+    <title>{{ $pageTitle }}</title>
+
+    @if($pageDesc)
+        <meta name="description" content="{{ $pageDesc }}">
     @endif
+
+    <!-- OpenGraph -->
+    <meta property="og:type"        content="{{ $ogType ?? 'website' }}">
+    <meta property="og:title"       content="{{ $ogTitle ?? $pageTitle }}">
+    <meta property="og:description" content="{{ $ogDescription ?? $pageDesc }}">
+    <meta property="og:image"       content="{{ $pageImage }}">
+    <meta property="og:url"         content="{{ $canonicalUrl }}">
+    <meta property="og:site_name"   content="{{ $siteSettings->get('brand_name', config('app.name')) }}">
+    <meta property="og:locale"      content="fr_FR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="{{ $ogTitle ?? $pageTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription ?? $pageDesc }}">
+    <meta name="twitter:image"       content="{{ $pageImage }}">
+
+    <link rel="canonical" href="{{ $canonicalUrl }}">
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -71,15 +95,15 @@
                             class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
                             <a href="{{ route('services.index') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600 font-medium">Tous nos services</a>
                             <div class="border-t border-gray-100 my-1"></div>
-                            <a href="{{ route('services.index', ['type' => 'conseil']) }}" class="block px-4 py-2 text-sm text-gray-500 hover:bg-brand-50 hover:text-brand-600">Conseil & Audit</a>
-                            <a href="{{ route('services.index', ['type' => 'formation']) }}" class="block px-4 py-2 text-sm text-gray-500 hover:bg-brand-50 hover:text-brand-600">Formation</a>
-                            <a href="{{ route('services.index', ['type' => 'accompagnement']) }}" class="block px-4 py-2 text-sm text-gray-500 hover:bg-brand-50 hover:text-brand-600">Accompagnement</a>
+                            <a href="{{ route('services.index', ['type' => 'audit']) }}" class="block px-4 py-2 text-sm text-gray-500 hover:bg-brand-50 hover:text-brand-600">Audit & Contrôle</a>
+                            <a href="{{ route('services.index', ['type' => 'strategic']) }}" class="block px-4 py-2 text-sm text-gray-500 hover:bg-brand-50 hover:text-brand-600">Conseil stratégique</a>
+                            <a href="{{ route('services.index', ['type' => 'training']) }}" class="block px-4 py-2 text-sm text-gray-500 hover:bg-brand-50 hover:text-brand-600">Formation</a>
+                            <a href="{{ route('services.index', ['type' => 'qhse']) }}" class="block px-4 py-2 text-sm text-gray-500 hover:bg-brand-50 hover:text-brand-600">Accompagnement QHSE</a>
                         </div>
                     </div>
 
                     <a href="{{ route('formations.index') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">Formations</a>
                     <a href="{{ route('about') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">À propos</a>
-                    <a href="{{ route('references') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">Références</a>
                     <a href="{{ route('blog.index') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">Blog</a>
                     <a href="{{ route('contact') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">Contact</a>
                 </nav>
@@ -108,7 +132,6 @@
             <a href="{{ route('services.index') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Services</a>
             <a href="{{ route('formations.index') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Formations</a>
             <a href="{{ route('about') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">À propos</a>
-            <a href="{{ route('references') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Références</a>
             <a href="{{ route('blog.index') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Blog</a>
             <a href="{{ route('contact') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Contact</a>
             <div class="pt-2 flex flex-col gap-2">
@@ -154,9 +177,10 @@
                     <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Services</h3>
                     <ul class="space-y-2 text-sm">
                         <li><a href="{{ route('services.index') }}" class="hover:text-brand-400 transition-colors">Tous nos services</a></li>
-                        <li><a href="{{ route('services.index', ['type' => 'conseil']) }}" class="hover:text-brand-400 transition-colors">Conseil & Audit</a></li>
-                        <li><a href="{{ route('services.index', ['type' => 'formation']) }}" class="hover:text-brand-400 transition-colors">Formation</a></li>
-                        <li><a href="{{ route('services.index', ['type' => 'accompagnement']) }}" class="hover:text-brand-400 transition-colors">Accompagnement</a></li>
+                        <li><a href="{{ route('services.index', ['type' => 'audit']) }}" class="hover:text-brand-400 transition-colors">Audit & Contrôle</a></li>
+                        <li><a href="{{ route('services.index', ['type' => 'strategic']) }}" class="hover:text-brand-400 transition-colors">Conseil stratégique</a></li>
+                        <li><a href="{{ route('services.index', ['type' => 'training']) }}" class="hover:text-brand-400 transition-colors">Formation</a></li>
+                        <li><a href="{{ route('services.index', ['type' => 'qhse']) }}" class="hover:text-brand-400 transition-colors">Accompagnement QHSE</a></li>
                         <li><a href="{{ route('formations.index') }}" class="hover:text-brand-400 transition-colors">Catalogue formations</a></li>
                     </ul>
                 </div>
@@ -166,7 +190,6 @@
                     <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Cabinet</h3>
                     <ul class="space-y-2 text-sm">
                         <li><a href="{{ route('about') }}" class="hover:text-brand-400 transition-colors">À propos</a></li>
-                        <li><a href="{{ route('references') }}" class="hover:text-brand-400 transition-colors">Références</a></li>
                         <li><a href="{{ route('blog.index') }}" class="hover:text-brand-400 transition-colors">Blog & Actualités</a></li>
                         <li><a href="{{ route('contact') }}" class="hover:text-brand-400 transition-colors">Contact</a></li>
                     </ul>

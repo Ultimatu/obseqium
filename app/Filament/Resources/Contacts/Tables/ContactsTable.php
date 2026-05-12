@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Contacts\Tables;
 
+use App\Filament\Exports\ContactExporter;
 use App\Models\Contact;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -22,6 +24,21 @@ class ContactsTable
                 TextColumn::make('name')->label('Nom')->searchable()->description(fn ($record) => $record->company),
                 TextColumn::make('email')->label('Email')->searchable(),
                 TextColumn::make('subject')->label('Objet')->searchable()->limit(50),
+                TextColumn::make('meeting_format')
+                    ->label('Format')
+                    ->badge()
+                    ->formatStateUsing(fn (?string $state) => match ($state) {
+                        'presentiel' => 'Présentiel',
+                        'visio' => 'Visio',
+                        'client' => 'Chez le client',
+                        default => '—',
+                    })
+                    ->color(fn (?string $state) => match ($state) {
+                        'presentiel' => 'success',
+                        'visio' => 'info',
+                        'client' => 'warning',
+                        default => 'gray',
+                    }),
                 TextColumn::make('message')->label('Message')->limit(60)->wrap()->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('is_read')->label('Lu')->boolean(),
                 TextColumn::make('assignee.name')->label('Assigné à')->placeholder('Non assigné'),
@@ -43,6 +60,9 @@ class ContactsTable
                     ])),
                 EditAction::make(),
             ])
-            ->toolbarActions([BulkActionGroup::make([DeleteBulkAction::make()])]);
+            ->toolbarActions([
+                ExportAction::make()->exporter(ContactExporter::class)->label('Exporter'),
+                BulkActionGroup::make([DeleteBulkAction::make()]),
+            ]);
     }
 }

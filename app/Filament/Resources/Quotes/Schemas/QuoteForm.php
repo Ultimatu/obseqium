@@ -6,8 +6,8 @@ use App\Models\User;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -46,6 +46,7 @@ class QuoteForm
                             ->relationship('client', 'name')
                             ->searchable()
                             ->preload()
+                            ->native(false)
                             ->nullable(),
                     ]),
 
@@ -62,7 +63,7 @@ class QuoteForm
                                 'qhse' => 'Conseil QHSE',
                                 'training' => 'Formation',
                                 'other' => 'Autre',
-                            ])
+                            ])->native(false)
                             ->default('qhse'),
                         TextInput::make('sector')
                             ->label('Secteur d\'activité'),
@@ -112,6 +113,7 @@ class QuoteForm
                     ->schema([
                         Select::make('status')
                             ->label('Statut')
+                            ->native(false)
                             ->required()
                             ->options([
                                 'draft' => 'Brouillon',
@@ -132,6 +134,7 @@ class QuoteForm
                         Select::make('assigned_to')
                             ->label('Consultant assigné')
                             ->options(fn () => User::consultants()->pluck('name', 'id'))
+                            ->native(false)
                             ->searchable()
                             ->nullable(),
                     ]),
