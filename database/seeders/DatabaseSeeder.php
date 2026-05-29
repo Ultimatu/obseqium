@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             ReferenceSeeder::class,
             BlogCategorySeeder::class,
             BlogPostSeeder::class,
+            ProcessPhaseSeeder::class,
+            PricingSeeder::class,
         ]);
     }
 }
