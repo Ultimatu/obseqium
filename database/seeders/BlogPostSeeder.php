@@ -12,17 +12,17 @@ class BlogPostSeeder extends Seeder
 {
     public function run(): void
     {
-        $author = User::query()->firstOrCreate(
+        $author = User::query()->first() ?? User::query()->firstOrCreate(
             ['email' => 'admin@obseqium.local'],
             [
                 'name' => 'Administrateur',
                 'password' => 'password',
                 'role' => 'admin',
                 'is_active' => true,
-            ],
+            ]
         );
 
-        $cat = fn (string $slug) => BlogCategory::where('slug', $slug)->value('id');
+        $cat = fn(string $slug) => BlogCategory::where('slug', $slug)->value('id');
 
         $posts = [
             [
