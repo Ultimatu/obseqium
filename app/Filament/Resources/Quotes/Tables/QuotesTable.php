@@ -84,7 +84,7 @@ class QuotesTable
                     ->falseColor('gray'),
                 TextColumn::make('total')
                     ->label('Total TTC')
-                    ->money('EUR')
+                    ->money('XOF')
                     ->sortable(),
                 TextColumn::make('valid_until')
                     ->label('Valable jusqu\'au')

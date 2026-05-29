@@ -4,12 +4,15 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PricingController;
+use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\QuotePdfController;
 use App\Http\Controllers\ReferenceController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
 use App\Livewire\AppointmentBooking;
 use App\Livewire\ContactPage;
+use App\Livewire\DiagnosticRequest;
 use App\Livewire\FormationCalendar;
 use App\Livewire\LegalPage;
 use App\Livewire\PrivacyPage;
@@ -32,8 +35,15 @@ Route::get('/formations/{slug}', [FormationController::class, 'show'])->name('fo
 // À propos
 Route::get('/a-propos', AboutController::class)->name('about');
 
+// Notre processus
+Route::get('/notre-processus', ProcessController::class)->name('process');
+
+// Tarifs & modalités
+Route::get('/tarifs', PricingController::class)->name('pricing');
+
 // Références
 Route::get('/references', ReferenceController::class)->name('references');
+Route::get('/references/{slug}', [ReferenceController::class, 'show'])->name('references.show');
 
 // Blog
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
@@ -42,6 +52,9 @@ Route::get('/blog/categorie/{slug}', [BlogController::class, 'category'])->name(
 
 // Contact
 Route::get('/contact', ContactPage::class)->name('contact');
+
+// Diagnostic gratuit
+Route::get('/diagnostic-gratuit', DiagnosticRequest::class)->name('diagnostic.request');
 
 // Devis
 Route::get('/devis', QuoteRequest::class)->name('quotes.request');

@@ -21,4 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
     )
 
     document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el))
+
+    // Timeline line draw animation
+    const timelineObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return
+                entry.target.classList.add('is-drawn')
+                timelineObserver.unobserve(entry.target)
+            })
+        },
+        { threshold: 0.2 },
+    )
+
+    document.querySelectorAll('.timeline-line').forEach((el) => timelineObserver.observe(el))
 })

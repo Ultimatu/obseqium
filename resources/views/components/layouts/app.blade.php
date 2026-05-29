@@ -73,16 +73,16 @@
             <div class="flex items-center justify-between h-18 py-4">
 
                 <!-- Logo -->
-                <a href="{{ route('home') }}" class="flex items-center gap-3 flex-shrink-0">
-                    <img src="/logos/Obsequium%20vert.png" alt="{{ $siteSettings->get('brand_name', 'Obsequium') }}" class="w-10 h-10 object-contain">
-                    <div>
-                        <span class="block text-brand-600 font-bold text-lg leading-tight">{{ $siteSettings->get('brand_name', 'Cabinet QHSE') }}</span>
-                        <span class="block text-gray-400 text-xs leading-tight">{{ $siteSettings->get('brand_tagline', 'Conseil & Formation') }}</span>
+                <a href="{{ route('home') }}" class="flex items-center gap-2.5 shrink-0">
+                    <img src="/logos/Obsequium%20vert.png" alt="{{ $siteSettings->get('brand_name', 'Obsequium') }}" class="w-8 h-8 object-contain">
+                    <div class="leading-tight">
+                        <span class="block text-brand-600 font-bold text-base">{{ $siteSettings->get('brand_name', 'Cabinet QHSE') }}</span>
+                        <span class="hidden xl:block text-gray-400 text-[11px]">{{ $siteSettings->get('brand_tagline', 'Conseil & Formation') }}</span>
                     </div>
                 </a>
 
                 <!-- Desktop Nav -->
-                <nav class="hidden lg:flex items-center gap-6">
+                <nav class="hidden lg:flex items-center gap-5">
                     <a href="{{ route('home') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">Accueil</a>
 
                     <!-- Services dropdown -->
@@ -102,19 +102,19 @@
                         </div>
                     </div>
 
+                    <a href="{{ route('process') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">Notre processus</a>
                     <a href="{{ route('formations.index') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">Formations</a>
-                    <a href="{{ route('about') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">À propos</a>
-                    <a href="{{ route('blog.index') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">Blog</a>
+                    <a href="{{ route('pricing') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">Tarifs</a>
                     <a href="{{ route('contact') }}" class="text-gray-600 hover:text-brand-600 font-medium text-sm transition-colors">Contact</a>
                 </nav>
 
                 <!-- CTA -->
-                <div class="hidden lg:flex items-center gap-3">
-                    <a href="{{ route('appointments.book') }}" class="text-brand-600 border border-brand-600 hover:bg-brand-50 font-medium text-sm px-4 py-2 rounded-lg transition-colors">
-                        Rendez-vous
+                <div class="hidden lg:flex items-center shrink-0 gap-3">
+                    <a href="{{ route('quotes.request') }}" class="text-brand-700 hover:text-brand-800 hover:bg-brand-50 font-medium text-sm px-4 py-2 rounded-lg transition-colors whitespace-nowrap border border-brand-200">
+                        Devis
                     </a>
-                    <a href="{{ route('quotes.request') }}" class="bg-brand-600 hover:bg-brand-700 text-white font-medium text-sm px-4 py-2 rounded-lg transition-colors">
-                        Demander un devis
+                    <a href="{{ route('diagnostic.request') }}" class="bg-brand-600 hover:bg-brand-700 text-white font-medium text-sm px-4 py-2 rounded-lg transition-colors whitespace-nowrap">
+                        Diagnostic gratuit
                     </a>
                 </div>
 
@@ -130,13 +130,16 @@
         <div x-show="mobileOpen" x-transition class="lg:hidden border-t border-gray-100 bg-white px-4 py-4 space-y-2">
             <a href="{{ route('home') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Accueil</a>
             <a href="{{ route('services.index') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Services</a>
+            <a href="{{ route('process') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Notre processus</a>
             <a href="{{ route('formations.index') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Formations</a>
+            <a href="{{ route('references') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Références</a>
+            <a href="{{ route('pricing') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Tarifs</a>
             <a href="{{ route('about') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">À propos</a>
             <a href="{{ route('blog.index') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Blog</a>
             <a href="{{ route('contact') }}" class="block py-2 text-sm font-medium text-gray-700 hover:text-brand-600">Contact</a>
             <div class="pt-2 flex flex-col gap-2">
-                <a href="{{ route('appointments.book') }}" class="w-full text-center text-brand-600 border border-brand-600 font-medium text-sm px-4 py-2 rounded-lg">Rendez-vous</a>
-                <a href="{{ route('quotes.request') }}" class="w-full text-center bg-brand-600 text-white font-medium text-sm px-4 py-2 rounded-lg">Demander un devis</a>
+                <a href="{{ route('diagnostic.request') }}" class="w-full text-center bg-brand-600 text-white font-medium text-sm px-4 py-2 rounded-lg">Diagnostic gratuit</a>
+                <a href="{{ route('quotes.request') }}" class="w-full text-center text-brand-600 border border-brand-600 font-medium text-sm px-4 py-2 rounded-lg">Demander un devis</a>
             </div>
         </div>
     </header>
@@ -190,6 +193,9 @@
                     <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Cabinet</h3>
                     <ul class="space-y-2 text-sm">
                         <li><a href="{{ route('about') }}" class="hover:text-brand-400 transition-colors">À propos</a></li>
+                        <li><a href="{{ route('process') }}" class="hover:text-brand-400 transition-colors">Notre processus</a></li>
+                        <li><a href="{{ route('references') }}" class="hover:text-brand-400 transition-colors">Références</a></li>
+                        <li><a href="{{ route('pricing') }}" class="hover:text-brand-400 transition-colors">Tarifs & modalités</a></li>
                         <li><a href="{{ route('blog.index') }}" class="hover:text-brand-400 transition-colors">Blog & Actualités</a></li>
                         <li><a href="{{ route('contact') }}" class="hover:text-brand-400 transition-colors">Contact</a></li>
                     </ul>
@@ -208,7 +214,23 @@
                         @if($siteSettings->get('contact_phone'))
                         <li class="flex items-start gap-2">
                             <svg class="w-4 h-4 mt-0.5 text-brand-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                            <span>{{ $siteSettings->get('contact_phone') }}</span>
+                            <div>
+                                <div>{{ $siteSettings->get('contact_phone') }}</div>
+                                @if($siteSettings->get('contact_phone_alt'))
+                                <div class="text-gray-400 text-xs">{{ $siteSettings->get('contact_phone_alt') }}</div>
+                                @endif
+                            </div>
+                        </li>
+                        @endif
+                        @if($siteSettings->get('contact_address'))
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 text-brand-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            <div>
+                                <div>{{ $siteSettings->get('contact_address') }}</div>
+                                @if($siteSettings->get('contact_postal'))
+                                <div class="text-gray-400 text-xs">{{ $siteSettings->get('contact_postal') }}</div>
+                                @endif
+                            </div>
                         </li>
                         @endif
                         @if($siteSettings->get('contact_hours'))
@@ -223,8 +245,19 @@
                 </div>
             </div>
 
+            @if($siteSettings->get('brand_slogan'))
+            <div class="border-t border-gray-800 pt-6 mb-6 text-center">
+                <p class="text-brand-400 italic text-sm">« {{ $siteSettings->get('brand_slogan') }} »</p>
+            </div>
+            @endif
+
             <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-                <p>© {{ date('Y') }} {{ $siteSettings->get('brand_name', 'Cabinet QHSE') }}. Tous droits réservés.</p>
+                <div class="text-center sm:text-left">
+                    <p>© {{ date('Y') }} {{ $siteSettings->get('brand_name', 'OBSEQUIUM') }}. Tous droits réservés.</p>
+                    @if($siteSettings->get('rccm'))
+                    <p class="text-xs text-gray-600 mt-1">RCCM : {{ $siteSettings->get('rccm') }}</p>
+                    @endif
+                </div>
                 <div class="flex gap-6">
                     <a href="{{ route('legal') }}" class="hover:text-gray-300 transition-colors">Mentions légales</a>
                     <a href="{{ route('privacy') }}" class="hover:text-gray-300 transition-colors">Confidentialité</a>

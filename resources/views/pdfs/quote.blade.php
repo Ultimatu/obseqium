@@ -108,9 +108,9 @@ table.items tbody tr:last-child td { border-bottom: 2px solid #46511f; }
       @endif
       <div class="brand-legal">
         @if($settings->get('quote_legal_name')) {{ $settings->get('quote_legal_name') }}<br>@endif
-        @if($settings->get('quote_siret')) SIRET : {{ $settings->get('quote_siret') }}<br>@endif
-        @if($settings->get('quote_vat')) TVA : {{ $settings->get('quote_vat') }}<br>@endif
-        @if($settings->get('quote_ape')) APE : {{ $settings->get('quote_ape') }}@endif
+        @if($settings->get('quote_rccm')) RCCM : {{ $settings->get('quote_rccm') }}<br>@endif
+        @if($settings->get('quote_cc')) CC : {{ $settings->get('quote_cc') }}<br>@endif
+        @if($settings->get('quote_ape')) Activité : {{ $settings->get('quote_ape') }}@endif
         @if($settings->get('quote_capital'))  — Capital : {{ $settings->get('quote_capital') }}@endif
       </div>
     </div>
@@ -203,7 +203,7 @@ table.items tbody tr:last-child td { border-bottom: 2px solid #46511f; }
     </tr>
     @else
     <tr>
-      <td colspan="2" style="font-size:10px; color:#64748b; font-style:italic">TVA non applicable — art. 293 B du CGI</td>
+      <td colspan="2" style="font-size:10px; color:#64748b; font-style:italic">TVA non applicable</td>
     </tr>
     @endif
     <tr class="ttc">
@@ -285,7 +285,8 @@ table.items tbody tr:last-child td { border-bottom: 2px solid #46511f; }
 <div class="footer">
   <span>
     {{ $settings->get('quote_legal_name', $settings->get('brand_name', config('app.name'))) }}
-    @if($settings->get('quote_siret')) — SIRET {{ $settings->get('quote_siret') }}@endif
+    @if($settings->get('quote_rccm')) — RCCM {{ $settings->get('quote_rccm') }}@endif
+    @if($settings->get('quote_cc')) — CC {{ $settings->get('quote_cc') }}@endif
     @if($settings->get('quote_iban')) — IBAN : {{ $settings->get('quote_iban') }}@endif
     @if($settings->get('quote_bank_name')) ({{ $settings->get('quote_bank_name') }})@endif
   </span>

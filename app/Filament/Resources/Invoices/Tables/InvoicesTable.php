@@ -2,16 +2,20 @@
 
 namespace App\Filament\Resources\Invoices\Tables;
 
+use App\Mail\InvoiceSentMail;
 use App\Models\Invoice;
 use App\Models\SiteSetting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 
 class InvoicesTable
@@ -36,7 +40,7 @@ class InvoicesTable
 
                 TextColumn::make('total')
                     ->label('Total TTC')
-                    ->money('EUR')
+                    ->money('XOF')
                     ->sortable(),
 
                 TextColumn::make('status')
@@ -98,6 +102,29 @@ class InvoicesTable
             ->emptyStateHeading('Aucune facture')
             ->emptyStateDescription('Les factures générées depuis les devis acceptés apparaîtront ici.')
             ->recordActions([
+                Action::make('sendEmail')
+                    ->label('Envoyer par email')
+                    ->icon(Heroicon::OutlinedPaperAirplane)
+                    ->color('info')
+                    ->visible(fn (Invoice $record) => in_array($record->status, ['draft', 'sent']))
+                    ->requiresConfirmation()
+                    ->modalHeading('Envoyer la facture par email')
+                    ->modalDescription(fn (Invoice $record) => "Un email avec la facture PDF sera envoyé à {$record->client_email}.")
+                    ->modalSubmitActionLabel('Envoyer')
+                    ->action(function (Invoice $record): void {
+                        $record->load('items');
+
+                        Mail::to($record->client_email, $record->client_name)
+                            ->send(new InvoiceSentMail($record));
+
+                        $record->update(['status' => 'sent', 'sent_at' => now()]);
+
+                        Notification::make()
+                            ->title("Facture {$record->reference} envoyée à {$record->client_email}")
+                            ->success()
+                            ->send();
+                    }),
+
                 Action::make('mark_paid')
                     ->label('Marquer payée')
                     ->icon(Heroicon::OutlinedCheckBadge)
@@ -135,6 +162,8 @@ class InvoicesTable
                     ->visible(fn (Invoice $record) => in_array($record->status, ['draft', 'sent']))
                     ->requiresConfirmation()
                     ->action(fn (Invoice $record) => $record->update(['status' => 'cancelled'])),
+
+                EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([DeleteBulkAction::make()]),

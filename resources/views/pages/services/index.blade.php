@@ -52,27 +52,28 @@
                 @foreach($services as $service)
                 <a href="{{ route('services.show', $service->slug) }}"
                    data-animate="fade-up" data-delay="{{ $loop->index * 70 }}"
-                   class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md border border-gray-200 hover:border-brand-300 transition-all flex flex-col">
+                   class="group card-lift bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:border-brand-300 flex flex-col">
                     @if($service->image)
-                    <div class="aspect-video overflow-hidden">
-                        <img src="{{ Storage::url($service->image) }}" alt="{{ $service->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                    <div class="img-zoom-container aspect-video">
+                        <img src="{{ Storage::url($service->image) }}" alt="{{ $service->title }}" class="w-full h-full object-cover">
                     </div>
                     @else
-                    <div class="aspect-video bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center">
+                    <div class="aspect-video bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-brand-500/5 group-hover:bg-brand-500/10 transition-colors"></div>
                         @if($service->icon)
-                        <span class="text-5xl">{{ $service->icon }}</span>
+                        <span class="text-5xl group-hover:scale-110 transition-transform duration-300">{{ $service->icon }}</span>
                         @endif
                     </div>
                     @endif
-                    <div class="p-6 flex-1 flex flex-col">
+                    <div class="p-6 flex-1 flex flex-col relative">
                         <div class="mb-3">
-                            <span class="inline-block text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full {{ $typeBadge[$service->type] ?? 'bg-gray-100 text-gray-600' }}">
+                            <span class="inline-block text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full {{ $typeBadge[$service->type] ?? 'bg-gray-100 text-gray-600' }} group-hover:shadow-sm transition-shadow">
                                 {{ $typeLabel[$service->type] ?? ucfirst($service->type ?? '') }}
                             </span>
                         </div>
                         <h2 class="font-semibold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors text-lg">{{ $service->title }}</h2>
                         <p class="text-gray-600 text-sm leading-relaxed flex-1 line-clamp-4">{{ $service->description }}</p>
-                        <div class="mt-5 flex items-center gap-1 text-brand-600 text-sm font-medium">
+                        <div class="mt-5 flex items-center gap-1 text-brand-600 text-sm font-medium icon-bounce">
                             En savoir plus
                             <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </div>

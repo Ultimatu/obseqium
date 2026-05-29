@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Filament\Resources\Pricings;
+
+use App\Filament\Resources\Pricings\Pages\CreatePricing;
+use App\Filament\Resources\Pricings\Pages\EditPricing;
+use App\Filament\Resources\Pricings\Pages\ListPricings;
+use App\Filament\Resources\Pricings\Schemas\PricingForm;
+use App\Filament\Resources\Pricings\Tables\PricingsTable;
+use App\Models\Pricing;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+
+class PricingResource extends Resource
+{
+    protected static ?string $model = Pricing::class;
+
+    protected static \UnitEnum|string|null $navigationGroup = 'Site Web';
+
+    protected static ?string $navigationLabel = 'Tarifs';
+
+    protected static ?int $navigationSort = 40;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
+
+    public static function form(Schema $schema): Schema
+    {
+        return PricingForm::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return PricingsTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListPricings::route('/'),
+            'create' => CreatePricing::route('/create'),
+            'edit' => EditPricing::route('/{record}/edit'),
+        ];
+    }
+}

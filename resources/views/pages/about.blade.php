@@ -1,4 +1,4 @@
-<x-layouts.app title="À propos — Cabinet QHSE">
+<x-layouts.app title="À propos">
     <!-- Hero -->
     <div class="bg-gradient-to-br from-brand-950 to-brand-700 text-white py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -8,41 +8,56 @@
                 <span class="text-brand-100">À propos</span>
             </nav>
             <div class="max-w-3xl">
+                <div class="hero-enter inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1.5 text-sm font-medium mb-6" style="animation-delay:0.15s">
+                    <span class="w-2 h-2 bg-brand-300 rounded-full animate-pulse"></span>
+                    {{ $siteSettings->get('brand_tagline', 'Cabinet de Conseil en Management Qualité et Conformité') }}
+                </div>
                 <h1 class="hero-enter text-4xl sm:text-5xl font-bold mb-6" style="animation-delay:0.2s">
-                    {{ $siteSettings->get('brand_name', 'Cabinet QHSE') }}
+                    {{ $siteSettings->get('brand_name', 'OBSEQUIUM') }}
                 </h1>
                 <p class="hero-enter text-xl text-brand-100 leading-relaxed" style="animation-delay:0.35s">
-                    {{ $siteSettings->get('about_intro', 'Depuis plus de 15 ans, nous accompagnons les entreprises dans leur démarche QHSE.') }}
+                    {{ $siteSettings->get('about_intro') }}
                 </p>
+                @if($siteSettings->get('brand_slogan'))
+                <p class="hero-enter text-brand-200 italic mt-4" style="animation-delay:0.5s">« {{ $siteSettings->get('brand_slogan') }} »</p>
+                @endif
             </div>
         </div>
     </div>
 
-    <!-- Mission -->
+    <!-- Mot du gérant -->
     <section class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
                 <div data-animate="fade-right">
-                    <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Notre mission</span>
-                    <h2 class="text-3xl font-bold text-gray-900 mt-2 mb-6">Accompagner vos ambitions QHSE</h2>
+                    <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Mot du gérant</span>
+                    <h2 class="text-3xl font-bold text-gray-900 mt-2 mb-6">La conformité comme levier de performance</h2>
                     <div class="space-y-4 text-gray-600 leading-relaxed">
-                        @if($siteSettings->get('about_description_1'))
-                        <p>{{ $siteSettings->get('about_description_1') }}</p>
-                        @endif
-                        @if($siteSettings->get('about_description_2'))
-                        <p>{{ $siteSettings->get('about_description_2') }}</p>
-                        @endif
-                        @if($siteSettings->get('about_description_3'))
-                        <p>{{ $siteSettings->get('about_description_3') }}</p>
-                        @endif
+                        @foreach(['about_description_1','about_description_2','about_description_3','about_description_4'] as $key)
+                            @if($siteSettings->get($key))
+                                <p>{{ $siteSettings->get($key) }}</p>
+                            @endif
+                        @endforeach
+                        <p class="text-brand-700 font-semibold pt-2">Parce que la performance durable commence toujours par une organisation maîtrisée.</p>
                     </div>
+                    @if($siteSettings->get('manager_name'))
+                    <div class="mt-8 flex items-center gap-3 text-sm text-gray-500">
+                        <div class="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center text-brand-700 font-bold">
+                            {{ collect(explode(' ', $siteSettings->get('manager_name')))->map(fn($p) => mb_substr($p, 0, 1))->implode('') }}
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900">{{ $siteSettings->get('manager_name') }}</p>
+                            <p class="text-xs text-gray-400">{{ $siteSettings->get('manager_role') }}</p>
+                        </div>
+                    </div>
+                    @endif
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     @foreach([
-                        [$siteSettings->get('stat_clients', '150+'), 'Entreprises accompagnées', 'bg-brand-50 text-brand-600'],
-                        [$siteSettings->get('stat_satisfaction', '98%'), 'Taux de satisfaction', 'bg-green-50 text-green-600'],
-                        [$siteSettings->get('stat_formations', '500+'), 'Formations dispensées', 'bg-blue-50 text-blue-600'],
-                        [$siteSettings->get('stat_years', '15+'), "Années d'expertise", 'bg-purple-50 text-purple-600'],
+                        [$siteSettings->get('stat_clients', '5'),      $siteSettings->get('stat_clients_label', 'Organisations accompagnées'), 'bg-brand-50 text-brand-600'],
+                        [$siteSettings->get('stat_formations', '3'),   $siteSettings->get('stat_formations_label', 'Normes ISO maîtrisées'),    'bg-blue-50 text-blue-600'],
+                        [$siteSettings->get('stat_years', '6-12'),     $siteSettings->get('stat_years_label', "Mois d'accompagnement"),         'bg-purple-50 text-purple-600'],
+                        [$siteSettings->get('stat_satisfaction', '100%'), $siteSettings->get('stat_satisfaction_label', 'Audit diagnostic offert'), 'bg-green-50 text-green-600'],
                     ] as $idx => [$num, $label, $cls])
                     <div data-animate="zoom-in" data-delay="{{ $idx * 80 }}"
                          class="rounded-2xl p-6 text-center {{ $cls }}">
@@ -51,6 +66,33 @@
                     </div>
                     @endforeach
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Domaines de compétences -->
+    <section class="py-20 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14" data-animate="fade-up">
+                <span class="text-brand-600 font-semibold text-sm uppercase tracking-wider">Notre spécialité</span>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2 mb-4">Accompagnement intégral à la certification ISO</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">Nous guidons vos équipes de la phase de diagnostic jusqu'à la préparation de l'audit de certification, avec une approche pragmatique, progressive et adaptée à chaque contexte organisationnel.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach([
+                    ['ISO 9001',  'Management de la Qualité',                'bg-brand-50 text-brand-700 border-brand-200'],
+                    ['ISO 14001', 'Management Environnemental',              'bg-green-50 text-green-700 border-green-200'],
+                    ['ISO 45001', 'Sécurité et Santé au Travail',            'bg-amber-50 text-amber-700 border-amber-200'],
+                    ['ISO 22000', 'Sécurité des Denrées Alimentaires',       'bg-rose-50 text-rose-700 border-rose-200'],
+                    ['ISO 27001', "Sécurité des Systèmes d'Information",     'bg-slate-50 text-slate-700 border-slate-200'],
+                    ['Autres',    'Normes sectorielles selon vos besoins',   'bg-gray-50 text-gray-700 border-gray-200'],
+                ] as $idx => [$norm, $desc, $cls])
+                <div data-animate="fade-up" data-delay="{{ $idx * 60 }}"
+                     class="rounded-2xl p-6 border-2 {{ $cls }}">
+                    <div class="text-xl font-bold mb-2">{{ $norm }}</div>
+                    <p class="text-sm opacity-90">{{ $desc }}</p>
+                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -64,11 +106,11 @@
             </div>
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach([
-                    ['target', 'Engagement', "Nous nous investissons pleinement dans chaque mission avec rigueur et passion.", 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'],
-                    ['handshake', 'Proximité', "Une relation de confiance, directe et durable avec chacun de nos clients.", 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
-                    ['bulb', 'Innovation', "Des approches pédagogiques et méthodologiques en constante évolution.", 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'],
-                    ['star', 'Excellence', "Des standards élevés de qualité à chaque étape de notre intervention.", 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z'],
-                ] as $idx => [$icon, $title, $desc, $path])
+                    ['Rigueur',    "Respect des normes ISO et des meilleures pratiques.",                          'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'],
+                    ['Adaptation', "Solutions personnalisées selon votre contexte et vos réalités opérationnelles.", 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'],
+                    ['Proximité',  "Une équipe disponible, accessible et présente sur le terrain à vos côtés.",     'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'],
+                    ['Résultats',  "Accompagnement structuré jusqu'à la certification, mesurable et durable.",      'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z'],
+                ] as $idx => [$title, $desc, $path])
                 <div data-animate="fade-up" data-delay="{{ $idx * 80 }}"
                      class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
                     <div class="w-12 h-12 bg-brand-50 rounded-xl flex items-center justify-center mx-auto mb-4">
@@ -79,6 +121,11 @@
                 </div>
                 @endforeach
             </div>
+            @if($siteSettings->get('brand_slogan'))
+            <div class="mt-12 text-center" data-animate="fade-up">
+                <p class="text-brand-700 italic text-lg">« {{ $siteSettings->get('brand_slogan') }} »</p>
+            </div>
+            @endif
         </div>
     </section>
 

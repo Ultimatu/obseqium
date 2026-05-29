@@ -65,7 +65,7 @@
 </div>
 
 @if($invoice->paid_at)
-  <div class="status-paid">✓ Payée le {{ $invoice->paid_at->format('d/m/Y') }}</div>
+  <div class="status-paid"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:4px"><polyline points="20 6 9 17 4 12"></polyline></svg> Payée le {{ $invoice->paid_at->format('d/m/Y') }}</div>
 @endif
 
 <div class="parties">

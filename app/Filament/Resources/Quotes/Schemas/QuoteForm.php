@@ -98,7 +98,7 @@ class QuoteForm
                                     ->label('Unité')
                                     ->default('forfait'),
                                 TextInput::make('unit_price')
-                                    ->label('Prix unitaire (€)')
+                                    ->label('Prix unitaire (FCFA)')
                                     ->numeric()
                                     ->required(),
                             ])
@@ -148,21 +148,21 @@ class QuoteForm
                             ->readOnly()
                             ->dehydrated(false)
                             ->numeric()
-                            ->prefix('€')
+                            ->suffix('FCFA')
                             ->placeholder('—'),
                         TextInput::make('tax_amount')
                             ->label('Montant TVA')
                             ->readOnly()
                             ->dehydrated(false)
                             ->numeric()
-                            ->prefix('€')
+                            ->suffix('FCFA')
                             ->placeholder('—'),
                         TextInput::make('total')
                             ->label('Total TTC')
                             ->readOnly()
                             ->dehydrated(false)
                             ->numeric()
-                            ->prefix('€')
+                            ->suffix('FCFA')
                             ->placeholder('—'),
                     ]),
 

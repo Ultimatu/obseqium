@@ -74,10 +74,10 @@
                     {{-- Right: stats (static) --}}
                     <div class="grid grid-cols-2 gap-4">
                         @foreach([
-                            [$siteSettings->get('stat_clients', '150+'), 'Clients accompagnés'],
-                            [$siteSettings->get('stat_formations', '500+'), 'Formations dispensées'],
-                            [$siteSettings->get('stat_years', '15+'), "Années d'expérience"],
-                            [$siteSettings->get('stat_satisfaction', '98%'), 'Taux de satisfaction'],
+                            [$siteSettings->get('stat_clients', '5'),         $siteSettings->get('stat_clients_label', 'Organisations accompagnées')],
+                            [$siteSettings->get('stat_formations', '3'),      $siteSettings->get('stat_formations_label', 'Normes ISO maîtrisées')],
+                            [$siteSettings->get('stat_years', '6-12'),        $siteSettings->get('stat_years_label', "Mois d'accompagnement")],
+                            [$siteSettings->get('stat_satisfaction', '100%'), $siteSettings->get('stat_satisfaction_label', 'Audit diagnostic offert')],
                         ] as $idx => [$stat, $label])
                         <div class="hero-enter bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20" style="animation-delay:{{ 0.6 + $idx * 0.1 }}s">
                             <div class="text-3xl font-bold text-white mb-1">{{ $stat }}</div>
@@ -241,14 +241,14 @@
     <!-- CTA devis -->
     <section class="py-16 bg-brand-600">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-animate="zoom-in">
-            <h2 class="text-3xl font-bold text-white mb-4">Un projet QHSE en tête ?</h2>
-            <p class="text-brand-100 mb-8 text-lg">Obtenez un devis personnalisé en quelques minutes. Notre équipe vous répond sous 24h.</p>
+            <h2 class="text-3xl font-bold text-white mb-4">Prêt à lancer votre certification ISO ?</h2>
+            <p class="text-brand-100 mb-8 text-lg">L'audit diagnostic est <strong class="text-white">100% gratuit et sans engagement</strong>. Vous repartez avec un rapport et un plan d'action priorisé.</p>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="{{ route('quotes.request') }}" class="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold px-8 py-3 rounded-xl transition-colors shadow">
-                    Demander un devis gratuit
+                    Demander mon diagnostic gratuit
                 </a>
-                <a href="{{ route('appointments.book') }}" class="inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 font-semibold px-8 py-3 rounded-xl transition-colors">
-                    Prendre rendez-vous
+                <a href="{{ route('process') }}" class="inline-flex items-center gap-2 border border-white/40 text-white hover:bg-white/10 font-semibold px-8 py-3 rounded-xl transition-colors">
+                    Voir notre processus
                 </a>
             </div>
         </div>
@@ -297,7 +297,7 @@
                         <p class="text-gray-500 text-sm line-clamp-2">{{ $formation->description }}</p>
                         <div class="mt-4 flex items-center justify-between">
                             <span class="text-brand-600 font-semibold text-sm">
-                                {{ $formation->price_on_request ? 'Sur devis' : number_format($formation->price, 0, ',', ' ').' €' }}
+                                {{ $formation->price_on_request ? 'Sur devis' : number_format($formation->price, 0, ',', ' ').' FCFA' }}
                             </span>
                             <span class="text-brand-600 text-sm font-medium flex items-center gap-1">
                                 Détails <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -388,17 +388,98 @@
 
     <!-- Références -->
     @if($references->count())
-    <section class="py-16 border-t border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-sm font-semibold text-gray-400 uppercase tracking-widest mb-10" data-animate="fade-up">Ils nous font confiance</p>
-            <div class="flex flex-wrap justify-center items-center gap-10" data-animate="fade-up" data-delay="100">
-                @foreach($references as $ref)
-                @if($ref->client_logo)
-                <img src="{{ Storage::url($ref->client_logo) }}" alt="{{ $ref->show_client_name ? $ref->client_name : 'Client' }}" class="h-10 object-contain grayscale hover:grayscale-0 opacity-50 hover:opacity-100 transition-all">
-                @elseif($ref->show_client_name)
-                <span class="text-gray-400 font-semibold text-sm hover:text-gray-700 transition-colors">{{ $ref->client_name }}</span>
-                @endif
-                @endforeach
+    <section class="relative py-20 overflow-hidden bg-linear-to-br from-brand-50 via-white to-brand-50/40">
+        {{-- Décorations de fond --}}
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04]" style="background-image:radial-gradient(#0d9488 1px, transparent 1px); background-size:24px 24px;"></div>
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-brand-200/30 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-brand-300/20 rounded-full blur-3xl"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" x-data="{ current: 0, total: {{ ceil($references->count() / 3) }}, getItems() { return $refs.track.children }, next() { if (this.current < this.total - 1) this.current++ }, prev() { if (this.current > 0) this.current-- }, goTo(index) { this.current = index } }" data-animate="fade-up">
+            {{-- En-tête de section --}}
+            <div class="text-center mb-10">
+                <span class="inline-flex items-center gap-2 bg-white border border-brand-200 text-brand-700 font-semibold text-xs uppercase tracking-wider px-4 py-1.5 rounded-full shadow-sm">
+                    <span class="w-1.5 h-1.5 bg-brand-500 rounded-full animate-pulse"></span>
+                    Ils nous font confiance
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-4">Des organisations de référence accompagnées</h2>
+                <p class="text-gray-500 mt-3 max-w-2xl mx-auto">Du secteur public aux grands groupes industriels, nous accompagnons des structures exigeantes vers leurs certifications ISO.</p>
+            </div>
+
+            {{-- Carousel container --}}
+            <div class="relative">
+                {{-- Bouton précédent --}}
+                <button @click="prev()" :class="{ 'opacity-30 cursor-not-allowed': current === 0 }" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-brand-600 hover:bg-brand-50 hover:scale-110 transition-all">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+
+                {{-- Track carousel --}}
+                <div class="overflow-hidden rounded-2xl">
+                    <div x-ref="track" class="flex transition-transform duration-500 ease-out" :style="`transform: translateX(-${current * 100}%)`">
+                        @foreach($references->chunk(3) as $chunk)
+                        <div class="w-full flex-shrink-0 grid grid-cols-1 sm:grid-cols-3 gap-5 px-1">
+                            @foreach($chunk as $ref)
+                            <div class="group relative bg-white rounded-2xl p-6 border border-gray-100 hover:border-brand-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                {{-- Numéro discret --}}
+                                <span class="absolute top-4 right-4 text-xs font-bold text-gray-200 group-hover:text-brand-300 transition-colors">{{ str_pad($loop->parent->index * 3 + $loop->index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+
+                                {{-- Logo ou monogramme --}}
+                                <div class="h-16 flex items-center justify-center mb-4">
+                                    @if($ref->client_logo)
+                                    <img src="{{ Storage::url($ref->client_logo) }}" alt="{{ $ref->show_client_name ? $ref->client_name : 'Client' }}" class="max-h-16 max-w-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300">
+                                    @else
+                                    <div class="w-16 h-16 rounded-xl bg-linear-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                                        <span class="text-white font-bold text-xl">
+                                            {{ collect(explode(' ', $ref->client_name))->take(2)->map(fn($w) => mb_substr($w, 0, 1))->implode('') }}
+                                        </span>
+                                    </div>
+                                    @endif
+                                </div>
+
+                                {{-- Nom du client --}}
+                                @if($ref->show_client_name)
+                                <h3 class="text-center font-bold text-gray-900 text-base leading-tight line-clamp-2 group-hover:text-brand-700 transition-colors mb-2">
+                                    {{ $ref->client_name }}
+                                </h3>
+                                @endif
+
+                                {{-- Secteur en badge --}}
+                                @if($ref->sector)
+                                <div class="flex justify-center mb-3">
+                                    <span class="text-[10px] uppercase tracking-wider font-semibold text-brand-600 bg-brand-50 px-3 py-1 rounded-full">{{ $ref->sector }}</span>
+                                </div>
+                                @endif
+
+                                {{-- Lien vers étude de cas --}}
+                                <a href="{{ route('references.show', $ref->slug) }}" class="flex items-center justify-center gap-1 text-xs text-brand-600 hover:text-brand-700 font-medium group/link">
+                                    Voir l'étude de cas
+                                    <svg class="w-3 h-3 group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                </a>
+                            </div>
+                            @endforeach
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Bouton suivant --}}
+                <button @click="next()" :class="{ 'opacity-30 cursor-not-allowed': current >= total - 1 }" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-brand-600 hover:bg-brand-50 hover:scale-110 transition-all">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            {{-- Pagination dots --}}
+            <div class="flex justify-center gap-2 mt-8">
+                <template x-for="i in total" :key="i">
+                    <button @click="goTo(i - 1)" :class="{ 'bg-brand-500 w-6': current === i - 1, 'bg-gray-300 w-2': current !== i - 1 }" class="h-2 rounded-full transition-all duration-300"></button>
+                </template>
+            </div>
+
+            {{-- CTA --}}
+            <div class="mt-10 text-center">
+                <a href="{{ route('references') }}" class="inline-flex items-center gap-2 text-brand-700 hover:text-brand-800 font-semibold text-sm group">
+                    Découvrir toutes nos références
+                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
             </div>
         </div>
     </section>

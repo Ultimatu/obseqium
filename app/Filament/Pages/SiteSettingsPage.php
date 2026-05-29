@@ -67,21 +67,45 @@ class SiteSettingsPage extends Page
                     ]),
 
                 Section::make('Identité du cabinet')
-                    ->description('Nom, sous-titre et année de fondation affichés sur le site.')
+                    ->description('Nom, sous-titre, slogan et année de fondation affichés sur le site.')
                     ->columns(['default' => 1, 'sm' => 2])
                     ->schema([
                         TextInput::make('brand_name')
                             ->label('Nom du cabinet')
                             ->prefixIcon(Heroicon::OutlinedBuildingOffice)
+                            ->placeholder('OBSEQUIUM')
                             ->required(),
                         TextInput::make('brand_tagline')
                             ->label('Sous-titre')
                             ->prefixIcon(Heroicon::OutlinedSparkles)
-                            ->placeholder('ex: Conseil & Formation'),
+                            ->placeholder('Cabinet de Conseil en Management Qualité et Conformité'),
+                        TextInput::make('brand_slogan')
+                            ->label('Slogan')
+                            ->prefixIcon(Heroicon::OutlinedMegaphone)
+                            ->placeholder('Pour votre conformité, pour votre performance')
+                            ->columnSpanFull(),
                         TextInput::make('founded_year')
                             ->label('Année de création')
                             ->prefixIcon(Heroicon::OutlinedCalendarDays)
-                            ->placeholder('ex: 2010'),
+                            ->placeholder('2026'),
+                        TextInput::make('rccm')
+                            ->label('RCCM (Registre du Commerce)')
+                            ->prefixIcon(Heroicon::OutlinedIdentification)
+                            ->placeholder('CI-ABJ-03-2026-B13-06180'),
+                    ]),
+
+                Section::make('Direction')
+                    ->description('Informations sur le gérant / dirigeant affichées sur la page À propos.')
+                    ->columns(['default' => 1, 'sm' => 2])
+                    ->schema([
+                        TextInput::make('manager_name')
+                            ->label('Nom du gérant')
+                            ->prefixIcon(Heroicon::OutlinedUser)
+                            ->placeholder('M. EHOUNOU Wilem'),
+                        TextInput::make('manager_role')
+                            ->label('Fonction')
+                            ->prefixIcon(Heroicon::OutlinedBriefcase)
+                            ->placeholder('Gérant — OBSEQUIUM'),
                     ]),
 
                 Section::make('Contact')
@@ -89,26 +113,43 @@ class SiteSettingsPage extends Page
                     ->columns(['default' => 1, 'sm' => 2])
                     ->schema([
                         TextInput::make('contact_email')
-                            ->label('Email de contact')
+                            ->label('Email principal')
                             ->prefixIcon(Heroicon::OutlinedEnvelope)
                             ->email()
                             ->required(),
+                        TextInput::make('contact_email_manager')
+                            ->label('Email du gérant (optionnel)')
+                            ->prefixIcon(Heroicon::OutlinedEnvelope)
+                            ->email()
+                            ->placeholder('wilem.ehounou@obsequium.ci'),
                         TextInput::make('contact_phone')
-                            ->label('Téléphone')
+                            ->label('Téléphone principal')
                             ->prefixIcon(Heroicon::OutlinedPhone)
-                            ->tel(),
+                            ->tel()
+                            ->placeholder('+225 07 49 89 49 90'),
+                        TextInput::make('contact_phone_alt')
+                            ->label('Téléphone secondaire')
+                            ->prefixIcon(Heroicon::OutlinedPhone)
+                            ->tel()
+                            ->placeholder('+225 05 96 26 49 12'),
                         TextInput::make('contact_address')
-                            ->label('Adresse')
+                            ->label('Adresse physique')
                             ->prefixIcon(Heroicon::OutlinedMapPin)
+                            ->placeholder('Cocody, Abidjan — Côte d’Ivoire')
                             ->columnSpanFull(),
+                        TextInput::make('contact_postal')
+                            ->label('Adresse postale (BP)')
+                            ->prefixIcon(Heroicon::OutlinedInbox)
+                            ->placeholder('08 BP 2940 ABIDJAN 08'),
                         TextInput::make('contact_hours')
                             ->label('Horaires d\'ouverture')
                             ->prefixIcon(Heroicon::OutlinedClock)
-                            ->placeholder('ex: Lun–Ven : 9h – 18h'),
+                            ->placeholder('Lun–Ven : 8h – 17h'),
                         TextInput::make('linkedin_url')
                             ->label('URL LinkedIn')
                             ->prefixIcon(Heroicon::OutlinedLink)
-                            ->url(),
+                            ->url()
+                            ->columnSpanFull(),
                     ]),
 
                 Section::make('Page d\'accueil — Hero')
@@ -130,25 +171,44 @@ class SiteSettingsPage extends Page
                     ]),
 
                 Section::make('Chiffres clés')
-                    ->description('Statistiques affichées sur la page d\'accueil et à propos.')
-                    ->columns(['default' => 1, 'sm' => 2, 'lg' => 4])
+                    ->description('Statistiques affichées sur la page d\'accueil et à propos. Chaque chiffre a sa propre étiquette personnalisable.')
+                    ->columns(['default' => 1, 'sm' => 2])
                     ->schema([
                         TextInput::make('stat_clients')
-                            ->label('Clients')
-                            ->prefixIcon(Heroicon::OutlinedUsers),
+                            ->label('Stat 1 — Valeur')
+                            ->prefixIcon(Heroicon::OutlinedUsers)
+                            ->placeholder('5'),
+                        TextInput::make('stat_clients_label')
+                            ->label('Stat 1 — Étiquette')
+                            ->placeholder('Organisations accompagnées'),
+
                         TextInput::make('stat_formations')
-                            ->label('Formations')
-                            ->prefixIcon(Heroicon::OutlinedAcademicCap),
+                            ->label('Stat 2 — Valeur')
+                            ->prefixIcon(Heroicon::OutlinedAcademicCap)
+                            ->placeholder('3'),
+                        TextInput::make('stat_formations_label')
+                            ->label('Stat 2 — Étiquette')
+                            ->placeholder('Normes ISO maîtrisées'),
+
                         TextInput::make('stat_years')
-                            ->label('Années d\'expérience')
-                            ->prefixIcon(Heroicon::OutlinedCalendarDays),
+                            ->label('Stat 3 — Valeur')
+                            ->prefixIcon(Heroicon::OutlinedCalendarDays)
+                            ->placeholder('6-12'),
+                        TextInput::make('stat_years_label')
+                            ->label('Stat 3 — Étiquette')
+                            ->placeholder('Mois d’accompagnement'),
+
                         TextInput::make('stat_satisfaction')
-                            ->label('Satisfaction')
-                            ->prefixIcon(Heroicon::OutlinedStar),
+                            ->label('Stat 4 — Valeur')
+                            ->prefixIcon(Heroicon::OutlinedStar)
+                            ->placeholder('100%'),
+                        TextInput::make('stat_satisfaction_label')
+                            ->label('Stat 4 — Étiquette')
+                            ->placeholder('Audit diagnostic offert'),
                     ]),
 
                 Section::make('Page À propos')
-                    ->description('Textes narratifs présentant le cabinet et sa philosophie.')
+                    ->description('Textes narratifs présentant le cabinet et sa philosophie (Mot du gérant).')
                     ->schema([
                         Textarea::make('about_intro')
                             ->label('Introduction (accroche hero)')
@@ -160,7 +220,10 @@ class SiteSettingsPage extends Page
                             ->label('Paragraphe 2 — Approche')
                             ->rows(3),
                         Textarea::make('about_description_3')
-                            ->label('Paragraphe 3 — Vision')
+                            ->label('Paragraphe 3 — Mission')
+                            ->rows(3),
+                        Textarea::make('about_description_4')
+                            ->label('Paragraphe 4 — Vision / engagement')
                             ->rows(3),
                     ]),
 
@@ -196,27 +259,28 @@ class SiteSettingsPage extends Page
                         TextInput::make('quote_legal_name')
                             ->label('Raison sociale')
                             ->prefixIcon(Heroicon::OutlinedBuildingOffice2)
-                            ->placeholder('OBSAQUIM SAS'),
+                            ->placeholder('OBSEQUIUM SARL'),
 
-                        TextInput::make('quote_siret')
-                            ->label('N° SIRET')
+                        TextInput::make('quote_rccm')
+                            ->label('RCCM')
                             ->prefixIcon(Heroicon::OutlinedIdentification)
-                            ->placeholder('123 456 789 00012'),
+                            ->placeholder('CI-ABJ-03-2026-B13-06180')
+                            ->helperText('Registre du Commerce et du Crédit Mobilier (Côte d’Ivoire).'),
 
-                        TextInput::make('quote_vat')
-                            ->label('N° TVA intracommunautaire')
+                        TextInput::make('quote_cc')
+                            ->label('Compte Contribuable (CC)')
                             ->prefixIcon(Heroicon::OutlinedReceiptPercent)
-                            ->placeholder('FR 12 345678900'),
+                            ->placeholder('2026 0123456 H'),
 
                         TextInput::make('quote_ape')
-                            ->label('Code APE / NAF')
+                            ->label('Code activité')
                             ->prefixIcon(Heroicon::OutlinedTag)
-                            ->placeholder('7490B'),
+                            ->placeholder('7022Z — Conseil pour les affaires'),
 
                         TextInput::make('quote_capital')
                             ->label('Capital social')
                             ->prefixIcon(Heroicon::OutlinedBanknotes)
-                            ->placeholder('10 000 €'),
+                            ->placeholder('1 000 000 FCFA'),
 
                         TextInput::make('quote_iban')
                             ->label('IBAN')
@@ -232,9 +296,9 @@ class SiteSettingsPage extends Page
                         TextInput::make('quote_currency')
                             ->label('Devise (symbole)')
                             ->prefixIcon(Heroicon::OutlinedCurrencyDollar)
-                            ->placeholder('XOF')
-                            ->hint('Symbole affiché sur les devis et factures PDF.')
-                            ->default('XOF'),
+                            ->placeholder('FCFA')
+                            ->hint('Symbole affiché sur les devis et factures PDF (FCFA / XOF).')
+                            ->default('FCFA'),
 
                         TextInput::make('quote_validity_days')
                             ->label('Validité du devis (jours)')

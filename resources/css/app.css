@@ -54,6 +54,92 @@
     animation: hero-enter 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
+/* ─── Timeline draw animation ───────────────────────────────── */
+.timeline-line {
+    background: linear-gradient(to bottom, var(--color-brand-600), var(--color-brand-400), var(--color-brand-200));
+    background-size: 100% 0%;
+    background-repeat: no-repeat;
+    transition: background-size 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-line.is-drawn {
+    background-size: 100% 100%;
+}
+
+/* ─── Timeline bubble pulse ──────────────────────────────────── */
+@keyframes bubble-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(124, 145, 49, 0.4); }
+    50% { box-shadow: 0 0 0 12px rgba(124, 145, 49, 0); }
+}
+
+.timeline-bubble-pulse {
+    animation: bubble-pulse 2s ease-in-out infinite;
+}
+
+/* ─── Card hover lift & glow ─────────────────────────────────── */
+.card-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -12px rgba(124, 145, 49, 0.25);
+}
+
+/* ─── Stagger animation delays ───────────────────────────────── */
+.stagger-1 { transition-delay: 0.08s; }
+.stagger-2 { transition-delay: 0.16s; }
+.stagger-3 { transition-delay: 0.24s; }
+.stagger-4 { transition-delay: 0.32s; }
+.stagger-5 { transition-delay: 0.40s; }
+.stagger-6 { transition-delay: 0.48s; }
+
+/* ─── Badge shimmer effect ───────────────────────────────────── */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.badge-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ─── Float animation for highlights ──────────────────────────── */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.highlight-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* ─── Service card image zoom ───────────────────────────────── */
+.img-zoom-container {
+    overflow: hidden;
+}
+
+.img-zoom-container img {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group:hover .img-zoom-container img {
+    transform: scale(1.08);
+}
+
+/* ─── Icon bounce on hover ───────────────────────────────────── */
+@keyframes icon-bounce {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(4px); }
+    75% { transform: translateX(-2px); }
+}
+
+.icon-bounce:hover svg {
+    animation: icon-bounce 0.4s ease;
+}
+
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
