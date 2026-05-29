@@ -401,7 +401,7 @@
                     <span class="w-1.5 h-1.5 bg-brand-500 rounded-full animate-pulse"></span>
                     Ils nous font confiance
                 </span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-4">Des organisations de référence accompagnées</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-4">Des organisations de référence accompagnées bb</h2>
                 <p class="text-gray-500 mt-3 max-w-2xl mx-auto">Du secteur public aux grands groupes industriels, nous accompagnons des structures exigeantes vers leurs certifications ISO.</p>
             </div>
 
