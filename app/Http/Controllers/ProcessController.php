@@ -13,21 +13,21 @@ class ProcessController extends Controller
         // Fallback si pas de phases en BDD
         if ($phases->isEmpty()) {
             $phases = collect([
-                (object) [
-                    'num' => 1,
+                    (object) [
+                        'order' => 1,
                     'title' => 'Audit Diagnostic',
                     'badge' => 'GRATUIT',
                     'description' => 'Évaluation de votre situation actuelle face aux exigences des normes. Identification des forces, faiblesses et opportunités.',
                     'highlights' => ['Évaluation gap initial', 'Rapport diagnostic complet', 'Recommandations priorisées'],
                 ],
-                (object) [
-                    'num' => 2,
+                    (object) [
+                        'order' => 2,
                     'title' => 'Restitution, Cotation et Planning',
                     'description' => 'Présentation du rapport diagnostic et cotation précise de la mission.',
                     'highlights' => ['Cotation transparente', 'Planning sur-mesure'],
                 ],
-                (object) [
-                    'num' => 3,
+                    (object) [
+                        'order' => 3,
                     'title' => 'Cadrage et Engagement',
                     'description' => 'Réunion de cadrage avec la direction et constitution du comité de pilotage.',
                     'highlights' => ['Engagement direction', 'Comité de pilotage'],
