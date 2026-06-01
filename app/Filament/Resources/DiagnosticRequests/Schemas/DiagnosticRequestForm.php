@@ -41,7 +41,6 @@ class DiagnosticRequestForm
                             ->prefixIcon(Heroicon::OutlinedBuildingOffice),
                         Textarea::make('client_address')
                             ->label('Adresse')
-                            ->prefixIcon(Heroicon::OutlinedMapPin)
                             ->columnSpanFull(),
                     ]),
 
