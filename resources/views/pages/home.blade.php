@@ -401,7 +401,7 @@
                     <span class="w-1.5 h-1.5 bg-brand-500 rounded-full animate-pulse"></span>
                     Ils nous font confiance
                 </span>
-                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-4">Des organisations de référence accompagnées bb</h2>
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-4">Des organisations de référence accompagnées</h2>
                 <p class="text-gray-500 mt-3 max-w-2xl mx-auto">Du secteur public aux grands groupes industriels, nous accompagnons des structures exigeantes vers leurs certifications ISO.</p>
             </div>
 
@@ -416,7 +416,7 @@
                 <div class="overflow-hidden rounded-2xl">
                     <div x-ref="track" class="flex transition-transform duration-500 ease-out" :style="`transform: translateX(-${current * 100}%)`">
                         @foreach($references->chunk(3) as $chunk)
-                        <div class="w-full flex-shrink-0 grid grid-cols-1 sm:grid-cols-3 gap-5 px-1">
+                        <div class="w-full shrink-0 grid grid-cols-1 sm:grid-cols-3 gap-5 px-1">
                             @foreach($chunk as $ref)
                             <div class="group relative bg-white rounded-2xl p-6 border border-gray-100 hover:border-brand-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                                 {{-- Numéro discret --}}
