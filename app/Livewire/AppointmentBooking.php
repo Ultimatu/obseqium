@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Appointment;
+use Carbon\Carbon;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -26,7 +27,20 @@ class AppointmentBooking extends Component
     // Step 3 — Date
     public string $requested_date = '';
 
+    // Calendar UI state
+    public int $calendarYear = 0;
+    public int $calendarMonth = 0;
+    public string $selectedTime = '';
+    public string $pendingTime = '';
+
     public bool $booked = false;
+
+    public function mount(): void
+    {
+        $next = Carbon::tomorrow();
+        $this->calendarYear = $next->year;
+        $this->calendarMonth = $next->month;
+    }
 
     public function nextStep(): void
     {
@@ -50,6 +64,41 @@ class AppointmentBooking extends Component
         $this->step = max(1, $this->step - 1);
     }
 
+    public function prevMonth(): void
+    {
+        $target = Carbon::create($this->calendarYear, $this->calendarMonth, 1)->subMonth();
+        if ($target->greaterThanOrEqualTo(Carbon::now()->startOfMonth())) {
+            $this->calendarYear = $target->year;
+            $this->calendarMonth = $target->month;
+        }
+    }
+
+    public function nextMonth(): void
+    {
+        $target = Carbon::create($this->calendarYear, $this->calendarMonth, 1)->addMonth();
+        if ($target->lessThanOrEqualTo(Carbon::now()->addMonths(3))) {
+            $this->calendarYear = $target->year;
+            $this->calendarMonth = $target->month;
+        }
+    }
+
+    public function selectCalendarDate(string $date): void
+    {
+        $this->requested_date = $date;
+        $this->pendingTime = '';
+        $this->selectedTime = '';
+    }
+
+    public function pickTime(string $time): void
+    {
+        $this->pendingTime = $time;
+    }
+
+    public function confirmTime(): void
+    {
+        $this->selectedTime = $this->pendingTime;
+    }
+
     public function book(): void
     {
         $this->validate([
@@ -60,21 +109,71 @@ class AppointmentBooking extends Component
         ]);
 
         Appointment::create([
-            'guest_name' => $this->guest_name,
-            'guest_email' => $this->guest_email,
-            'guest_phone' => $this->guest_phone,
-            'guest_company' => $this->guest_company,
-            'type' => $this->type,
-            'subject' => $this->subject,
-            'requested_date' => $this->requested_date,
-            'status' => 'pending',
+            'guest_name'     => $this->guest_name,
+            'guest_email'    => $this->guest_email,
+            'guest_phone'    => $this->guest_phone,
+            'guest_company'  => $this->guest_company,
+            'type'           => $this->type,
+            'subject'        => $this->subject,
+            'requested_date' => $this->requested_date
+                ? $this->requested_date . ($this->selectedTime ? ' ' . $this->selectedTime : '')
+                : null,
+            'status'         => 'pending',
         ]);
 
         $this->booked = true;
     }
 
+    private function getCalendarDays(): array
+    {
+        if (! $this->calendarYear || ! $this->calendarMonth) {
+            return [];
+        }
+
+        $firstDay = Carbon::create($this->calendarYear, $this->calendarMonth, 1);
+        $daysInMonth = $firstDay->daysInMonth;
+        $startDow = ($firstDay->dayOfWeek + 6) % 7;
+        $today = Carbon::today();
+
+        $bookedDates = Appointment::whereIn('status', ['pending', 'confirmed'])
+            ->whereYear('requested_date', $this->calendarYear)
+            ->whereMonth('requested_date', $this->calendarMonth)
+            ->whereNotNull('requested_date')
+            ->pluck('requested_date')
+            ->map(fn($d) => Carbon::parse($d)->format('Y-m-d'))
+            ->all();
+
+        $days = [];
+        for ($i = 0; $i < $startDow; $i++) {
+            $days[] = null;
+        }
+
+        for ($d = 1; $d <= $daysInMonth; $d++) {
+            $date = Carbon::create($this->calendarYear, $this->calendarMonth, $d);
+            $dateStr = $date->format('Y-m-d');
+            $days[] = [
+                'day'       => $d,
+                'date'      => $dateStr,
+                'available' => ! $date->isWeekend() && $date->greaterThan($today) && ! in_array($dateStr, $bookedDates),
+                'booked'    => in_array($dateStr, $bookedDates),
+                'selected'  => $this->requested_date === $dateStr,
+            ];
+        }
+
+        return $days;
+    }
+
     public function render()
     {
-        return view('livewire.appointment-booking');
+        $calendarDays = $this->getCalendarDays();
+        $monthLabel = $this->calendarYear
+            ? Carbon::create($this->calendarYear, $this->calendarMonth, 1)->locale('fr')->isoFormat('MMMM YYYY')
+            : '';
+        $selectedDateLabel = $this->requested_date
+            ? Carbon::parse($this->requested_date)->locale('fr')->isoFormat('dddd D MMMM')
+            : null;
+        $timeSlots = ['09:00', '10:30', '14:00', '15:30', '17:00'];
+
+        return view('livewire.appointment-booking', compact('calendarDays', 'monthLabel', 'selectedDateLabel', 'timeSlots'));
     }
 }

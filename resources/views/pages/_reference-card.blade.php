@@ -6,6 +6,9 @@
         <div class="aspect-video overflow-hidden relative">
             <img src="{{ Storage::url($reference->cover_image) }}" alt="{{ $reference->title }}"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            {{-- Overlay sombre --}}
+            <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent pointer-events-none">
+            </div>
             {{-- Secteur overlay --}}
             @if ($reference->sector)
                 <span
@@ -91,15 +94,5 @@
                 @endforeach
             </div>
         @endif
-
-        {{-- Lien vers l'étude --}}
-        <a href="{{ route('references.show', $reference->slug) }}"
-            class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 hover:text-accent-600 group/link transition-colors mt-auto">
-            Voir l'étude de cas
-            <svg class="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-        </a>
     </div>
 </div>
