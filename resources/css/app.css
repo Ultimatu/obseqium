@@ -68,8 +68,8 @@
 
 /* ─── Timeline bubble pulse ──────────────────────────────────── */
 @keyframes bubble-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(124, 145, 49, 0.4); }
-    50% { box-shadow: 0 0 0 12px rgba(124, 145, 49, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(118, 144, 68, 0.45); }
+    50% { box-shadow: 0 0 0 12px rgba(118, 144, 68, 0); }
 }
 
 .timeline-bubble-pulse {
@@ -83,7 +83,7 @@
 
 .card-lift:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 40px -12px rgba(124, 145, 49, 0.25);
+    box-shadow: 0 20px 40px -12px rgba(21, 66, 134, 0.18);
 }
 
 /* ─── Stagger animation delays ───────────────────────────────── */
@@ -140,20 +140,60 @@
     animation: icon-bounce 0.4s ease;
 }
 
+/* ─── Marquee infini (logos références) ─────────────────────── */
+@keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+    animation: marquee 30s linear infinite;
+    will-change: transform;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
-    /* Brand colors — extrait du logo Obsequium (#a3bb4e) */
-    --color-brand-50:  #f9fbf4;
-    --color-brand-100: #f2f6e4;
-    --color-brand-200: #e4edc5;
-    --color-brand-300: #cfdba3;
-    --color-brand-400: #bace74;
-    --color-brand-500: #a3bb4e;
-    --color-brand-600: #7c9131;
-    --color-brand-700: #617029;
-    --color-brand-800: #46511f;
-    --color-brand-900: #323a18;
-    --color-brand-950: #1f2310;
+    /* ── Palette bleue — couleur dominante Obsequium (#154286) ── */
+    --color-brand-50:  #E8EFF8;   /* bleu pâle — fonds de sections, cartes */
+    --color-brand-100: #D0DFF2;
+    --color-brand-200: #A8C0E5;
+    --color-brand-300: #7FA0D8;
+    --color-brand-400: #4D7EC8;
+    --color-brand-500: #1A5CB5;   /* bleu hover/actif */
+    --color-brand-600: #154286;   /* bleu principal — DOMINANT */
+    --color-brand-700: #103268;
+    --color-brand-800: #0C234B;
+    --color-brand-900: #07142E;
+    --color-brand-950: #040C1C;
+
+    /* ── Palette verte — accent QSE Obsequium (#769044) ──────── */
+    --color-accent-50:  #F0F4E8;  /* vert pâle — fonds alternés */
+    --color-accent-100: #E0E9D0;
+    --color-accent-200: #C1D3A1;
+    --color-accent-300: #A3BC72;
+    --color-accent-400: #96B857;  /* vert clair — hover, highlights */
+    --color-accent-500: #86A24D;
+    --color-accent-600: #769044;  /* vert secondaire — accents QSE */
+    --color-accent-700: #5E7336;
+    --color-accent-800: #4A6028;  /* badges Formation / Qualité */
+    --color-accent-900: #38491E;
+    --color-accent-950: #1E2710;
+
+    /* ── Tokens sémantiques Obsequium ────────────────────────── */
+    --color-obq-blue:        #154286;   /* bleu principal */
+    --color-obq-blue-hover:  #1A5CB5;   /* bleu interactif */
+    --color-obq-blue-pale:   #E8EFF8;   /* fond section bleue */
+    --color-obq-green:       #769044;   /* vert secondaire */
+    --color-obq-green-light: #96B857;   /* vert hover */
+    --color-obq-green-pale:  #F0F4E8;   /* fond section verte */
+    --color-obq-anthracite:  #2C2C2C;   /* corps de texte */
+    --color-obq-muted:       #6B7280;   /* textes secondaires */
+    --color-obq-page:        #F4F4F4;   /* fond général */
+    --color-obq-surface:     #FFFFFF;   /* cartes, modales */
 }

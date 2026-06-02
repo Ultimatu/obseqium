@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Carbon\Carbon;
 use App\Mail\DiagnosticRequestedMail;
 use App\Models\DiagnosticRequest as DiagnosticModel;
 use Illuminate\Support\Facades\Http;
@@ -45,6 +46,22 @@ class DiagnosticRequest extends Component
     public string $notes = '';
 
     public string $recaptchaToken = '';
+
+    // Calendar UI state
+    public int $calendarYear = 0;
+
+    public int $calendarMonth = 0;
+
+    public string $selectedTime = '';
+
+    public string $pendingTime = '';
+
+    public function mount(): void
+    {
+        $next = Carbon::tomorrow();
+        $this->calendarYear = $next->year;
+        $this->calendarMonth = $next->month;
+    }
 
     public function nextStep(): void
     {
@@ -109,7 +126,9 @@ class DiagnosticRequest extends Component
             'company_size' => $this->company_size,
             'requested_standards' => $this->requested_standards,
             'requested_date' => $this->requested_date ?: null,
-            'notes' => $this->notes,
+            'notes' => $this->selectedTime
+                ? '[Créneau souhaité : ' . $this->selectedTime . ']' . ($this->notes ? "\n" . $this->notes : '')
+                : $this->notes,
             'status' => 'requested',
         ]);
 
@@ -125,8 +144,93 @@ class DiagnosticRequest extends Component
         $this->submitted = true;
     }
 
+    public function prevMonth(): void
+    {
+        $target = Carbon::create($this->calendarYear, $this->calendarMonth, 1)->subMonth();
+        if ($target->greaterThanOrEqualTo(Carbon::now()->startOfMonth())) {
+            $this->calendarYear = $target->year;
+            $this->calendarMonth = $target->month;
+        }
+    }
+
+    public function nextMonth(): void
+    {
+        $target = Carbon::create($this->calendarYear, $this->calendarMonth, 1)->addMonth();
+        if ($target->lessThanOrEqualTo(Carbon::now()->addMonths(3))) {
+            $this->calendarYear = $target->year;
+            $this->calendarMonth = $target->month;
+        }
+    }
+
+    public function selectCalendarDate(string $date): void
+    {
+        $this->requested_date = $date;
+        $this->pendingTime = '';
+        $this->selectedTime = '';
+    }
+
+    public function pickTime(string $time): void
+    {
+        $this->pendingTime = $time;
+    }
+
+    public function confirmTime(): void
+    {
+        $this->selectedTime = $this->pendingTime;
+    }
+
+    private function getCalendarDays(): array
+    {
+        if (! $this->calendarYear || ! $this->calendarMonth) {
+            return [];
+        }
+
+        $firstDay = Carbon::create($this->calendarYear, $this->calendarMonth, 1);
+        $daysInMonth = $firstDay->daysInMonth;
+        // Convert Sun=0…Sat=6 → Mon=0…Sun=6
+        $startDow = ($firstDay->dayOfWeek + 6) % 7;
+        $today = Carbon::today();
+
+        // Dates déjà réservées (demandées ou planifiées) dans ce mois
+        $bookedDates = DiagnosticModel::whereIn('status', ['requested', 'scheduled'])
+            ->whereYear('requested_date', $this->calendarYear)
+            ->whereMonth('requested_date', $this->calendarMonth)
+            ->whereNotNull('requested_date')
+            ->pluck('requested_date')
+            ->map(fn($d) => Carbon::parse($d)->format('Y-m-d'))
+            ->all();
+
+        $days = [];
+        for ($i = 0; $i < $startDow; $i++) {
+            $days[] = null;
+        }
+
+        for ($d = 1; $d <= $daysInMonth; $d++) {
+            $date = Carbon::create($this->calendarYear, $this->calendarMonth, $d);
+            $dateStr = $date->format('Y-m-d');
+            $days[] = [
+                'day'       => $d,
+                'date'      => $dateStr,
+                'available' => ! $date->isWeekend() && $date->greaterThan($today) && ! in_array($dateStr, $bookedDates),
+                'booked'    => in_array($dateStr, $bookedDates),
+                'selected'  => $this->requested_date === $dateStr,
+            ];
+        }
+
+        return $days;
+    }
+
     public function render()
     {
-        return view('livewire.diagnostic-request');
+        $calendarDays = $this->getCalendarDays();
+        $monthLabel = $this->calendarYear
+            ? Carbon::create($this->calendarYear, $this->calendarMonth, 1)->locale('fr')->isoFormat('MMMM YYYY')
+            : '';
+        $selectedDateLabel = $this->requested_date
+            ? Carbon::parse($this->requested_date)->locale('fr')->isoFormat('dddd D MMMM')
+            : null;
+        $timeSlots = ['09:00', '10:30', '14:00', '15:30', '17:00'];
+
+        return view('livewire.diagnostic-request', compact('calendarDays', 'monthLabel', 'selectedDateLabel', 'timeSlots'));
     }
 }
