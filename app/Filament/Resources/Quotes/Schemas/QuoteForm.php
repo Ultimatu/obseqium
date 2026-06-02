@@ -6,11 +6,11 @@ use App\Models\User;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 
 class QuoteForm
 {
@@ -19,40 +19,32 @@ class QuoteForm
         return $schema
             ->components([
                 Section::make('Informations client')
-                    ->description('Coordonnées du destinataire du devis.')
-                    ->columns(['default' => 1, 'sm' => 2])
+                    ->columns(2)
                     ->schema([
                         TextInput::make('client_name')
                             ->label('Nom complet')
-                            ->prefixIcon(Heroicon::OutlinedUser)
                             ->required(),
                         TextInput::make('client_email')
                             ->label('Email')
-                            ->prefixIcon(Heroicon::OutlinedEnvelope)
                             ->email()
                             ->required(),
                         TextInput::make('client_phone')
                             ->label('Téléphone')
-                            ->prefixIcon(Heroicon::OutlinedPhone)
                             ->tel(),
                         TextInput::make('client_company')
-                            ->label('Société')
-                            ->prefixIcon(Heroicon::OutlinedBuildingOffice),
+                            ->label('Société'),
                         TextInput::make('client_job_title')
-                            ->label('Fonction')
-                            ->prefixIcon(Heroicon::OutlinedBriefcase),
+                            ->label('Fonction'),
                         Select::make('client_id')
                             ->label('Compte client lié')
                             ->relationship('client', 'name')
                             ->searchable()
                             ->preload()
-                            ->native(false)
                             ->nullable(),
                     ]),
 
                 Section::make('Prestation')
-                    ->description('Nature et contexte de la mission demandée.')
-                    ->columns(['default' => 1, 'sm' => 2])
+                    ->columns(2)
                     ->schema([
                         Select::make('service_type')
                             ->label('Type de prestation')
@@ -63,7 +55,7 @@ class QuoteForm
                                 'qhse' => 'Conseil QHSE',
                                 'training' => 'Formation',
                                 'other' => 'Autre',
-                            ])->native(false)
+                            ])
                             ->default('qhse'),
                         TextInput::make('sector')
                             ->label('Secteur d\'activité'),
@@ -78,7 +70,6 @@ class QuoteForm
                     ]),
 
                 Section::make('Lignes du devis')
-                    ->description('Détaillez chaque prestation, quantité et tarif unitaire.')
                     ->schema([
                         Repeater::make('items')
                             ->relationship()
@@ -98,7 +89,7 @@ class QuoteForm
                                     ->label('Unité')
                                     ->default('forfait'),
                                 TextInput::make('unit_price')
-                                    ->label('Prix unitaire (FCFA)')
+                                    ->label('Prix unitaire (€)')
                                     ->numeric()
                                     ->required(),
                             ])
@@ -108,12 +99,10 @@ class QuoteForm
                     ]),
 
                 Section::make('Conditions financières')
-                    ->description('TVA, délai de validité et responsable du dossier.')
-                    ->columns(['default' => 1, 'sm' => 2, 'lg' => 3])
+                    ->columns(3)
                     ->schema([
                         Select::make('status')
                             ->label('Statut')
-                            ->native(false)
                             ->required()
                             ->options([
                                 'draft' => 'Brouillon',
@@ -133,42 +122,13 @@ class QuoteForm
                             ->label('Valable jusqu\'au'),
                         Select::make('assigned_to')
                             ->label('Consultant assigné')
-                            ->options(fn () => User::consultants()->pluck('name', 'id'))
-                            ->native(false)
+                            ->options(fn () => User::where('role', '!=', 'client')->pluck('name', 'id'))
                             ->searchable()
                             ->nullable(),
                     ]),
 
-                Section::make('Récapitulatif')
-                    ->description('Totaux calculés automatiquement à partir des lignes.')
-                    ->columns(['default' => 1, 'sm' => 2, 'lg' => 3])
-                    ->schema([
-                        TextInput::make('subtotal')
-                            ->label('Total HT')
-                            ->readOnly()
-                            ->dehydrated(false)
-                            ->numeric()
-                            ->suffix('FCFA')
-                            ->placeholder('—'),
-                        TextInput::make('tax_amount')
-                            ->label('Montant TVA')
-                            ->readOnly()
-                            ->dehydrated(false)
-                            ->numeric()
-                            ->suffix('FCFA')
-                            ->placeholder('—'),
-                        TextInput::make('total')
-                            ->label('Total TTC')
-                            ->readOnly()
-                            ->dehydrated(false)
-                            ->numeric()
-                            ->suffix('FCFA')
-                            ->placeholder('—'),
-                    ]),
-
                 Section::make('Notes')
-                    ->description('Observations destinées au client et notes internes.')
-                    ->columns(['default' => 1, 'sm' => 2])
+                    ->columns(2)
                     ->schema([
                         Textarea::make('notes')
                             ->label('Notes client')

@@ -8,11 +8,11 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Str;
 
 class FormationForm
@@ -22,8 +22,7 @@ class FormationForm
         return $schema
             ->components([
                 Section::make('Informations générales')
-                    ->description('Titre, thématique, format et conditions tarifaires.')
-                    ->columns(['default' => 1, 'sm' => 2])
+                    ->columns(2)
                     ->schema([
                         TextInput::make('title')
                             ->label('Intitulé')
@@ -39,7 +38,6 @@ class FormationForm
                             ->columnSpanFull(),
                         TextInput::make('slug')
                             ->label('Slug URL')
-                            ->prefixIcon(Heroicon::OutlinedLink)
                             ->unique(ignoreRecord: true)
                             ->columnSpanFull(),
                         FileUpload::make('cover_image')
@@ -84,7 +82,6 @@ class FormationForm
                     ]),
 
                 Section::make('Contenu pédagogique')
-                    ->description('Programme, objectifs et conditions d\'accès à la formation.')
                     ->schema([
                         Textarea::make('description')
                             ->label('Présentation')
@@ -105,8 +102,7 @@ class FormationForm
                     ]),
 
                 Section::make('SEO & Publication')
-                    ->description('Visibilité sur le site et métadonnées de référencement.')
-                    ->columns(['default' => 1, 'sm' => 2])
+                    ->columns(2)
                     ->schema([
                         Toggle::make('is_active')
                             ->label('Actif')
@@ -117,7 +113,6 @@ class FormationForm
                             ->inline(false),
                         TextInput::make('meta_title')
                             ->label('Titre SEO')
-                            ->prefixIcon(Heroicon::OutlinedMagnifyingGlass)
                             ->columnSpanFull(),
                         Textarea::make('meta_description')
                             ->label('Description SEO')
