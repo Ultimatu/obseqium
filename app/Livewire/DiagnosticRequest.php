@@ -65,12 +65,8 @@ class DiagnosticRequest extends Component
 
     public function nextStep(): void
     {
-        $this->validate(match ($this->step) {
-            1 => [
-                'client_name' => 'required|string|min:2|max:100',
-                'client_email' => 'required|email|max:150',
-                'client_phone' => 'nullable|string|max:20',
-            ],
+        $rules = match ($this->step) {
+            1 => [],
             2 => [
                 'sector' => 'required|string|max:100',
                 'company_size' => 'required|string|in:micro,small,medium,large',
@@ -78,7 +74,11 @@ class DiagnosticRequest extends Component
                 'requested_standards.*' => 'string|in:ISO 9001,ISO 14001,ISO 45001,ISO 22000,ISO 27001',
             ],
             default => [],
-        });
+        };
+
+        if (!empty($rules)) {
+            $this->validate($rules);
+        }
 
         $this->step++;
     }

@@ -94,7 +94,7 @@
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-sm font-semibold text-white/90">Étape {{ $step }} sur 3</span>
                         <span
-                            class="text-xs font-medium text-white/60 uppercase tracking-widest">{{ match ($step) {1 => 'Vos coordonnées',2 => 'Votre entreprise',3 => 'Planification'} }}</span>
+                            class="text-xs font-medium text-white/60 uppercase tracking-widest">{{ match ($step) {1 => 'Planification',2 => 'Votre entreprise',3 => 'Vos coordonnées'} }}</span>
                     </div>
                     <div class="flex items-center gap-2">
                         @for ($i = 1; $i <= 3; $i++)
@@ -106,140 +106,23 @@
                 </div>
 
                 <form wire:submit="{{ $step === 3 ? 'submit' : 'nextStep' }}" class="p-8">
-                    {{-- Step 1: Client Info --}}
+                    {{-- Step 1: Scheduling --}}
                     @if ($step === 1)
                         <div class="space-y-5">
                             <div class="flex items-center gap-3 mb-6">
                                 <span
                                     class="w-7 h-7 bg-brand-600 text-white rounded-lg flex items-center justify-center text-xs font-bold shrink-0">1</span>
-                                <h3 class="text-lg font-semibold text-obq-anthracite">Vos coordonnées</h3>
-                            </div>
-
-                            <div class="grid sm:grid-cols-2 gap-5">
-                                <div>
-                                    <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Nom complet
-                                        <span class="text-red-500">*</span></label>
-                                    <input type="text" wire:model="client_name"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200"
-                                        placeholder="Jean Dupont">
-                                    @error('client_name')
-                                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Email <span
-                                            class="text-red-500">*</span></label>
-                                    <input type="email" wire:model="client_email"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200"
-                                        placeholder="jean@entreprise.ci">
-                                    @error('client_email')
-                                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="grid sm:grid-cols-2 gap-5">
-                                <div>
-                                    <label
-                                        class="block text-sm font-medium text-obq-anthracite mb-1.5">Téléphone</label>
-                                    <input type="tel" wire:model="client_phone"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200"
-                                        placeholder="+225 07 XX XX XX XX">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Société</label>
-                                    <input type="text" wire:model="client_company"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200"
-                                        placeholder="Nom de votre entreprise">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Adresse</label>
-                                <textarea wire:model="client_address" rows="2"
-                                    class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200 resize-none"
-                                    placeholder="Cocody, Abidjan"></textarea>
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- Step 2: Company Profile --}}
-                    @if ($step === 2)
-                        <div class="space-y-5">
-                            <div class="flex items-center gap-3 mb-6">
-                                <span
-                                    class="w-7 h-7 bg-brand-600 text-white rounded-lg flex items-center justify-center text-xs font-bold shrink-0">2</span>
-                                <h3 class="text-lg font-semibold text-obq-anthracite">Votre entreprise</h3>
-                            </div>
-
-                            <div class="grid sm:grid-cols-2 gap-5">
-                                <div>
-                                    <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Secteur
-                                        d'activité <span class="text-red-500">*</span></label>
-                                    <input type="text" wire:model="sector"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200"
-                                        placeholder="Industrie, Santé, BTP...">
-                                    @error('sector')
-                                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Taille de
-                                        l'entreprise <span class="text-red-500">*</span></label>
-                                    <select wire:model="company_size"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 bg-white transition-all duration-200">
-                                        <option value="">Sélectionnez...</option>
-                                        <option value="micro">Micro-entreprise (&lt; 10 pers.)</option>
-                                        <option value="small">Petite entreprise (10-49 pers.)</option>
-                                        <option value="medium">Moyenne entreprise (50-249 pers.)</option>
-                                        <option value="large">Grande entreprise (≥ 250 pers.)</option>
-                                    </select>
-                                    @error('company_size')
-                                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-obq-anthracite mb-3">Normes ISO concernées
-                                    <span class="text-red-500">*</span></label>
-                                <div class="grid sm:grid-cols-2 gap-3">
-                                    @foreach (['ISO 9001' => 'ISO 9001 — Management de la Qualité', 'ISO 14001' => 'ISO 14001 — Management Environnemental', 'ISO 45001' => 'ISO 45001 — Santé et Sécurité au Travail', 'ISO 22000' => 'ISO 22000 — Sécurité des Denrées Alimentaires', 'ISO 27001' => 'ISO 27001 — Sécurité de l\'Information'] as $code => $label)
-                                        <label
-                                            class="flex items-start gap-3 p-3.5 border rounded-xl cursor-pointer transition-all duration-150
-                                            {{ in_array($code, $requested_standards) ? 'border-accent-400 bg-accent-50 shadow-sm' : 'border-gray-200 hover:border-brand-200 hover:bg-brand-50' }}">
-                                            <input type="checkbox" wire:model="requested_standards"
-                                                value="{{ $code }}"
-                                                class="mt-0.5 w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-400">
-                                            <span
-                                                class="text-sm {{ in_array($code, $requested_standards) ? 'text-obq-anthracite font-medium' : 'text-obq-muted' }}">{{ $label }}</span>
-                                        </label>
-                                    @endforeach
-                                </div>
-                                @error('requested_standards')
-                                    <p class="mt-2 text-xs text-red-500">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- Step 3: Scheduling --}}
-                    @if ($step === 3)
-                        <div class="space-y-5">
-                            <div class="flex items-center gap-3 mb-6">
-                                <span
-                                    class="w-7 h-7 bg-brand-600 text-white rounded-lg flex items-center justify-center text-xs font-bold shrink-0">3</span>
                                 <h3 class="text-lg font-semibold text-obq-anthracite">Planification souhaitée</h3>
                             </div>
 
                             <div class="flex items-start gap-3 bg-brand-50 border border-brand-100 rounded-xl p-4">
-                                <svg class="w-5 h-5 text-brand-500 shrink-0 mt-0.5" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
+                                <svg class="w-5 h-5 text-brand-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 <p class="text-sm text-brand-700">
-                                    <strong>Information :</strong> Cette date est indicative. Notre équipe vous
+                                    <strong>Information :</strong> Cette date est indicative. Notre équipe vous
                                     contactera pour confirmer la disponibilité.
                                 </p>
                             </div>
@@ -284,7 +167,6 @@
                                         {{-- Days grid --}}
                                         <div class="grid grid-cols-7 gap-y-0.5">
                                             @foreach ($calendarDays as $dayData)
-
                                                 @if ($dayData === null)
                                                     <span></span>
                                                 @elseif ($dayData['available'])
@@ -295,11 +177,11 @@
                                                     </button>
                                                 @elseif ($dayData['booked'])
                                                     {{-- Déjà réservé : grisé avec point indicateur --}}
-                                                    <span
-                                                        title="Date déjà réservée"
+                                                    <span title="Date déjà réservée"
                                                         class="relative w-8 h-8 mx-auto flex items-center justify-center text-sm text-gray-300 cursor-not-allowed select-none">
                                                         {{ $dayData['day'] }}
-                                                        <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-gray-300"></span>
+                                                        <span
+                                                            class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-gray-300"></span>
                                                     </span>
                                                 @else
                                                     <span
@@ -396,6 +278,123 @@
                                 <textarea wire:model="notes" rows="4"
                                     class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200 resize-none"
                                     placeholder="Décrivez vos besoins spécifiques, contexte particulier, délais..."></textarea>
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Step 2: Company Profile --}}
+                    @if ($step === 2)
+                        <div class="space-y-5">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="w-7 h-7 bg-brand-600 text-white rounded-lg flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                                <h3 class="text-lg font-semibold text-obq-anthracite">Votre entreprise</h3>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Secteur
+                                        d'activité <span class="text-red-500">*</span></label>
+                                    <input type="text" wire:model="sector"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200"
+                                        placeholder="Industrie, Santé, BTP...">
+                                    @error('sector')
+                                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Taille de
+                                        l'entreprise <span class="text-red-500">*</span></label>
+                                    <select wire:model="company_size"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 bg-white transition-all duration-200">
+                                        <option value="">Sélectionnez...</option>
+                                        <option value="micro">Micro-entreprise (&lt; 10 pers.)</option>
+                                        <option value="small">Petite entreprise (10-49 pers.)</option>
+                                        <option value="medium">Moyenne entreprise (50-249 pers.)</option>
+                                        <option value="large">Grande entreprise (≥ 250 pers.)</option>
+                                    </select>
+                                    @error('company_size')
+                                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-obq-anthracite mb-3">Normes ISO concernées
+                                    <span class="text-red-500">*</span></label>
+                                <div class="grid sm:grid-cols-2 gap-3">
+                                    @foreach (['ISO 9001' => 'ISO 9001 — Management de la Qualité', 'ISO 14001' => 'ISO 14001 — Management Environnemental', 'ISO 45001' => 'ISO 45001 — Santé et Sécurité au Travail', 'ISO 22000' => 'ISO 22000 — Sécurité des Denrées Alimentaires', 'ISO 27001' => 'ISO 27001 — Sécurité de l\'Information'] as $code => $label)
+                                        <label
+                                            class="flex items-start gap-3 p-3.5 border rounded-xl cursor-pointer transition-all duration-150
+                                            {{ in_array($code, $requested_standards) ? 'border-accent-400 bg-accent-50 shadow-sm' : 'border-gray-200 hover:border-brand-200 hover:bg-brand-50' }}">
+                                            <input type="checkbox" wire:model="requested_standards"
+                                                value="{{ $code }}"
+                                                class="mt-0.5 w-4 h-4 text-accent-600 border-gray-300 rounded focus:ring-accent-400">
+                                            <span
+                                                class="text-sm {{ in_array($code, $requested_standards) ? 'text-obq-anthracite font-medium' : 'text-obq-muted' }}">{{ $label }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                                @error('requested_standards')
+                                    <p class="mt-2 text-xs text-red-500">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Step 3: Client Info --}}
+                    @if ($step === 3)
+                        <div class="space-y-5">
+                            <div class="flex items-center gap-3 mb-6">
+                                <span
+                                    class="w-7 h-7 bg-brand-600 text-white rounded-lg flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                                <h3 class="text-lg font-semibold text-obq-anthracite">Vos coordonnées</h3>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Nom complet
+                                        <span class="text-red-500">*</span></label>
+                                    <input type="text" wire:model="client_name"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200"
+                                        placeholder="Jean Dupont">
+                                    @error('client_name')
+                                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Email <span
+                                            class="text-red-500">*</span></label>
+                                    <input type="email" wire:model="client_email"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200"
+                                        placeholder="jean@entreprise.ci">
+                                    @error('client_email')
+                                        <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label
+                                        class="block text-sm font-medium text-obq-anthracite mb-1.5">Téléphone</label>
+                                    <input type="tel" wire:model="client_phone"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200"
+                                        placeholder="+225 07 XX XX XX XX">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Société</label>
+                                    <input type="text" wire:model="client_company"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200"
+                                        placeholder="Nom de votre entreprise">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-obq-anthracite mb-1.5">Adresse</label>
+                                <textarea wire:model="client_address" rows="2"
+                                    class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent hover:border-gray-300 transition-all duration-200 resize-none"
+                                    placeholder="Cocody, Abidjan"></textarea>
                             </div>
 
                             {{-- reCAPTCHA v3 --}}
