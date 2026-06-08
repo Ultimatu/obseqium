@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\BlogPosts\Schemas;
 
+use App\Models\BlogCategory;
+use App\Models\BlogTag;
 use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -14,7 +16,6 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Str;
 
 class BlogPostForm
@@ -24,7 +25,6 @@ class BlogPostForm
         return $schema
             ->components([
                 Section::make('Article')
-                    ->description('Titre, contenu et image de couverture de l\'article.')
                     ->schema([
                         TextInput::make('title')
                             ->label('Titre')
@@ -39,7 +39,6 @@ class BlogPostForm
                             }),
                         TextInput::make('slug')
                             ->label('Slug URL')
-                            ->prefixIcon(Heroicon::OutlinedLink)
                             ->unique(ignoreRecord: true),
                         FileUpload::make('cover_image')
                             ->label('Image de couverture')
@@ -61,8 +60,7 @@ class BlogPostForm
                     ]),
 
                 Section::make('Classification')
-                    ->description('Catégorie, tags et auteur de l\'article.')
-                    ->columns(['default' => 1, 'sm' => 2])
+                    ->columns(2)
                     ->schema([
                         Select::make('blog_category_id')
                             ->label('Catégorie')
@@ -83,14 +81,13 @@ class BlogPostForm
                             ]),
                         Select::make('author_id')
                             ->label('Auteur')
-                            ->options(fn () => User::consultants()->pluck('name', 'id'))
+                            ->options(fn () => User::where('role', '!=', 'client')->pluck('name', 'id'))
                             ->default(fn () => auth()->id())
                             ->required(),
                     ]),
 
                 Section::make('Publication')
-                    ->description('Statut, date de publication et référencement SEO.')
-                    ->columns(['default' => 1, 'sm' => 2])
+                    ->columns(2)
                     ->schema([
                         Select::make('status')
                             ->label('Statut')
@@ -107,8 +104,7 @@ class BlogPostForm
                             ->label('Article à la une')
                             ->inline(false),
                         TextInput::make('meta_title')
-                            ->label('Titre SEO')
-                            ->prefixIcon(Heroicon::OutlinedMagnifyingGlass),
+                            ->label('Titre SEO'),
                         Textarea::make('meta_description')
                             ->label('Description SEO')
                             ->rows(2),
