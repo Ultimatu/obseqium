@@ -272,21 +272,83 @@
                     </h3>
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         @foreach ($services as $service)
+                            @php
+                                // Calculer la ligne (en supposant 3 colonnes par ligne)
+                                $row = floor($loop->index / 3);
+                                // Position dans la ligne (0, 1, 2)
+                                $col = $loop->index % 3;
+
+                                // Décaler le pattern de couleurs selon la ligne
+                                $colorIndex = ($col + $row) % 3;
+
+                                $bgColors = ['bg-white', 'bg-brand-50', 'bg-[#96B857]'];
+                                $bgColor = $bgColors[$colorIndex];
+
+                                // Couleurs de texte et hover selon le fond
+                                $textColor = match ($bgColor) {
+                                    'bg-[#96B857]' => 'text-white',
+                                    'bg-brand-50' => 'text-gray-900',
+                                    default => 'text-gray-900',
+                                };
+
+                                $descColor = match ($bgColor) {
+                                    'bg-[#96B857]' => 'text-white/90',
+                                    'bg-brand-50' => 'text-gray-600',
+                                    default => 'text-gray-500',
+                                };
+
+                                $borderColor = match ($bgColor) {
+                                    'bg-[#96B857]' => 'border-[#96B857]',
+                                    'bg-brand-50' => 'border-brand-100',
+                                    default => 'border-gray-100',
+                                };
+
+                                $hoverBorder = match ($bgColor) {
+                                    'bg-[#96B857]' => 'hover:border-[#7a9642]',
+                                    'bg-brand-50' => 'hover:border-brand-200',
+                                    default => 'hover:border-brand-200',
+                                };
+
+                                $iconBg = match ($bgColor) {
+                                    'bg-[#96B857]' => 'bg-white/20',
+                                    'bg-brand-50' => 'bg-brand-100',
+                                    default => 'bg-brand-50',
+                                };
+
+                                $iconHoverBg = match ($bgColor) {
+                                    'bg-[#96B857]' => 'group-hover:bg-white/30',
+                                    'bg-brand-50' => 'group-hover:bg-brand-200',
+                                    default => 'group-hover:bg-brand-100',
+                                };
+
+                                $titleHover = match ($bgColor) {
+                                    'bg-[#96B857]' => 'group-hover:text-white',
+                                    'bg-brand-50' => 'group-hover:text-brand-700',
+                                    default => 'group-hover:text-brand-600',
+                                };
+
+                                $linkColor = match ($bgColor) {
+                                    'bg-[#96B857]' => 'text-white',
+                                    'bg-brand-50' => 'text-brand-700',
+                                    default => 'text-brand-600',
+                                };
+                            @endphp
                             <a href="{{ route('services.show', $service->slug) }}" data-animate="fade-up"
                                 data-delay="{{ $loop->index * 70 }}"
-                                class="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 hover:border-brand-200 transition-all">
+                                class="group {{ $bgColor }} rounded-2xl p-6 shadow-sm hover:shadow-md border {{ $borderColor }} {{ $hoverBorder }} transition-all">
                                 @if ($service->icon)
                                     <div
-                                        class="w-11 h-11 bg-brand-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand-100 transition-colors">
-                                        <span class="text-xl">{{ $service->icon }}</span>
+                                        class="w-11 h-11 {{ $iconBg }} rounded-xl flex items-center justify-center mb-4 {{ $iconHoverBg }} transition-colors">
+                                        <span
+                                            class="text-xl {{ $bgColor === 'bg-[#96B857]' ? 'text-white' : '' }}">{{ $service->icon }}</span>
                                     </div>
                                 @endif
                                 <h4
-                                    class="font-semibold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">
+                                    class="font-semibold {{ $textColor }} mb-2 {{ $titleHover }} transition-colors">
                                     {{ $service->title }}</h4>
-                                <p class="text-gray-500 text-sm leading-relaxed line-clamp-2">
+                                <p class="{{ $descColor }} text-sm leading-relaxed line-clamp-2">
                                     {{ $service->description }}</p>
-                                <div class="mt-4 flex items-center gap-1 text-brand-600 text-sm font-medium">
+                                <div class="mt-4 flex items-center gap-1 {{ $linkColor }} text-sm font-medium">
                                     Détails <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform"
                                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -690,7 +752,7 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section class="relative py-20 bg-brand-900 text-white">
+    <section class="relative py-12 bg-brand-900 text-white">
         <div class="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true">
             <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <defs>
