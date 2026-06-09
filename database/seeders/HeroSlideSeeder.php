@@ -17,7 +17,7 @@ class HeroSlideSeeder extends Seeder
                 'title' => 'Votre certification ISO commence par un diagnostic gratuit',
                 'description' => "OBSEQUIUM évalue gratuitement votre situation face aux exigences ISO 9001, 14001, 45001. Vous repartez avec un rapport diagnostic, des recommandations concrètes et un plan d'action priorisé.",
                 'cta_primary_label' => 'Demander mon diagnostic gratuit',
-                'cta_primary_href' => '/devis',
+                'cta_primary_href' => '/diagnostic-gratuit',
                 'cta_secondary_label' => 'Découvrir notre processus',
                 'cta_secondary_href' => '/notre-processus',
                 'gradient' => 'from-brand-950 via-brand-800 to-brand-600',

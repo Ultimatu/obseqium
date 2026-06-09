@@ -78,7 +78,7 @@
                                 </p>
                                 <div class="hero-enter flex flex-wrap gap-3 sm:gap-4">
                                     <a href="{{ $slide->cta_primary_href }}"
-                                        class="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-bold px-7 py-3.5 rounded-xl transition-all shadow-xl hover:shadow-2xl hover:-translate-y-0.5">
+                                        class="inline-flex items-center gap-2 text-white bg-[#769044] hover:bg-[#96B857] font-bold px-7 py-3.5 rounded-xl transition-all shadow-xl hover:shadow-2xl hover:-translate-y-0.5">
                                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -381,14 +381,15 @@
             <p class="text-brand-100 mb-8 text-lg">L'audit diagnostic est <strong class="text-white">100% gratuit et
                     sans engagement</strong>. Vous repartez avec un rapport et un plan d'action priorisé.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="{{ route('quotes.request') }}"
-                    class="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold px-8 py-3 rounded-xl transition-colors shadow">
+            <a href="{{ route('diagnostic.request') }}"
+                    class="inline-flex items-center gap-2 text-white bg-[#769044] hover:bg-[#96B857] font-semibold px-8 py-3 rounded-xl transition-colors">
                     Demander mon diagnostic gratuit
                 </a>
                 <a href="{{ route('process') }}"
-                    class="inline-flex items-center gap-2 text-white bg-[#769044] hover:bg-[#96B857] font-semibold px-8 py-3 rounded-xl transition-colors">
+                    class="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-brand-50 font-semibold px-8 py-3 rounded-xl transition-colors shadow">
                     Voir notre processus
                 </a>
+
             </div>
         </div>
     </section>
