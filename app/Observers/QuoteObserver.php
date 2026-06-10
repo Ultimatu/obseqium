@@ -6,7 +6,10 @@ use App\Mail\QuoteSubmittedAdminMail;
 use App\Models\ActivityLog;
 use App\Models\Quote;
 use App\Models\SiteSetting;
+use App\Models\User;
+use App\Notifications\AdminActionNotification;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class QuoteObserver
 {
@@ -19,6 +22,17 @@ class QuoteObserver
         }
 
         ActivityLog::record('quote.created', "Nouvelle demande de devis #{$quote->reference}", $quote);
+
+        Notification::send(
+            User::consultants()->get(),
+            new AdminActionNotification(
+                title: 'Nouveau devis — '.$quote->reference,
+                body: $quote->client_name.($quote->client_company ? ' ('.$quote->client_company.')' : ''),
+                url: url('/admin/quotes'),
+                icon: 'heroicon-o-document-text',
+                color: 'info',
+            )
+        );
     }
 
     public function updated(Quote $quote): void

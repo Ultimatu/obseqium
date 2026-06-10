@@ -40,20 +40,20 @@
     <!-- JSON-LD: Organization (toutes les pages) -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "Organization",
+        "@@context": "https://schema.org",
+        "@@type": "Organization",
         "name": "{{ $siteSettings->get('brand_name', config('app.name')) }}",
         "url": "{{ config('app.url') }}",
         "logo": "{{ asset('logos/Logo-Obsequium_Fond_bleue.png') }}",
         "contactPoint": {
-            "@type": "ContactPoint",
+            "@@type": "ContactPoint",
             "telephone": "{{ $siteSettings->get('contact_phone', '') }}",
             "contactType": "customer service",
             "areaServed": "CI",
             "availableLanguage": "French"
         },
         "address": {
-            "@type": "PostalAddress",
+            "@@type": "PostalAddress",
             "addressLocality": "Abidjan",
             "addressCountry": "CI",
             "streetAddress": "{{ $siteSettings->get('contact_address', '') }}"

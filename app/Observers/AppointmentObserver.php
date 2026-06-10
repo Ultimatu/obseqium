@@ -7,7 +7,10 @@ use App\Mail\AppointmentConfirmationMail;
 use App\Models\ActivityLog;
 use App\Models\Appointment;
 use App\Models\SiteSetting;
+use App\Models\User;
+use App\Notifications\AdminActionNotification;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class AppointmentObserver
 {
@@ -23,5 +26,16 @@ class AppointmentObserver
             ->send(new AppointmentConfirmationMail($appointment));
 
         ActivityLog::record('appointment.created', "Nouveau rendez-vous demandé par {$appointment->client_name}", $appointment);
+
+        Notification::send(
+            User::consultants()->get(),
+            new AdminActionNotification(
+                title: 'Nouveau rendez-vous',
+                body: $appointment->client_name.($appointment->client_company ? ' ('.$appointment->client_company.')' : ''),
+                url: url('/admin/appointments'),
+                icon: 'heroicon-o-calendar-days',
+                color: 'success',
+            )
+        );
     }
 }
