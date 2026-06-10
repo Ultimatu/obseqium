@@ -124,7 +124,7 @@ class ReferenceSeeder extends Seeder
             'chu-treichville-iso-9001' => 'assets/images/chu_treichville.png',
             'kazam-triple-iso-9001-14001-45001' => 'assets/images/entreprise-kazam.png',
             'metea-groupe-iso-9001' => 'assets/images/meta-group-sa.png',
-            'richkoff-africa-steam-iso-9001' => 'assets/images/r-a-s.png',
+            'richkoff-africa-steam-iso-9001' => 'assets/images/rickoff.jpeg',
             'anaged-iso-9001' => 'assets/images/anaged.png',
         ];
 

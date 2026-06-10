@@ -19,7 +19,7 @@
                 <div class="flex gap-1 py-3 overflow-x-auto">
                     <a href="{{ route('services.index') }}"
                         class="shrink-0 text-sm px-4 py-2 rounded-lg font-medium transition-colors text-gray-500 hover:bg-gray-100">Tous</a>
-                    @foreach (['audit' => 'Audit & Conseil', 'training' => 'Formation', 'qhse' => 'QHSE', 'strategic' => 'Stratégique'] as $val => $label)
+                    @foreach (['strategic' => 'Accompagnement', 'audit' => 'Audit & Conseil', 'qhse' => 'QHSE', 'training' => 'Formation'] as $val => $label)
                         <a href="{{ route('services.index', ['type' => $val]) }}"
                             class="shrink-0 text-sm px-4 py-2 rounded-lg font-medium transition-colors {{ request('type') === $val ? 'bg-brand-600 text-white' : 'text-gray-500 hover:bg-gray-100' }}">{{ $label }}</a>
                     @endforeach

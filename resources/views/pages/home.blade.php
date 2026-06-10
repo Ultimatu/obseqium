@@ -10,7 +10,7 @@
         },
         startTimer() {
             clearInterval(this.timer);
-            this.timer = setInterval(() => this.next(), 6000);
+            this.timer = setInterval(() => this.next(), 20000);
         },
         next() {
             this.current = (this.current + 1) % this.total;
@@ -160,7 +160,7 @@
     <style>
         .hero-progress {
             width: 0;
-            animation: heroProgress 6s linear forwards;
+            animation: heroProgress 20s linear forwards;
         }
 
         @keyframes heroProgress {
@@ -188,8 +188,33 @@
             <!-- 3 grandes catégories (toujours visibles) -->
             <div class="grid md:grid-cols-3 gap-6 mb-10">
 
-                <a href="{{ route('services.index', ['type' => 'audit']) }}" data-animate="fade-up" data-delay="0"
+                <a href="{{ route('services.index', ['type' => 'strategic']) }}" data-animate="fade-up" data-delay="0"
                     style="background-color: var(--color-brand-600);"
+                    class="group relative overflow-hidden rounded-2xl p-8 text-white transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:brightness-110">
+                    <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center mb-5">
+                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Accompagnement & Certification</h3>
+                    <p class="text-white/80 text-sm leading-relaxed mb-6">Notre cœur de métier : un suivi opérationnel
+                        de A à Z pour l'obtention et le maintien de vos certifications ISO 9001, ISO 14001, ISO 45001 et
+                        référentiels sectoriels.</p>
+                    <div class="flex items-center gap-2 text-white/90 font-semibold text-sm">
+                        En savoir plus
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-white/5"></div>
+                    <div class="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-white/5"></div>
+                </a>
+
+                <a href="{{ route('services.index', ['type' => 'audit']) }}" data-animate="fade-up" data-delay="100"
+                    style="background-color: var(--color-brand-700);"
                     class="group relative overflow-hidden rounded-2xl p-8 text-white transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:brightness-110">
                     <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center mb-5">
                         <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -214,7 +239,7 @@
                 </a>
 
                 <a href="{{ route('services.index', ['type' => 'training']) }}" data-animate="fade-up"
-                    data-delay="100" style="background-color: var(--color-brand-700);"
+                    data-delay="200" style="background-color: var(--color-brand-800);"
                     class="group relative overflow-hidden rounded-2xl p-8 text-white transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:brightness-110">
                     <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center mb-5">
                         <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -226,31 +251,6 @@
                     <p class="text-white/80 text-sm leading-relaxed mb-6">Programmes de formation sur mesure dispensés
                         par des experts certifiés — présentiel, distanciel ou blended — pour tous les niveaux de votre
                         organisation.</p>
-                    <div class="flex items-center gap-2 text-white/90 font-semibold text-sm">
-                        En savoir plus
-                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                    </div>
-                    <div class="absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-white/5"></div>
-                    <div class="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-white/5"></div>
-                </a>
-
-                <a href="{{ route('services.index', ['type' => 'qhse']) }}" data-animate="fade-up" data-delay="200"
-                    style="background-color: var(--color-brand-800);"
-                    class="group relative overflow-hidden rounded-2xl p-8 text-white transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:brightness-110">
-                    <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center mb-5">
-                        <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Accompagnement & Certification</h3>
-                    <p class="text-white/80 text-sm leading-relaxed mb-6">Suivi opérationnel de A à Z pour l'obtention
-                        et le maintien de vos certifications ISO 9001, ISO 14001, ISO 45001 et référentiels sectoriels.
-                    </p>
                     <div class="flex items-center gap-2 text-white/90 font-semibold text-sm">
                         En savoir plus
                         <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
@@ -469,55 +469,18 @@
                     @endforeach
                 </div>
             @else
-                <!-- Teaser statique formations -->
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    @foreach ([['shield', 'Sécurité au travail', 'Prévention des risques, document unique, DUERP', '7h – 14h'], ['leaf', 'Management environnemental', 'ISO 14001, bilan carbone, éco-conception', '14h – 21h'], ['badge-check', 'Systèmes qualité', 'ISO 9001, audits internes, revues de processus', '14h – 35h'], ['beaker', 'Hygiène & alimentaire', 'HACCP, BPH, traçabilité, IFS/BRC', '7h – 21h']] as $idx => [$icon, $title, $desc, $duration])
-                        <div data-animate="fade-up" data-delay="{{ $idx * 80 }}"
-                            class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:border-brand-200 hover:shadow-md transition-all cursor-default">
-                            <div class="w-11 h-11 bg-brand-50 rounded-xl flex items-center justify-center mb-4">
-                                @if ($icon === 'shield')
-                                    <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                    </svg>
-                                @elseif($icon === 'leaf')
-                                    <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                                    </svg>
-                                @elseif($icon === 'badge-check')
-                                    <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                                    </svg>
-                                @else
-                                    <svg class="w-5 h-5 text-brand-600" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                                    </svg>
-                                @endif
-                            </div>
-                            <h3 class="font-semibold text-gray-900 mb-2">{{ $title }}</h3>
-                            <p class="text-gray-500 text-sm leading-relaxed mb-4">{{ $desc }}</p>
-                            <span
-                                class="inline-flex items-center gap-1 bg-brand-50 text-brand-700 text-xs font-medium px-2.5 py-1 rounded-full">
-                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                {{ $duration }}
-                            </span>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="mt-10 text-center" data-animate="fade-up">
-                    <a href="{{ route('formations.index') }}"
-                        class="inline-flex items-center gap-2 bg-[#769044] hover:bg-[#96B857] text-white font-semibold px-6 py-3 rounded-xl transition-colors shadow-sm">
-                        Consulter le catalogue complet
+                <div class="flex flex-col items-center justify-center py-16 px-6 text-center" data-animate="fade-up">
+                    <div class="w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center mb-5">
+                        <svg class="w-8 h-8 text-brand-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Catalogue en cours de construction</h3>
+                    <p class="text-gray-500 text-sm max-w-sm leading-relaxed mb-6">Nos formations seront bientôt disponibles. Contactez-nous pour connaître nos prochaines sessions.</p>
+                    <a href="{{ route('contact') }}"
+                        class="inline-flex items-center gap-2 bg-[#769044] hover:bg-[#96B857] text-white font-semibold px-5 py-2.5 rounded-xl transition-colors text-sm">
+                        Nous contacter
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17 8l4 4m0 0l-4 4m4-4H3" />

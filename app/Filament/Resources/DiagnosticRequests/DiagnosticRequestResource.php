@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\DiagnosticRequests;
 
+use App\Filament\Resources\DiagnosticRequests\Pages\CalendarDiagnosticRequests;
 use App\Filament\Resources\DiagnosticRequests\Pages\CreateDiagnosticRequest;
 use App\Filament\Resources\DiagnosticRequests\Pages\EditDiagnosticRequest;
 use App\Filament\Resources\DiagnosticRequests\Pages\ListDiagnosticRequests;
@@ -58,6 +59,7 @@ class DiagnosticRequestResource extends Resource
     {
         return [
             'index' => ListDiagnosticRequests::route('/'),
+            'calendar' => CalendarDiagnosticRequests::route('/calendrier'),
             'create' => CreateDiagnosticRequest::route('/create'),
             'edit' => EditDiagnosticRequest::route('/{record}/edit'),
         ];

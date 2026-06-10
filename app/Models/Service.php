@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Service extends Model
 {
@@ -25,13 +26,15 @@ class Service extends Model
     {
         static::creating(function (self $model) {
             if (empty($model->slug)) {
-                $model->slug = \Illuminate\Support\Str::slug($model->title);
+                $model->slug = Str::slug($model->title);
             }
         });
     }
 
     public function scopeActive($query)
     {
-        return $query->where('is_active', true)->orderBy('order');
+        return $query->where('is_active', true)
+            ->orderByRaw("CASE WHEN type = 'strategic' THEN 0 ELSE 1 END")
+            ->orderBy('order');
     }
 }

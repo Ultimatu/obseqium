@@ -108,17 +108,17 @@
                                 class="block px-4 py-2 text-sm text-[#96B857] hover:bg-[#F0F4E8] font-semibold">Tous
                                 nos services</a>
                             <div class="border-t border-brand-50 my-1"></div>
+                            <a href="{{ route('services.index', ['type' => 'strategic']) }}"
+                                class="block px-4 py-2 text-sm text-obq-anthracite hover:bg-[#F0F4E8] hover:text-[#769044]">Accompagnement
+                                stratégique</a>
                             <a href="{{ route('services.index', ['type' => 'audit']) }}"
                                 class="block px-4 py-2 text-sm text-obq-anthracite hover:bg-[#F0F4E8] hover:text-[#769044]">Audit
                                 & Contrôle</a>
-                            <a href="{{ route('services.index', ['type' => 'strategic']) }}"
+                            <a href="{{ route('services.index', ['type' => 'qhse']) }}"
                                 class="block px-4 py-2 text-sm text-obq-anthracite hover:bg-[#F0F4E8] hover:text-[#769044]">Conseil
-                                stratégique</a>
+                                QHSE</a>
                             <a href="{{ route('services.index', ['type' => 'training']) }}"
                                 class="block px-4 py-2 text-sm text-obq-anthracite hover:bg-[#F0F4E8] hover:text-[#769044]">Formation</a>
-                            <a href="{{ route('services.index', ['type' => 'qhse']) }}"
-                                class="block px-4 py-2 text-sm text-obq-anthracite hover:bg-[#F0F4E8] hover:text-[#769044]">Accompagnement
-                                QHSE</a>
                         </div>
                     </div>
 
@@ -235,14 +235,14 @@
                     <ul class="space-y-2 text-sm">
                         <li><a href="{{ route('services.index') }}"
                                 class="hover:text-brand-400 transition-colors">Tous nos services</a></li>
+                        <li><a href="{{ route('services.index', ['type' => 'strategic']) }}"
+                                class="hover:text-brand-400 transition-colors">Accompagnement stratégique</a></li>
                         <li><a href="{{ route('services.index', ['type' => 'audit']) }}"
                                 class="hover:text-brand-400 transition-colors">Audit & Contrôle</a></li>
-                        <li><a href="{{ route('services.index', ['type' => 'strategic']) }}"
-                                class="hover:text-brand-400 transition-colors">Conseil stratégique</a></li>
+                        <li><a href="{{ route('services.index', ['type' => 'qhse']) }}"
+                                class="hover:text-brand-400 transition-colors">Conseil QHSE</a></li>
                         <li><a href="{{ route('services.index', ['type' => 'training']) }}"
                                 class="hover:text-brand-400 transition-colors">Formation</a></li>
-                        <li><a href="{{ route('services.index', ['type' => 'qhse']) }}"
-                                class="hover:text-brand-400 transition-colors">Accompagnement QHSE</a></li>
                         <li><a href="{{ route('formations.index') }}"
                                 class="hover:text-brand-400 transition-colors">Catalogue formations</a></li>
                     </ul>

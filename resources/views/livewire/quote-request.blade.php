@@ -99,6 +99,34 @@
                 </a>
             </div>
         @else
+            {{-- Diagnostic gratuit obligatoire --}}
+            <div class="mb-8 rounded-2xl border border-amber-200 bg-amber-50 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                <div class="shrink-0 w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-semibold text-amber-900 text-sm sm:text-base mb-1">Diagnostic gratuit
+                        obligatoire avant tout devis</h3>
+                    <p class="text-amber-800 text-sm leading-relaxed">
+                        Chez OBSEQUIUM, toute demande de devis est précédée d'un <strong>audit diagnostic
+                            gratuit</strong>. Si vous n'avez pas encore bénéficié de ce diagnostic, merci de le
+                        demander d'abord — c'est l'étape qui nous permet de vous proposer une offre adaptée et
+                        chiffrée.
+                    </p>
+                </div>
+                <a href="{{ route('diagnostic.request') }}"
+                    class="shrink-0 inline-flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm px-5 py-3 rounded-xl transition-colors whitespace-nowrap">
+                    Demander mon diagnostic
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </a>
+            </div>
+
             {{-- Stepper --}}
             <div class="flex items-start w-full mb-10">
                 @php $steps = ['Vos informations', 'Votre projet', 'Récapitulatif']; @endphp
