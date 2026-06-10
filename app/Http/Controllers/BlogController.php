@@ -32,7 +32,17 @@ class BlogController
             ->take(3)
             ->get();
 
-        return view('pages.blog.show', compact('post', 'related'));
+        return view('pages.blog.show', [
+            'post' => $post,
+            'related' => $related,
+            'title' => $post->meta_title ?: $post->title,
+            'metaDescription' => $post->meta_description ?: $post->excerpt,
+            'ogType' => 'article',
+            'ogTitle' => $post->meta_title ?: $post->title,
+            'ogDescription' => $post->meta_description ?: $post->excerpt,
+            'ogImage' => $post->cover_image ? asset('storage/'.$post->cover_image) : null,
+            'canonicalUrl' => route('blog.show', $post->slug),
+        ]);
     }
 
     public function category(string $slug)

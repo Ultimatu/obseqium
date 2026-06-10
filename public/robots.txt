@@ -1,2 +1,11 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /admin/
+Disallow: /devis
+Disallow: /devis/
+Disallow: /diagnostic-gratuit
+Disallow: /rendez-vous
+Disallow: /mentions-legales
+Disallow: /confidentialite
+
+Sitemap: https://obsequium-ci.com/sitemap.xml

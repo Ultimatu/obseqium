@@ -24,6 +24,14 @@ class FormationController
         $formation = Formation::where('slug', $slug)->where('is_active', true)->firstOrFail();
         $sessions = $formation->sessions()->published()->orderBy('start_date')->get();
 
-        return view('pages.formations.show', compact('formation', 'sessions'));
+        return view('pages.formations.show', [
+            'formation' => $formation,
+            'sessions' => $sessions,
+            'title' => $formation->meta_title ?: $formation->title,
+            'metaDescription' => $formation->meta_description ?: $formation->description,
+            'ogType' => 'website',
+            'ogImage' => $formation->cover_image ? asset('storage/'.$formation->cover_image) : null,
+            'canonicalUrl' => route('formations.show', $formation->slug),
+        ]);
     }
 }

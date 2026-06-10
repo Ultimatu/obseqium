@@ -35,6 +35,35 @@
     <meta name="twitter:image" content="{{ $pageImage }}">
 
     <link rel="canonical" href="{{ $canonicalUrl }}">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ route('sitemap') }}">
+
+    <!-- JSON-LD: Organization (toutes les pages) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "{{ $siteSettings->get('brand_name', config('app.name')) }}",
+        "url": "{{ config('app.url') }}",
+        "logo": "{{ asset('logos/Logo-Obsequium_Fond_bleue.png') }}",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "{{ $siteSettings->get('contact_phone', '') }}",
+            "contactType": "customer service",
+            "areaServed": "CI",
+            "availableLanguage": "French"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Abidjan",
+            "addressCountry": "CI",
+            "streetAddress": "{{ $siteSettings->get('contact_address', '') }}"
+        }
+    }
+    </script>
+
+    @if(isset($jsonLd))
+    <script type="application/ld+json">{!! $jsonLd !!}</script>
+    @endif
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">

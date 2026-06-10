@@ -26,6 +26,14 @@ class ServiceController
             ->limit(3)
             ->get();
 
-        return view('pages.services.show', compact('service', 'relatedServices'));
+        return view('pages.services.show', [
+            'service' => $service,
+            'relatedServices' => $relatedServices,
+            'title' => $service->meta_title ?: $service->title,
+            'metaDescription' => $service->meta_description ?: $service->description,
+            'ogType' => 'website',
+            'ogImage' => $service->image ? asset('storage/'.$service->image) : null,
+            'canonicalUrl' => route('services.show', $service->slug),
+        ]);
     }
 }
