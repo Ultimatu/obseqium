@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Models\Appointment;
 use App\Models\Contact;
+use App\Models\DiagnosticRequest;
 use App\Models\Quote;
 use App\Models\SiteSetting;
 use App\Observers\AppointmentObserver;
 use App\Observers\ContactObserver;
+use App\Observers\DiagnosticRequestObserver;
 use App\Observers\QuoteObserver;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -25,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
         Contact::observe(ContactObserver::class);
         Appointment::observe(AppointmentObserver::class);
         Quote::observe(QuoteObserver::class);
+        DiagnosticRequest::observe(DiagnosticRequestObserver::class);
     }
 }
