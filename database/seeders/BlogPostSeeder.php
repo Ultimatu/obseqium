@@ -13,11 +13,10 @@ class BlogPostSeeder extends Seeder
     public function run(): void
     {
         $author = User::query()->first() ?? User::query()->firstOrCreate(
-            ['email' => 'admin@obseqium.local'],
+            ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Administrateur',
                 'password' => 'password',
-                'role' => 'admin',
                 'is_active' => true,
             ]
         );
