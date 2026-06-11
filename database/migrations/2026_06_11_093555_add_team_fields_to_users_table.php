@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('photo')->nullable()->after('bio');
             $table->string('linkedin_url')->nullable()->after('photo');
             $table->integer('order')->default(0)->after('linkedin_url');
-            $table->dropColumn('company');
+            // $table->dropColumn('company');
         });
     }
 
