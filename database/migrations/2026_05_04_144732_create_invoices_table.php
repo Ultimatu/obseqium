@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('reference')->unique();
             $table->foreignId('quote_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('client_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('client_id')->nullable()->constrained('clients')->nullOnDelete();
             $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete();
             $table->string('status')->default('draft'); // draft, sent, paid, overdue, cancelled
             $table->string('client_name');

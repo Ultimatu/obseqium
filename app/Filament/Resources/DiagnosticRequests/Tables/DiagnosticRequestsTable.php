@@ -70,12 +70,12 @@ class DiagnosticRequestsTable
                 TextColumn::make('scheduled_date')
                     ->label('Planifié le')
                     ->date('d/m/Y')
-                    ->placeholder('—')
+                    ->placeholder('-')
                     ->sortable(),
 
                 TextColumn::make('consultant.name')
                     ->label('Consultant')
-                    ->placeholder('—'),
+                    ->placeholder('-'),
 
                 IconColumn::make('is_converted')
                     ->label('Converti')
@@ -125,7 +125,7 @@ class DiagnosticRequestsTable
                             ->required(),
                         Select::make('assigned_to')
                             ->label('Consultant')
-                            ->options(fn () => User::consultants()->pluck('name', 'id'))
+                            ->options(fn () => User::pluck('name', 'id'))
                             ->searchable()
                             ->native(false)
                             ->required(),

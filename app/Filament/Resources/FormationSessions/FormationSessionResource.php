@@ -10,14 +10,11 @@ use App\Filament\Resources\FormationSessions\Tables\FormationSessionsTable;
 use App\Models\FormationSession;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class FormationSessionResource extends Resource
 {
     protected static ?string $model = FormationSession::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Catalogue';
 

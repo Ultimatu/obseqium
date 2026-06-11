@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
 use App\Mail\DiagnosticRequestedMail;
 use App\Models\DiagnosticRequest as DiagnosticModel;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Layout;
@@ -22,7 +22,7 @@ class DiagnosticRequest extends Component
 
     public string $reference = '';
 
-    // Step 1 — Client info
+    // Step 1 - Client info
     public string $client_name = '';
 
     public string $client_email = '';
@@ -33,14 +33,14 @@ class DiagnosticRequest extends Component
 
     public string $client_address = '';
 
-    // Step 2 — Company profile
+    // Step 2 - Company profile
     public string $sector = '';
 
     public string $company_size = '';
 
     public array $requested_standards = [];
 
-    // Step 3 — Scheduling & notes
+    // Step 3 - Scheduling & notes
     public string $requested_date = '';
 
     public string $notes = '';
@@ -76,7 +76,7 @@ class DiagnosticRequest extends Component
             default => [],
         };
 
-        if (!empty($rules)) {
+        if (! empty($rules)) {
             $this->validate($rules);
         }
 
@@ -127,7 +127,7 @@ class DiagnosticRequest extends Component
             'requested_standards' => $this->requested_standards,
             'requested_date' => $this->requested_date ?: null,
             'notes' => $this->selectedTime
-                ? '[Créneau souhaité : ' . $this->selectedTime . ']' . ($this->notes ? "\n" . $this->notes : '')
+                ? '[Créneau souhaité : '.$this->selectedTime.']'.($this->notes ? "\n".$this->notes : '')
                 : $this->notes,
             'status' => 'requested',
         ]);
@@ -197,7 +197,7 @@ class DiagnosticRequest extends Component
             ->whereMonth('requested_date', $this->calendarMonth)
             ->whereNotNull('requested_date')
             ->pluck('requested_date')
-            ->map(fn($d) => Carbon::parse($d)->format('Y-m-d'))
+            ->map(fn ($d) => Carbon::parse($d)->format('Y-m-d'))
             ->all();
 
         $days = [];
@@ -209,11 +209,11 @@ class DiagnosticRequest extends Component
             $date = Carbon::create($this->calendarYear, $this->calendarMonth, $d);
             $dateStr = $date->format('Y-m-d');
             $days[] = [
-                'day'       => $d,
-                'date'      => $dateStr,
+                'day' => $d,
+                'date' => $dateStr,
                 'available' => ! $date->isWeekend() && $date->greaterThan($today) && ! in_array($dateStr, $bookedDates),
-                'booked'    => in_array($dateStr, $bookedDates),
-                'selected'  => $this->requested_date === $dateStr,
+                'booked' => in_array($dateStr, $bookedDates),
+                'selected' => $this->requested_date === $dateStr,
             ];
         }
 

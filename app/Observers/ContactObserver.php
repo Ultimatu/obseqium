@@ -24,10 +24,10 @@ class ContactObserver
         ActivityLog::record('contact.created', "Nouvelle demande de contact de {$contact->name}", $contact);
 
         Notification::send(
-            User::consultants()->get(),
+            User::get(),
             new AdminActionNotification(
                 title: 'Nouveau message de contact',
-                body: $contact->name.($contact->subject ? ' — '.$contact->subject : ''),
+                body: $contact->name.($contact->subject ? ' - '.$contact->subject : ''),
                 url: url('/admin/contacts'),
                 icon: 'heroicon-o-envelope',
                 color: 'warning',

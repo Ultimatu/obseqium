@@ -45,14 +45,14 @@
 
             <h3 style="color: #0d9488;">Prochaines étapes</h3>
             <ol>
-                <li><strong>Analyse de votre demande</strong> — Notre équipe étudie votre besoin (24-48h)</li>
-                <li><strong>Contact téléphonique</strong> — Nous vous appelons pour planifier la visite</li>
-                <li><strong>Diagnostic sur site</strong> — Audit complet de votre organisation</li>
-                <li><strong>Rapport et recommandations</strong> — Vous recevez un rapport détaillé</li>
+                <li><strong>Analyse de votre demande</strong> - Notre équipe étudie votre besoin (24-48h)</li>
+                <li><strong>Contact téléphonique</strong> - Nous vous appelons pour planifier la visite</li>
+                <li><strong>Diagnostic sur site</strong> - Audit complet de votre organisation</li>
+                <li><strong>Rapport et recommandations</strong> - Vous recevez un rapport détaillé</li>
             </ol>
 
             <p style="background: #fef3c7; padding: 15px; border-radius: 6px; margin: 20px 0;">
-                <strong>Gratuit et sans engagement</strong> — Ce diagnostic est une prestation offerte par OBSEQUIUM pour vous permettre d'évaluer votre niveau de conformité.
+                <strong>Gratuit et sans engagement</strong> - Ce diagnostic est une prestation offerte par OBSEQUIUM pour vous permettre d'évaluer votre niveau de conformité.
             </p>
 
             <p style="margin-top: 30px;">

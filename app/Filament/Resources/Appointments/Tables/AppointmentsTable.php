@@ -64,7 +64,7 @@ class AppointmentsTable
                     ->label('Date confirmée')
                     ->dateTime('d/m/Y H:i')
                     ->sortable()
-                    ->placeholder('—'),
+                    ->placeholder('-'),
             ])
             ->filters([
                 SelectFilter::make('status')

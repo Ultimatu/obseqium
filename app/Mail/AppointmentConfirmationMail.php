@@ -18,7 +18,7 @@ class AppointmentConfirmationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Confirmation de votre rendez-vous — '.config('app.name'),
+            subject: 'Confirmation de votre rendez-vous - '.config('app.name'),
         );
     }
 

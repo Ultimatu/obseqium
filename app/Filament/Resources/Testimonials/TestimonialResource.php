@@ -10,14 +10,11 @@ use App\Filament\Resources\Testimonials\Tables\TestimonialsTable;
 use App\Models\Testimonial;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class TestimonialResource extends Resource
 {
     protected static ?string $model = Testimonial::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleLeftRight;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Contenu';
 

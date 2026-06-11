@@ -14,23 +14,30 @@ class AppointmentBooking extends Component
 {
     public int $step = 1;
 
-    // Step 1 — Identity
+    // Step 1 - Identity
     public string $guest_name = '';
+
     public string $guest_email = '';
+
     public string $guest_phone = '';
+
     public string $guest_company = '';
 
-    // Step 2 — Format
+    // Step 2 - Format
     public string $type = 'visio';
+
     public string $subject = '';
 
-    // Step 3 — Date
+    // Step 3 - Date
     public string $requested_date = '';
 
     // Calendar UI state
     public int $calendarYear = 0;
+
     public int $calendarMonth = 0;
+
     public string $selectedTime = '';
+
     public string $pendingTime = '';
 
     public bool $booked = false;
@@ -46,7 +53,7 @@ class AppointmentBooking extends Component
     {
         $this->validate(match ($this->step) {
             1 => [
-                'guest_name'  => 'required|string|min:2|max:100',
+                'guest_name' => 'required|string|min:2|max:100',
                 'guest_email' => 'required|email|max:150',
                 'guest_phone' => 'nullable|string|max:20',
             ],
@@ -102,23 +109,23 @@ class AppointmentBooking extends Component
     public function book(): void
     {
         $this->validate([
-            'guest_name'     => 'required|string|min:2|max:100',
-            'guest_email'    => 'required|email|max:150',
-            'type'           => 'required|in:visio,presential',
+            'guest_name' => 'required|string|min:2|max:100',
+            'guest_email' => 'required|email|max:150',
+            'type' => 'required|in:visio,presential',
             'requested_date' => 'required|date|after:today',
         ]);
 
         Appointment::create([
-            'guest_name'     => $this->guest_name,
-            'guest_email'    => $this->guest_email,
-            'guest_phone'    => $this->guest_phone,
-            'guest_company'  => $this->guest_company,
-            'type'           => $this->type,
-            'subject'        => $this->subject,
+            'guest_name' => $this->guest_name,
+            'guest_email' => $this->guest_email,
+            'guest_phone' => $this->guest_phone,
+            'guest_company' => $this->guest_company,
+            'type' => $this->type,
+            'subject' => $this->subject,
             'requested_date' => $this->requested_date
-                ? $this->requested_date . ($this->selectedTime ? ' ' . $this->selectedTime : '')
+                ? $this->requested_date.($this->selectedTime ? ' '.$this->selectedTime : '')
                 : null,
-            'status'         => 'pending',
+            'status' => 'pending',
         ]);
 
         $this->booked = true;
@@ -140,7 +147,7 @@ class AppointmentBooking extends Component
             ->whereMonth('requested_date', $this->calendarMonth)
             ->whereNotNull('requested_date')
             ->pluck('requested_date')
-            ->map(fn($d) => Carbon::parse($d)->format('Y-m-d'))
+            ->map(fn ($d) => Carbon::parse($d)->format('Y-m-d'))
             ->all();
 
         $days = [];
@@ -152,11 +159,11 @@ class AppointmentBooking extends Component
             $date = Carbon::create($this->calendarYear, $this->calendarMonth, $d);
             $dateStr = $date->format('Y-m-d');
             $days[] = [
-                'day'       => $d,
-                'date'      => $dateStr,
+                'day' => $d,
+                'date' => $dateStr,
                 'available' => ! $date->isWeekend() && $date->greaterThan($today) && ! in_array($dateStr, $bookedDates),
-                'booked'    => in_array($dateStr, $bookedDates),
-                'selected'  => $this->requested_date === $dateStr,
+                'booked' => in_array($dateStr, $bookedDates),
+                'selected' => $this->requested_date === $dateStr,
             ];
         }
 

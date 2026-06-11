@@ -17,8 +17,6 @@ use Filament\Support\Icons\Heroicon;
 
 class SiteSettingsPage extends Page
 {
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
-
     protected static \UnitEnum|string|null $navigationGroup = 'Administration';
 
     protected static ?string $navigationLabel = 'Paramètres du site';
@@ -105,7 +103,7 @@ class SiteSettingsPage extends Page
                         TextInput::make('manager_role')
                             ->label('Fonction')
                             ->prefixIcon(Heroicon::OutlinedBriefcase)
-                            ->placeholder('Gérant — OBSEQUIUM'),
+                            ->placeholder('Gérant - OBSEQUIUM'),
                     ]),
 
                 Section::make('Contact')
@@ -135,7 +133,7 @@ class SiteSettingsPage extends Page
                         TextInput::make('contact_address')
                             ->label('Adresse physique')
                             ->prefixIcon(Heroicon::OutlinedMapPin)
-                            ->placeholder('Cocody, Abidjan — Côte d’Ivoire')
+                            ->placeholder('Cocody, Abidjan - Côte d’Ivoire')
                             ->columnSpanFull(),
                         TextInput::make('contact_postal')
                             ->label('Adresse postale (BP)')
@@ -152,7 +150,7 @@ class SiteSettingsPage extends Page
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Page d\'accueil — Hero')
+                Section::make('Page d\'accueil - Hero')
                     ->description('Contenu de la section hero visible dès l\'arrivée sur le site.')
                     ->columns(['default' => 1, 'sm' => 2])
                     ->schema([
@@ -175,35 +173,35 @@ class SiteSettingsPage extends Page
                     ->columns(['default' => 1, 'sm' => 2])
                     ->schema([
                         TextInput::make('stat_clients')
-                            ->label('Stat 1 — Valeur')
+                            ->label('Stat 1 - Valeur')
                             ->prefixIcon(Heroicon::OutlinedUsers)
                             ->placeholder('5'),
                         TextInput::make('stat_clients_label')
-                            ->label('Stat 1 — Étiquette')
+                            ->label('Stat 1 - Étiquette')
                             ->placeholder('Organisations accompagnées'),
 
                         TextInput::make('stat_formations')
-                            ->label('Stat 2 — Valeur')
+                            ->label('Stat 2 - Valeur')
                             ->prefixIcon(Heroicon::OutlinedAcademicCap)
                             ->placeholder('3'),
                         TextInput::make('stat_formations_label')
-                            ->label('Stat 2 — Étiquette')
+                            ->label('Stat 2 - Étiquette')
                             ->placeholder('Normes ISO maîtrisées'),
 
                         TextInput::make('stat_years')
-                            ->label('Stat 3 — Valeur')
+                            ->label('Stat 3 - Valeur')
                             ->prefixIcon(Heroicon::OutlinedCalendarDays)
                             ->placeholder('6-12'),
                         TextInput::make('stat_years_label')
-                            ->label('Stat 3 — Étiquette')
+                            ->label('Stat 3 - Étiquette')
                             ->placeholder('Mois d’accompagnement'),
 
                         TextInput::make('stat_satisfaction')
-                            ->label('Stat 4 — Valeur')
+                            ->label('Stat 4 - Valeur')
                             ->prefixIcon(Heroicon::OutlinedStar)
                             ->placeholder('100%'),
                         TextInput::make('stat_satisfaction_label')
-                            ->label('Stat 4 — Étiquette')
+                            ->label('Stat 4 - Étiquette')
                             ->placeholder('Audit diagnostic offert'),
                     ]),
 
@@ -214,16 +212,16 @@ class SiteSettingsPage extends Page
                             ->label('Introduction (accroche hero)')
                             ->rows(2),
                         Textarea::make('about_description_1')
-                            ->label('Paragraphe 1 — Présentation')
+                            ->label('Paragraphe 1 - Présentation')
                             ->rows(3),
                         Textarea::make('about_description_2')
-                            ->label('Paragraphe 2 — Approche')
+                            ->label('Paragraphe 2 - Approche')
                             ->rows(3),
                         Textarea::make('about_description_3')
-                            ->label('Paragraphe 3 — Mission')
+                            ->label('Paragraphe 3 - Mission')
                             ->rows(3),
                         Textarea::make('about_description_4')
-                            ->label('Paragraphe 4 — Vision / engagement')
+                            ->label('Paragraphe 4 - Vision / engagement')
                             ->rows(3),
                     ]),
 
@@ -275,7 +273,7 @@ class SiteSettingsPage extends Page
                         TextInput::make('quote_ape')
                             ->label('Code activité')
                             ->prefixIcon(Heroicon::OutlinedTag)
-                            ->placeholder('7022Z — Conseil pour les affaires'),
+                            ->placeholder('7022Z - Conseil pour les affaires'),
 
                         TextInput::make('quote_capital')
                             ->label('Capital social')
@@ -341,7 +339,7 @@ class SiteSettingsPage extends Page
                         Textarea::make('quote_terms')
                             ->label('Conditions générales de vente')
                             ->rows(8)
-                            ->placeholder("Article 1 — Objet\nLes présentes conditions générales de vente s'appliquent à toutes les prestations de services conclues par le cabinet...\n\nArticle 2 — Prix\nLes prix sont indiqués en euros hors taxes...")
+                            ->placeholder("Article 1 - Objet\nLes présentes conditions générales de vente s'appliquent à toutes les prestations de services conclues par le cabinet...\n\nArticle 2 - Prix\nLes prix sont indiqués en euros hors taxes...")
                             ->hint('Ces conditions apparaîtront en bas du PDF de devis.')
                             ->columnSpanFull(),
                     ]),

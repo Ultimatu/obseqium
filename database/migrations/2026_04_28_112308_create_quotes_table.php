@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('quotes', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->foreignId('client_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('client_id')->nullable()->constrained('clients')->nullOnDelete();
             $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete();
             $table->enum('status', ['draft', 'sent', 'viewed', 'accepted', 'refused', 'revision_requested'])->default('draft');
             $table->string('client_name');

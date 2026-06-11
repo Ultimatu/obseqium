@@ -18,7 +18,7 @@ class DiagnosticRequestedAdminMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '['.config('app.name').'] Nouvelle demande de diagnostic — '.$this->diagnostic->reference,
+            subject: '['.config('app.name').'] Nouvelle demande de diagnostic - '.$this->diagnostic->reference,
         );
     }
 

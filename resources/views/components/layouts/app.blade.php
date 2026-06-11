@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @php
-        $pageTitle = ($title ?? config('app.name')) . ' — ' . $siteSettings->get('brand_name', 'Cabinet QHSE');
+        $pageTitle = ($title ?? config('app.name')) . ' - ' . $siteSettings->get('brand_name', 'Cabinet QHSE');
         $pageDesc = $metaDescription ?? $siteSettings->get('hero_description', '');
         $pageImage = $ogImage ?? asset('logos/Logo-Obsequium%20Fond%20blanc.png');
         $canonicalUrl = $canonicalUrl ?? url()->current();
@@ -358,7 +358,7 @@
                             </li>
                         @endif
                     </ul>
-                    <p class="text-xs text-white/50 mb-2">Newsletter — nos actualités QHSE</p>
+                    <p class="text-xs text-white/50 mb-2">Newsletter - nos actualités QHSE</p>
                     <livewire:newsletter-form compact />
                 </div>
             </div>

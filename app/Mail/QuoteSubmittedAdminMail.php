@@ -18,7 +18,7 @@ class QuoteSubmittedAdminMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '['.config('app.name').'] Nouvelle demande de devis — '.$this->quote->client_name,
+            subject: '['.config('app.name').'] Nouvelle demande de devis - '.$this->quote->client_name,
         );
     }
 

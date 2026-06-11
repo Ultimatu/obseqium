@@ -43,6 +43,24 @@ class Quote extends Model
                 $model->token = Str::random(48);
             }
         });
+
+        static::created(function (self $model) {
+            if (empty($model->client_id) && ! empty($model->client_email)) {
+                $client = Client::firstOrCreate(
+                    ['email' => $model->client_email],
+                    [
+                        'name' => $model->client_name,
+                        'phone' => $model->client_phone,
+                        'company' => $model->client_company,
+                        'address' => $model->client_address ?? null,
+                        'sector' => $model->sector ?? null,
+                        'is_active' => true,
+                    ]
+                );
+
+                $model->updateQuietly(['client_id' => $client->id]);
+            }
+        });
     }
 
     public static function generateReference(): string
@@ -81,6 +99,10 @@ class Quote extends Model
 
     public function portalUrl(): string
     {
+        if (! $this->token) {
+            return '';
+        }
+
         return route('quotes.portal', $this->token);
     }
 
@@ -96,7 +118,7 @@ class Quote extends Model
 
     public function client()
     {
-        return $this->belongsTo(User::class, 'client_id');
+        return $this->belongsTo(Client::class, 'client_id');
     }
 
     public function consultant()

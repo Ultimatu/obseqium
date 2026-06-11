@@ -323,7 +323,7 @@
                                 <label class="block text-sm font-medium text-obq-anthracite mb-3">Normes ISO concernées
                                     <span class="text-red-500">*</span></label>
                                 <div class="grid sm:grid-cols-2 gap-3">
-                                    @foreach (['ISO 9001' => 'ISO 9001 — Management de la Qualité', 'ISO 14001' => 'ISO 14001 — Management Environnemental', 'ISO 45001' => 'ISO 45001 — Santé et Sécurité au Travail', 'ISO 22000' => 'ISO 22000 — Sécurité des Denrées Alimentaires', 'ISO 27001' => 'ISO 27001 — Sécurité de l\'Information'] as $code => $label)
+                                    @foreach (['ISO 9001' => 'ISO 9001 - Management de la Qualité', 'ISO 14001' => 'ISO 14001 - Management Environnemental', 'ISO 45001' => 'ISO 45001 - Santé et Sécurité au Travail', 'ISO 22000' => 'ISO 22000 - Sécurité des Denrées Alimentaires', 'ISO 27001' => 'ISO 27001 - Sécurité de l\'Information'] as $code => $label)
                                         <label
                                             class="flex items-start gap-3 p-3.5 border rounded-xl cursor-pointer transition-all duration-150
                                             {{ in_array($code, $requested_standards) ? 'border-accent-400 bg-accent-50 shadow-sm' : 'border-gray-200 hover:border-brand-200 hover:bg-brand-50' }}">

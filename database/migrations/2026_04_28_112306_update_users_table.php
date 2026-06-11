@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone', 20)->nullable()->after('email');
-            $table->string('company')->nullable()->after('phone');
-            $table->string('job_title')->nullable()->after('company');
-            $table->enum('role', ['client', 'consultant', 'admin'])->default('client')->after('job_title');
+            $table->string('job_title')->nullable()->after('phone');
+            $table->enum('role', ['consultant', 'admin'])->default('consultant')->after('job_title');
             $table->boolean('is_active')->default(true)->after('role');
         });
     }

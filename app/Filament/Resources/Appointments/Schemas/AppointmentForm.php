@@ -5,8 +5,8 @@ namespace App\Filament\Resources\Appointments\Schemas;
 use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -17,6 +17,7 @@ class AppointmentForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('Demandeur')
                     ->description('Associez un compte existant ou saisissez les coordonnées d\'un contact invité.')
@@ -30,7 +31,7 @@ class AppointmentForm
                             ->nullable(),
                         Select::make('consultant_id')
                             ->label('Consultant assigné')
-                            ->options(fn () => User::consultants()->pluck('name', 'id'))
+                            ->options(fn () => User::pluck('name', 'id'))
                             ->searchable()
                             ->nullable(),
                         TextInput::make('guest_name')

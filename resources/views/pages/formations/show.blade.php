@@ -68,7 +68,7 @@
                                 <div class="font-medium text-gray-900">
                                     {{ $session->start_date->format('d M Y') }}
                                     @if($session->end_date)
-                                    — {{ $session->end_date->format('d M Y') }}
+                                    - {{ $session->end_date->format('d M Y') }}
                                     @endif
                                 </div>
                                 @if($session->city)

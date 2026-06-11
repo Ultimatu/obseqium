@@ -10,14 +10,11 @@ use App\Filament\Resources\BlogTags\Tables\BlogTagsTable;
 use App\Models\BlogTag;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class BlogTagResource extends Resource
 {
     protected static ?string $model = BlogTag::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedHashtag;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Blog';
 

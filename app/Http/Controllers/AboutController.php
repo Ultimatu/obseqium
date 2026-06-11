@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TeamMember;
+use App\Models\User;
 
 class AboutController
 {
     public function __invoke()
     {
-        $team = TeamMember::where('is_active', true)->orderBy('order')->get();
+        $team = User::where('is_active', true)->whereNotNull('bio')->orderBy('order')->get();
 
         return view('pages.about', compact('team'));
     }

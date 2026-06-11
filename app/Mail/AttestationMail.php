@@ -19,7 +19,7 @@ class AttestationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Votre attestation de formation — '.$this->registration->session->formation->title,
+            subject: 'Votre attestation de formation - '.$this->registration->session->formation->title,
         );
     }
 

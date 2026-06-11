@@ -10,14 +10,11 @@ use App\Filament\Resources\References\Tables\ReferencesTable;
 use App\Models\Reference;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class ReferenceResource extends Resource
 {
     protected static ?string $model = Reference::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedTrophy;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Contenu';
 

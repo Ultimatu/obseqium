@@ -10,7 +10,6 @@ use App\Filament\Resources\ProcessPhases\Tables\ProcessPhasesTable;
 use App\Models\ProcessPhase;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class ProcessPhaseResource extends Resource
@@ -22,8 +21,6 @@ class ProcessPhaseResource extends Resource
     protected static ?string $navigationLabel = 'Processus';
 
     protected static ?int $navigationSort = 30;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedQueueList;
 
     public static function form(Schema $schema): Schema
     {

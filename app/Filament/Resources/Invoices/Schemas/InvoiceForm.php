@@ -16,7 +16,8 @@ class InvoiceForm
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema
+        return $schema->columns(1)
+
             ->components([
                 Section::make('Informations client')
                     ->description('Coordonnées du client facturé.')
@@ -115,7 +116,7 @@ class InvoiceForm
                             ->nullable(),
                         Select::make('assigned_to')
                             ->label('Responsable')
-                            ->options(fn () => User::consultants()->pluck('name', 'id'))
+                            ->options(fn () => User::pluck('name', 'id'))
                             ->native(false)
                             ->searchable()
                             ->nullable(),
@@ -138,21 +139,21 @@ class InvoiceForm
                             ->dehydrated(false)
                             ->numeric()
                             ->suffix('FCFA')
-                            ->placeholder('—'),
+                            ->placeholder('-'),
                         TextInput::make('tax_amount')
                             ->label('Montant TVA')
                             ->readOnly()
                             ->dehydrated(false)
                             ->numeric()
                             ->suffix('FCFA')
-                            ->placeholder('—'),
+                            ->placeholder('-'),
                         TextInput::make('total')
                             ->label('Total TTC')
                             ->readOnly()
                             ->dehydrated(false)
                             ->numeric()
                             ->suffix('FCFA')
-                            ->placeholder('—'),
+                            ->placeholder('-'),
                     ]),
 
                 Section::make('Notes')

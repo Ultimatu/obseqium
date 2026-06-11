@@ -38,7 +38,7 @@ class ActivityLogsTable
 
                 TextColumn::make('subject_type')
                     ->label('Sujet')
-                    ->formatStateUsing(fn (?string $state) => $state ? class_basename($state) : '—')
+                    ->formatStateUsing(fn (?string $state) => $state ? class_basename($state) : '-')
                     ->toggleable(),
 
                 TextColumn::make('causer.name')

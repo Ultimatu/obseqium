@@ -5,11 +5,11 @@ namespace App\Filament\Resources\BlogPosts\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class BlogPostsTable
@@ -26,7 +26,7 @@ class BlogPostsTable
                 })->color(fn ($state) => match ($state) {
                     'draft' => 'gray', 'published' => 'success', 'archived' => 'warning', default => 'gray',
                 }),
-                TextColumn::make('published_at')->label('Publié le')->date('d/m/Y')->sortable()->placeholder('—'),
+                TextColumn::make('published_at')->label('Publié le')->date('d/m/Y')->sortable()->placeholder('-'),
                 TextColumn::make('views')->label('Vues')->numeric()->sortable(),
                 IconColumn::make('is_featured')->label('À la une')->boolean(),
             ])

@@ -18,7 +18,7 @@ class QuotePdfController extends Controller
 
         $logoPath = $settings->get('quote_logo')
             ? Storage::disk('public')->path($settings->get('quote_logo'))
-            : public_path('logos/Logo-Obsequium Fond blanc.png');
+            : public_path('logos/Logo-Obsequium_Fond_blanc.png');
         $signaturePath = $settings->get('quote_signature') ? Storage::disk('public')->path($settings->get('quote_signature')) : null;
 
         $logoBase64 = ($logoPath && file_exists($logoPath)) ? $this->toBase64($logoPath) : null;
@@ -29,7 +29,7 @@ class QuotePdfController extends Controller
             'settings' => $settings,
             'logoBase64' => $logoBase64,
             'signatureBase64' => $signatureBase64,
-            'totalInWords' => NumberToWords::convert((float) $quote->total),
+            'totalInWords' => NumberToWords::convert((float) $quote->total, $settings->get('quote_currency', 'XOF')),
             'currency' => $settings->get('quote_currency', 'XOF'),
         ])->setPaper('a4');
 

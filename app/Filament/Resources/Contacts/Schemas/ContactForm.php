@@ -4,8 +4,8 @@ namespace App\Filament\Resources\Contacts\Schemas;
 
 use App\Models\User;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -58,7 +58,7 @@ class ContactForm
                             ->inline(false),
                         Select::make('assigned_to')
                             ->label('Assigné à')
-                            ->options(fn () => User::consultants()->pluck('name', 'id'))
+                            ->options(fn () => User::pluck('name', 'id'))
                             ->nullable(),
                         Textarea::make('admin_notes')
                             ->label('Notes internes')

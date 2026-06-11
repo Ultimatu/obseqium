@@ -55,6 +55,22 @@ class DiagnosticRequest extends Model
                 $diagnostic->reference = 'DIAG-'.now()->format('Y').'-'.str_pad((static::max('id') ?? 0) + 1, 4, '0', STR_PAD_LEFT);
             }
         });
+
+        static::created(function (self $diagnostic) {
+            if (! empty($diagnostic->client_email)) {
+                Client::firstOrCreate(
+                    ['email' => $diagnostic->client_email],
+                    [
+                        'name' => $diagnostic->client_name,
+                        'phone' => $diagnostic->client_phone,
+                        'company' => $diagnostic->client_company,
+                        'address' => $diagnostic->client_address ?? null,
+                        'sector' => $diagnostic->sector ?? null,
+                        'is_active' => true,
+                    ]
+                );
+            }
+        });
     }
 
     public function consultant(): BelongsTo

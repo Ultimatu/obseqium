@@ -9,16 +9,13 @@ use App\Filament\Resources\Contacts\Schemas\ContactForm;
 use App\Filament\Resources\Contacts\Tables\ContactsTable;
 use App\Models\Contact;
 use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class ContactResource extends Resource
 {
     protected static ?string $model = Contact::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Commercial';
 
@@ -34,7 +31,7 @@ class ContactResource extends Resource
     {
         return [
             'Email' => $record->email,
-            'Société' => $record->company ?? '—',
+            'Société' => $record->company ?? '-',
         ];
     }
 

@@ -31,7 +31,7 @@ class ContactsTable
                         'presentiel' => 'Présentiel',
                         'visio' => 'Visio',
                         'client' => 'Chez le client',
-                        default => '—',
+                        default => '-',
                     })
                     ->color(fn (?string $state) => match ($state) {
                         'presentiel' => 'success',

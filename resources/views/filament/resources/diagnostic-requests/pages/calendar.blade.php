@@ -108,7 +108,7 @@
                                 <a href="{{ str_replace('/0/edit', '/' . $event->id . '/edit', $editRouteBase) }}"
                                     class="cal-event"
                                     style="{{ $style }}"
-                                    title="{{ $event->reference }} — {{ $event->client_name }}{{ $event->client_company ? ' (' . $event->client_company . ')' : '' }} — {{ $statusLabels[$event->status] ?? $event->status }}">
+                                    title="{{ $event->reference }} - {{ $event->client_name }}{{ $event->client_company ? ' (' . $event->client_company . ')' : '' }} - {{ $statusLabels[$event->status] ?? $event->status }}">
                                     <strong>{{ $event->client_company ?: $event->client_name }}</strong>
                                     @if ($event->consultant)
                                         <small> · {{ $event->consultant->name }}</small>

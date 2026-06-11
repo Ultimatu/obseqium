@@ -5,10 +5,10 @@ namespace App\Filament\Resources\Newsletters\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class NewslettersTable
@@ -18,10 +18,10 @@ class NewslettersTable
         return $table
             ->columns([
                 TextColumn::make('email')->label('Email')->searchable()->sortable(),
-                TextColumn::make('name')->label('Nom')->searchable()->placeholder('—'),
+                TextColumn::make('name')->label('Nom')->searchable()->placeholder('-'),
                 IconColumn::make('is_active')->label('Actif')->boolean(),
                 TextColumn::make('subscribed_at')->label('Inscrit le')->date('d/m/Y')->sortable(),
-                TextColumn::make('unsubscribed_at')->label('Désinscrit le')->date('d/m/Y')->placeholder('—'),
+                TextColumn::make('unsubscribed_at')->label('Désinscrit le')->date('d/m/Y')->placeholder('-'),
             ])
             ->filters([TernaryFilter::make('is_active')->label('Actif')])
             ->defaultSort('subscribed_at', 'desc')

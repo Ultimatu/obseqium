@@ -24,9 +24,9 @@ class DiagnosticRequestObserver
         ActivityLog::record('diagnostic.created', "Nouvelle demande de diagnostic #{$diagnostic->reference}", $diagnostic);
 
         Notification::send(
-            User::consultants()->get(),
+            User::get(),
             new AdminActionNotification(
-                title: 'Nouveau diagnostic — '.$diagnostic->reference,
+                title: 'Nouveau diagnostic - '.$diagnostic->reference,
                 body: $diagnostic->client_name.($diagnostic->client_company ? ' ('.$diagnostic->client_company.')' : ''),
                 url: url('/admin/diagnostic-requests'),
                 icon: 'heroicon-o-clipboard-document-check',

@@ -64,7 +64,7 @@
                             @foreach($cell['sessions'] as $session)
                                 <a href="{{ route('formations.show', $session->formation->slug) }}"
                                    class="block text-[10px] leading-tight bg-brand-600 text-white rounded px-1.5 py-1 mb-1 hover:bg-brand-700 transition-colors truncate"
-                                   title="{{ $session->formation->title }}{{ $session->city ? ' — '.$session->city : '' }}">
+                                   title="{{ $session->formation->title }}{{ $session->city ? ' - '.$session->city : '' }}">
                                     {{ $session->formation->title }}
                                     @if($session->city)
                                         <span class="opacity-75">({{ $session->city }})</span>

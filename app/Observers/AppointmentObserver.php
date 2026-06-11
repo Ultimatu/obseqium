@@ -28,7 +28,7 @@ class AppointmentObserver
         ActivityLog::record('appointment.created', "Nouveau rendez-vous demandé par {$appointment->client_name}", $appointment);
 
         Notification::send(
-            User::consultants()->get(),
+            User::get(),
             new AdminActionNotification(
                 title: 'Nouveau rendez-vous',
                 body: $appointment->client_name.($appointment->client_company ? ' ('.$appointment->client_company.')' : ''),

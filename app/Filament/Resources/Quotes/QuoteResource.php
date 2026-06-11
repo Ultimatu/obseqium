@@ -9,16 +9,13 @@ use App\Filament\Resources\Quotes\Schemas\QuoteForm;
 use App\Filament\Resources\Quotes\Tables\QuotesTable;
 use App\Models\Quote;
 use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class QuoteResource extends Resource
 {
     protected static ?string $model = Quote::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Commercial';
 

@@ -55,8 +55,8 @@
             <p><strong>Coordonnées bancaires pour le règlement :</strong></p>
             <p style="background: #f3f4f6; padding: 15px; border-radius: 6px; font-family: monospace;">
                 {{ $settings->get('bank_name', 'À définir dans les paramètres') }}<br>
-                IBAN: {{ $settings->get('bank_iban', '—') }}<br>
-                BIC: {{ $settings->get('bank_bic', '—') }}
+                IBAN: {{ $settings->get('bank_iban', '-') }}<br>
+                BIC: {{ $settings->get('bank_bic', '-') }}
             </p>
 
             <p style="margin-top: 30px;">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Maintenance — {{ $settings->get('brand_name', 'Obsequium') }}</title>
+    <title>Maintenance - {{ $settings->get('brand_name', 'Obsequium') }}</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -194,7 +194,7 @@
     </div>
 
     <footer>
-        © {{ date('Y') }} {{ $settings->get('brand_name', 'Obsequium') }} — Tous droits réservés
+        © {{ date('Y') }} {{ $settings->get('brand_name', 'Obsequium') }} - Tous droits réservés
     </footer>
 
 </body>

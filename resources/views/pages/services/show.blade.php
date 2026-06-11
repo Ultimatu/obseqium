@@ -112,7 +112,7 @@
                             <div class="w-6 h-6 bg-brand-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                                 <svg class="w-3.5 h-3.5 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                             </div>
-                            <span class="text-sm font-medium text-gray-800">{{ is_array($deliverable) ? implode(' — ', $deliverable) : $deliverable }}</span>
+                            <span class="text-sm font-medium text-gray-800">{{ is_array($deliverable) ? implode(' - ', $deliverable) : $deliverable }}</span>
                         </div>
                         @endforeach
                     </div>

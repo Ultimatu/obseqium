@@ -22,8 +22,6 @@ class HeroSlideResource extends Resource
 {
     protected static ?string $model = HeroSlide::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;
-
     protected static \UnitEnum|string|null $navigationGroup = 'Contenu';
 
     protected static ?string $modelLabel = 'Slide hero';
@@ -55,11 +53,11 @@ class HeroSlideResource extends Resource
                     ->label('Badge')
                     ->badge()
                     ->color('success')
-                    ->placeholder('—'),
+                    ->placeholder('-'),
 
                 TextColumn::make('cta_primary_label')
                     ->label('CTA principal')
-                    ->placeholder('—')
+                    ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 IconColumn::make('is_active')

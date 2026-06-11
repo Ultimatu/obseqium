@@ -1,7 +1,7 @@
 <x-layouts.app :title="$pricing->hero_title">
 
     {{-- ═══════════════════════════════════════════
-         HERO — dégradé diagonal + motif de points
+         HERO - dégradé diagonal + motif de points
     ═══════════════════════════════════════════ --}}
     <div
         class="relative overflow-hidden bg-linear-to-br from-brand-950 via-brand-800 to-brand-600 text-white py-8 sm:py-12">
@@ -36,7 +36,7 @@
     </div>
 
     {{-- ═══════════════════════════════════════════
-         PRINCIPE CLÉ — bandeau accent full-width
+         PRINCIPE CLÉ - bandeau accent full-width
     ═══════════════════════════════════════════ --}}
     <section class="bg-brand-50 border-y border-brand-100">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
@@ -70,7 +70,7 @@
     </section>
 
     {{-- ═══════════════════════════════════════════
-         CRITÈRES DE TARIFICATION — grille de cards
+         CRITÈRES DE TARIFICATION - grille de cards
     ═══════════════════════════════════════════ --}}
     <section class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -98,7 +98,7 @@
     </section>
 
     {{-- ═══════════════════════════════════════════
-         MODALITÉS DE PAIEMENT — 2 colonnes
+         MODALITÉS DE PAIEMENT - 2 colonnes
     ═══════════════════════════════════════════ --}}
     <section class="py-24 bg-gray-50 border-y border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -140,7 +140,7 @@
     </section>
 
     {{-- ═══════════════════════════════════════════
-         INCLUS / EXCLUS — cartes avec en-tête coloré
+         INCLUS / EXCLUS - cartes avec en-tête coloré
     ═══════════════════════════════════════════ --}}
     <section class="py-24 bg-obq-page">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -234,7 +234,7 @@
     </section>
 
     {{-- ═══════════════════════════════════════════
-         PROCESSUS DE COMMANDE — stepper connecté
+         PROCESSUS DE COMMANDE - stepper connecté
     ═══════════════════════════════════════════ --}}
     <section class="py-24 bg-gray-50 border-y border-gray-100">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -269,7 +269,7 @@
     </section>
 
     {{-- ═══════════════════════════════════════════
-         REMISES DE LANCEMENT — card dégradé + badge pulsant
+         REMISES DE LANCEMENT - card dégradé + badge pulsant
     ═══════════════════════════════════════════ --}}
     <section class="py-20 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

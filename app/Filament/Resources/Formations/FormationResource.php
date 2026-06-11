@@ -9,16 +9,13 @@ use App\Filament\Resources\Formations\Schemas\FormationForm;
 use App\Filament\Resources\Formations\Tables\FormationsTable;
 use App\Models\Formation;
 use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class FormationResource extends Resource
 {
     protected static ?string $model = Formation::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedAcademicCap;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Catalogue';
 

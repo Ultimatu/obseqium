@@ -6,14 +6,11 @@ use App\Filament\Resources\ActivityLogs\Pages\ListActivityLogs;
 use App\Filament\Resources\ActivityLogs\Tables\ActivityLogsTable;
 use App\Models\ActivityLog;
 use Filament\Resources\Resource;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class ActivityLogResource extends Resource
 {
     protected static ?string $model = ActivityLog::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Administration';
 

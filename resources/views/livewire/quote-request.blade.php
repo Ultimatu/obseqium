@@ -113,7 +113,7 @@
                     <p class="text-amber-800 text-sm leading-relaxed">
                         Chez OBSEQUIUM, toute demande de devis est précédée d'un <strong>audit diagnostic
                             gratuit</strong>. Si vous n'avez pas encore bénéficié de ce diagnostic, merci de le
-                        demander d'abord — c'est l'étape qui nous permet de vous proposer une offre adaptée et
+                        demander d'abord - c'est l'étape qui nous permet de vous proposer une offre adaptée et
                         chiffrée.
                     </p>
                 </div>

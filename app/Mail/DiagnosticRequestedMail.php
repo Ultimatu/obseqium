@@ -26,7 +26,7 @@ class DiagnosticRequestedMail extends Mailable
                 $settings->get('contact_email', 'accueil@obsequium-ci.com'),
                 $settings->get('brand_name', 'OBSEQUIUM')
             ),
-            subject: 'Votre demande de diagnostic gratuit — '.$this->diagnostic->reference,
+            subject: 'Votre demande de diagnostic gratuit - '.$this->diagnostic->reference,
         );
     }
 

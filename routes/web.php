@@ -72,7 +72,7 @@ Route::get('/confidentialite', PrivacyPage::class)->name('privacy');
 // Sitemap
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
-// Admin — pages standalone (protégées par auth)
+// Admin - pages standalone (protégées par auth)
 Route::middleware('auth')->group(function () {
     Route::get('/admin/calendrier-diagnostics', DiagnosticCalendarController::class)
         ->name('admin.diagnostic-calendar');

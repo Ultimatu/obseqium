@@ -1,7 +1,7 @@
 <x-layouts.app title="Notre processus d'accompagnement">
 
     {{-- ═══════════════════════════════════════════
-         HERO — dégradé diagonal + motif de points
+         HERO - dégradé diagonal + motif de points
     ═══════════════════════════════════════════ --}}
     <div
         class="relative overflow-hidden bg-linear-to-br from-brand-950 via-brand-800 to-brand-600 text-white py-8 sm:py-12">
@@ -69,7 +69,7 @@
     </section>
 
     {{-- ═══════════════════════════════════════════
-         TIMELINE — ligne verticale Tailwind uniquement
+         TIMELINE - ligne verticale Tailwind uniquement
     ═══════════════════════════════════════════ --}}
     <section class="py-24 bg-gray-50">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -130,7 +130,7 @@
 
     {{-- CTA FINAL --}}
     <x-cta-banner title="Prêt à démarrer votre certification ISO ?"
-        description="La première phase est gratuite. Vous repartez avec un rapport et un plan d'action — quelle que soit votre décision."
+        description="La première phase est gratuite. Vous repartez avec un rapport et un plan d'action - quelle que soit votre décision."
         primaryLabel="Demander mon diagnostic gratuit" primaryRoute="diagnostic.request" secondaryLabel="Nous contacter"
         secondaryRoute="contact" badge="Sans engagement • Réponse sous 24h" py="py-16" />
 </x-layouts.app>

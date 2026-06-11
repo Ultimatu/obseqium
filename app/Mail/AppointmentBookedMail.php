@@ -18,7 +18,7 @@ class AppointmentBookedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '['.config('app.name').'] Nouvelle demande de rendez-vous — '.$this->appointment->client_name,
+            subject: '['.config('app.name').'] Nouvelle demande de rendez-vous - '.$this->appointment->client_name,
         );
     }
 

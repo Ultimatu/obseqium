@@ -1,4 +1,4 @@
-<x-layouts.app :title="'Blog — '.$category->name">
+<x-layouts.app :title="'Blog - '.$category->name">
     <div class="bg-gray-50 border-b border-gray-100 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav class="text-sm text-gray-400 mb-4">

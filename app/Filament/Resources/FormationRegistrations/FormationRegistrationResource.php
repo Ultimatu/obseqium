@@ -9,17 +9,14 @@ use App\Filament\Resources\FormationRegistrations\Schemas\FormationRegistrationF
 use App\Filament\Resources\FormationRegistrations\Tables\FormationRegistrationsTable;
 use App\Models\FormationRegistration;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 class FormationRegistrationResource extends Resource
 {
     protected static ?string $model = FormationRegistration::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Catalogue';
 
@@ -51,13 +48,13 @@ class FormationRegistrationResource extends Resource
         $participant = $record->guest_name ?? $record->user?->name ?? 'Participant';
         $formation = $record->session?->formation?->title ?? 'Formation';
 
-        return $participant.' — '.$formation;
+        return $participant.' - '.$formation;
     }
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
-            'Session' => $record->session?->start_date?->format('d/m/Y') ?? '—',
+            'Session' => $record->session?->start_date?->format('d/m/Y') ?? '-',
             'Statut' => match ($record->status) {
                 'pending' => 'En attente',
                 'confirmed' => 'Confirmée',

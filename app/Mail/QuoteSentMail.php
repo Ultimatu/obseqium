@@ -18,7 +18,7 @@ class QuoteSentMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Votre devis '.$this->quote->reference.' — '.config('app.name'),
+            subject: 'Votre devis '.$this->quote->reference.' - '.config('app.name'),
         );
     }
 

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Quote;
 use App\Models\Service;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
@@ -16,17 +17,24 @@ class QuoteRequest extends Component
 {
     public int $step = 1;
 
-    // Step 1 — Client info
+    // Step 1 - Client info
     public string $client_name = '';
+
     public string $client_email = '';
+
     public string $client_phone = '';
+
     public string $client_company = '';
+
     public string $client_job_title = '';
 
-    // Step 2 — Project
+    // Step 2 - Project
     public string $service_type = '';
+
     public string $sector = '';
+
     public string $company_size = '';
+
     public string $description = '';
 
     public bool $submitted = false;
@@ -37,13 +45,13 @@ class QuoteRequest extends Component
     {
         $this->validate(match ($this->step) {
             1 => [
-                'client_name'  => 'required|string|min:2|max:100',
+                'client_name' => 'required|string|min:2|max:100',
                 'client_email' => 'required|email|max:150',
                 'client_phone' => 'nullable|string|max:20',
             ],
             2 => [
                 'service_type' => 'required|string',
-                'description'  => 'required|string|min:10|max:3000',
+                'description' => 'required|string|min:10|max:3000',
             ],
             default => [],
         });
@@ -59,17 +67,17 @@ class QuoteRequest extends Component
     public function submit(): void
     {
         $this->validate([
-            'client_name'  => 'required|string|min:2|max:100',
+            'client_name' => 'required|string|min:2|max:100',
             'client_email' => 'required|email|max:150',
             'service_type' => 'required|string',
-            'description'  => 'required|string|min:10|max:3000',
+            'description' => 'required|string|min:10|max:3000',
         ]);
 
         if (config('services.recaptcha.site_key')) {
             $response = Http::timeout(5)
                 ->asForm()
                 ->post('https://www.google.com/recaptcha/api/siteverify', [
-                    'secret'   => config('services.recaptcha.secret_key'),
+                    'secret' => config('services.recaptcha.secret_key'),
                     'response' => $this->recaptchaToken,
                     'remoteip' => request()->ip(),
                 ]);
@@ -100,7 +108,7 @@ class QuoteRequest extends Component
     }
 
     #[Computed]
-    public function services(): \Illuminate\Support\Collection
+    public function services(): Collection
     {
         return Service::active()->get();
     }

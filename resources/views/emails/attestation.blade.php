@@ -4,7 +4,7 @@
 <div class="meta">
   <table>
     <tr><td>Formation</td><td><strong>{{ $registration->session->formation->title }}</strong></td></tr>
-    <tr><td>Dates</td><td>{{ $registration->session->start_date->format('d/m/Y') }}@if($registration->session->end_date && $registration->session->end_date != $registration->session->start_date) — {{ $registration->session->end_date->format('d/m/Y') }}@endif</td></tr>
+    <tr><td>Dates</td><td>{{ $registration->session->start_date->format('d/m/Y') }}@if($registration->session->end_date && $registration->session->end_date != $registration->session->start_date) - {{ $registration->session->end_date->format('d/m/Y') }}@endif</td></tr>
     @if($registration->session->city)<tr><td>Lieu</td><td>{{ $registration->session->city }}</td></tr>@endif
   </table>
 </div>

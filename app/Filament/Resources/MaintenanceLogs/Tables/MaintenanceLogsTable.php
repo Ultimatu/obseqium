@@ -29,28 +29,28 @@ class MaintenanceLogsTable
 
                 TextColumn::make('duration')
                     ->label('Durée')
-                    ->state(fn ($record) => $record->duration ?? '—')
+                    ->state(fn ($record) => $record->duration ?? '-')
                     ->badge()
                     ->color(fn ($record) => $record->ended_at ? 'gray' : 'warning'),
 
                 TextColumn::make('startedBy.name')
                     ->label('Activé par')
-                    ->placeholder('—'),
+                    ->placeholder('-'),
 
                 TextColumn::make('endedBy.name')
                     ->label('Désactivé par')
-                    ->placeholder('—'),
+                    ->placeholder('-'),
 
                 TextColumn::make('message')
                     ->label('Message')
                     ->limit(60)
-                    ->placeholder('—')
+                    ->placeholder('-')
                     ->toggleable(),
 
                 TextColumn::make('notes')
                     ->label('Notes internes')
                     ->limit(60)
-                    ->placeholder('—')
+                    ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([

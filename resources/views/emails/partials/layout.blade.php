@@ -7,7 +7,8 @@
 <style>
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;margin:0;padding:0;color:#1e293b}
   .wrapper{max-width:600px;margin:40px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-  .header{background:{{ $headerColor ?? '#1a7a4a' }};padding:28px 40px}
+  .header{background:{{ $headerColor ?? '#1a7a4a' }};padding:24px 40px}
+  .header img{height:48px;width:auto;display:block;margin-bottom:10px}
   .header h1{color:#fff;margin:0;font-size:20px;font-weight:700}
   .header p{color:{{ $headerSubColor ?? '#a7f3d0' }};margin:4px 0 0;font-size:13px}
   .body{padding:36px 40px}
@@ -27,6 +28,7 @@
 <body>
 <div class="wrapper">
   <div class="header">
+    <img src="{{ config('app.url') }}/logos/New_Logo_navbar.png" alt="{{ config('app.name') }}">
     <h1>{{ config('app.name') }}</h1>
     <p>Conseil & Formation QHSE</p>
   </div>

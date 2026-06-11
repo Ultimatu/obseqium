@@ -9,17 +9,14 @@ use App\Filament\Resources\BlogPosts\Schemas\BlogPostForm;
 use App\Filament\Resources\BlogPosts\Tables\BlogPostsTable;
 use App\Models\BlogPost;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 class BlogPostResource extends Resource
 {
     protected static ?string $model = BlogPost::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Blog';
 
@@ -40,7 +37,7 @@ class BlogPostResource extends Resource
                 'archived' => 'Archivé',
                 default => $record->status,
             },
-            'Catégorie' => $record->category?->name ?? '—',
+            'Catégorie' => $record->category?->name ?? '-',
         ];
     }
 

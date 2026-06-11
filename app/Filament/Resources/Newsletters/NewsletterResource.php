@@ -10,14 +10,11 @@ use App\Filament\Resources\Newsletters\Tables\NewslettersTable;
 use App\Models\Newsletter;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
 class NewsletterResource extends Resource
 {
     protected static ?string $model = Newsletter::class;
-
-    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedPaperAirplane;
 
     protected static \UnitEnum|string|null $navigationGroup = 'Commercial';
 

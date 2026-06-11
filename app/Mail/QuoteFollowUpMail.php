@@ -18,7 +18,7 @@ class QuoteFollowUpMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Rappel : votre devis '.$this->quote->reference.' est en attente — '.config('app.name'),
+            subject: 'Rappel : votre devis '.$this->quote->reference.' est en attente - '.config('app.name'),
         );
     }
 

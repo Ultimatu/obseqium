@@ -41,7 +41,7 @@ class ServiceSeeder extends Seeder
         $services = [
             // ── 3 Offres principales ─────────────────────────────────────
             [
-                'title' => 'Accompagnement ISO 9001 — Management de la Qualité',
+                'title' => 'Accompagnement ISO 9001 - Management de la Qualité',
                 'slug' => 'accompagnement-iso-9001',
                 'icon' => null,
                 'type' => 'qhse',
@@ -59,12 +59,12 @@ class ServiceSeeder extends Seeder
                     'Audit interne préparatoire',
                     'Dossier complet pour l’audit de certification',
                 ],
-                'meta_title' => 'Accompagnement ISO 9001 — OBSEQUIUM Côte d’Ivoire',
+                'meta_title' => 'Accompagnement ISO 9001 - OBSEQUIUM Côte d’Ivoire',
                 'meta_description' => 'Cabinet OBSEQUIUM : accompagnement intégral à la certification ISO 9001 en Côte d’Ivoire. Audit diagnostic gratuit, 6 à 12 mois, formations incluses.',
                 'is_active' => true,
             ],
             [
-                'title' => 'Accompagnement ISO 14001 — Management Environnemental',
+                'title' => 'Accompagnement ISO 14001 - Management Environnemental',
                 'slug' => 'accompagnement-iso-14001',
                 'icon' => null,
                 'type' => 'qhse',
@@ -82,12 +82,12 @@ class ServiceSeeder extends Seeder
                     'Audit interne préparatoire',
                     'Dossier complet pour l’audit de certification',
                 ],
-                'meta_title' => 'Accompagnement ISO 14001 & PGES — OBSEQUIUM',
+                'meta_title' => 'Accompagnement ISO 14001 & PGES - OBSEQUIUM',
                 'meta_description' => 'Mise en place de votre système de management environnemental ISO 14001 et PGES. Cabinet OBSEQUIUM, Abidjan.',
                 'is_active' => true,
             ],
             [
-                'title' => 'Accompagnement ISO 45001 — Santé & Sécurité au Travail',
+                'title' => 'Accompagnement ISO 45001 - Santé & Sécurité au Travail',
                 'slug' => 'accompagnement-iso-45001',
                 'icon' => null,
                 'type' => 'qhse',
@@ -105,20 +105,20 @@ class ServiceSeeder extends Seeder
                     'Audit interne préparatoire',
                     'Dossier complet pour l’audit de certification',
                 ],
-                'meta_title' => 'Accompagnement ISO 45001 — OBSEQUIUM',
+                'meta_title' => 'Accompagnement ISO 45001 - OBSEQUIUM',
                 'meta_description' => 'Système de management de la santé et sécurité au travail ISO 45001. Cabinet OBSEQUIUM, Abidjan.',
                 'is_active' => true,
             ],
 
             // ── Offres complémentaires ───────────────────────────────────
             [
-                'title' => 'Accompagnement ISO 22000 — Sécurité des Denrées Alimentaires',
+                'title' => 'Accompagnement ISO 22000 - Sécurité des Denrées Alimentaires',
                 'slug' => 'accompagnement-iso-22000',
                 'icon' => null,
                 'type' => 'qhse',
                 'order' => 4,
                 'description' => 'Mise en place d’un système de management de la sécurité des denrées alimentaires conforme à ISO 22000, intégrant les principes HACCP et les exigences de la chaîne alimentaire.',
-                'content' => '<p>ISO 22000 s’adresse à toute organisation de la chaîne alimentaire — production, transformation, distribution, restauration. Elle intègre les principes HACCP dans une démarche structurée de management.</p>',
+                'content' => '<p>ISO 22000 s’adresse à toute organisation de la chaîne alimentaire - production, transformation, distribution, restauration. Elle intègre les principes HACCP dans une démarche structurée de management.</p>',
                 'methodology' => $methodology,
                 'deliverables' => [
                     'Rapport diagnostic initial gratuit',
@@ -131,7 +131,7 @@ class ServiceSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'title' => 'Accompagnement ISO 27001 — Sécurité de l’Information',
+                'title' => 'Accompagnement ISO 27001 - Sécurité de l’Information',
                 'slug' => 'accompagnement-iso-27001',
                 'icon' => null,
                 'type' => 'qhse',
@@ -152,7 +152,7 @@ class ServiceSeeder extends Seeder
 
             // ── Audit & Formation transverses ───────────────────────────
             [
-                'title' => 'Audit diagnostic ISO — GRATUIT',
+                'title' => 'Audit diagnostic ISO - GRATUIT',
                 'slug' => 'audit-diagnostic-iso-gratuit',
                 'icon' => null,
                 'type' => 'audit',
@@ -173,7 +173,7 @@ class ServiceSeeder extends Seeder
                 'icon' => null,
                 'type' => 'training',
                 'order' => 7,
-                'description' => 'Programmes de formation sur les normes ISO, l’approche processus, la gestion des risques, l’audit interne et la culture qualité-sécurité — en présentiel à Abidjan ou à distance.',
+                'description' => 'Programmes de formation sur les normes ISO, l’approche processus, la gestion des risques, l’audit interne et la culture qualité-sécurité - en présentiel à Abidjan ou à distance.',
                 'content' => '<p>Nos formations sont systématiquement <strong>intégrées</strong> dans nos missions d’accompagnement, mais aussi disponibles en sessions inter ou intra-entreprise.</p><h3>Thématiques couvertes</h3><ul><li>Sensibilisation aux normes ISO 9001, 14001, 45001, 22000, 27001</li><li>Approche processus & cartographie</li><li>Gestion des risques (méthodes et outils)</li><li>Formation auditeurs internes</li><li>Veille réglementaire</li><li>Culture qualité et culture sécurité</li></ul>',
                 'deliverables' => [
                     'Supports pédagogiques personnalisés',

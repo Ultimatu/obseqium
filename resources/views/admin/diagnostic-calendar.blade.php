@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendrier des diagnostics — {{ $monthLabel }}</title>
+    <title>Calendrier des diagnostics - {{ $monthLabel }}</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -312,7 +312,7 @@
             </div>
             <div>
                 <div class="header-title">Calendrier des diagnostics</div>
-                <div class="header-sub">Vue mensuelle — Cabinet QHSE</div>
+                <div class="header-sub">Vue mensuelle - Cabinet QHSE</div>
             </div>
         </div>
 
@@ -407,7 +407,7 @@
                                     <a href="{{ $editUrl }}"
                                        target="_blank"
                                        class="cal-event status-{{ $event->status }}"
-                                       title="{{ $event->client_name }}{{ $event->client_company ? ' — ' . $event->client_company : '' }}">
+                                       title="{{ $event->client_name }}{{ $event->client_company ? ' - ' . $event->client_company : '' }}">
                                         <strong>{{ $event->client_company ?: $event->client_name }}</strong>
                                         @if ($event->consultant)
                                             <small> · {{ $event->consultant->name }}</small>

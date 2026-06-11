@@ -16,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class InvoicesTable
@@ -35,7 +36,7 @@ class InvoicesTable
 
                 TextColumn::make('client_company')
                     ->label('Société')
-                    ->placeholder('—')
+                    ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('total')
@@ -77,12 +78,12 @@ class InvoicesTable
                 TextColumn::make('paid_at')
                     ->label('Payée le')
                     ->date('d/m/Y')
-                    ->placeholder('—')
+                    ->placeholder('-')
                     ->toggleable(),
 
                 TextColumn::make('quote.reference')
                     ->label('Devis')
-                    ->placeholder('—')
+                    ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
@@ -141,9 +142,17 @@ class InvoicesTable
                         $record->load('items', 'quote');
                         $settings = SiteSetting::getAllCached();
 
+                        $logoPath = $settings->get('quote_logo')
+                            ? Storage::disk('public')->path($settings->get('quote_logo'))
+                            : public_path('logos/Logo-Obsequium_Fond_blanc.png');
+                        $logoBase64 = ($logoPath && file_exists($logoPath))
+                            ? 'data:'.mime_content_type($logoPath).';base64,'.base64_encode(file_get_contents($logoPath))
+                            : null;
+
                         $pdf = Pdf::loadView('pdfs.invoice', [
                             'invoice' => $record,
                             'settings' => $settings,
+                            'logoBase64' => $logoBase64,
                             'currency' => $settings->get('quote_currency', 'XOF'),
                         ])->setPaper('a4');
 

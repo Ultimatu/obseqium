@@ -18,7 +18,7 @@ class AppointmentReminderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Rappel : votre rendez-vous demain — '.config('app.name'),
+            subject: 'Rappel : votre rendez-vous demain - '.config('app.name'),
         );
     }
 

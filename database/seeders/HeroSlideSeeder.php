@@ -28,7 +28,7 @@ class HeroSlideSeeder extends Seeder
             [
                 'badge' => 'Accompagnement intégral ISO',
                 'title' => 'Du diagnostic à la certification, un accompagnement structuré',
-                'description' => "Nous pilotons l'ensemble de votre projet de certification ISO 9001, 14001 ou 45001 en 9 phases progressives sur 6 à 12 mois — méthodologie, formation, documentation, audits internes, préparation à l'audit de certification.",
+                'description' => "Nous pilotons l'ensemble de votre projet de certification ISO 9001, 14001 ou 45001 en 9 phases progressives sur 6 à 12 mois - méthodologie, formation, documentation, audits internes, préparation à l'audit de certification.",
                 'cta_primary_label' => 'Nos offres ISO',
                 'cta_primary_href' => '/services',
                 'cta_secondary_label' => 'Prendre rendez-vous',

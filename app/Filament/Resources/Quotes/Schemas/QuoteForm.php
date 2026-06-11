@@ -6,10 +6,9 @@ use App\Models\User;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Schema;
 
 class QuoteForm
@@ -17,6 +16,7 @@ class QuoteForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('Informations client')
                     ->columns(2)

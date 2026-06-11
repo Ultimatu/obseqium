@@ -15,16 +15,23 @@ class NumberToWords
         'soixante', 'soixante', 'quatre-vingt', 'quatre-vingt',
     ];
 
-    public static function convert(float $amount): string
+    public static function convert(float $amount, string $currency = 'EUR'): string
     {
         $amount = round($amount, 2);
-        $euros = (int) $amount;
-        $cents = (int) round(($amount - $euros) * 100);
+        $main = (int) $amount;
+        $cents = (int) round(($amount - $main) * 100);
 
-        $result = self::convertInteger($euros).' euro'.(($euros > 1) ? 's' : '');
+        [$mainUnit, $mainUnitPlural, $centUnit, $centUnitPlural] = match (strtoupper($currency)) {
+            'XOF', 'XAF', 'GNF', 'MGA' => ['franc CFA', 'francs CFA', 'centime', 'centimes'],
+            'USD' => ['dollar', 'dollars', 'cent', 'cents'],
+            'GBP' => ['livre sterling', 'livres sterling', 'penny', 'pence'],
+            default => ['euro', 'euros', 'centime', 'centimes'],
+        };
+
+        $result = self::convertInteger($main).' '.($main > 1 ? $mainUnitPlural : $mainUnit);
 
         if ($cents > 0) {
-            $result .= ' et '.self::convertInteger($cents).' centime'.(($cents > 1) ? 's' : '');
+            $result .= ' et '.self::convertInteger($cents).' '.($cents > 1 ? $centUnitPlural : $centUnit);
         }
 
         return ucfirst($result);

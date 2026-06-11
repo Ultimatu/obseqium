@@ -14,7 +14,7 @@ class ProcessPhaseSeeder extends Seeder
                 'order' => 1,
                 'title' => 'Audit Diagnostic',
                 'badge' => 'GRATUIT',
-                'description' => 'Évaluation de votre situation actuelle face aux exigences des normes. Identification des forces, faiblesses et opportunités. Vous repartez avec un rapport diagnostic et des recommandations concrètes — sans engagement.',
+                'description' => 'Évaluation de votre situation actuelle face aux exigences des normes. Identification des forces, faiblesses et opportunités. Vous repartez avec un rapport diagnostic et des recommandations concrètes - sans engagement.',
                 'highlights' => ['Évaluation gap initial', 'Rapport diagnostic complet', 'Recommandations priorisées'],
                 'icon' => 'clipboard-document-check',
             ],

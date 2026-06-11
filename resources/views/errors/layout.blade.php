@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $code }} — {{ $title }}</title>
+    <title>{{ $code }} - {{ $title }}</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -194,7 +194,7 @@
 </main>
 
 <footer>
-    © {{ date('Y') }} Obsequium — Tous droits réservés
+    © {{ date('Y') }} Obsequium - Tous droits réservés
 </footer>
 
 </body>

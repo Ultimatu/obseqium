@@ -4,11 +4,11 @@
         <div class="prose prose-gray max-w-none">
             <h2>Éditeur du site</h2>
             <p>
-                <strong>{{ \App\Models\SiteSetting::get('brand_name', 'OBSEQUIUM') }}</strong> — {{ \App\Models\SiteSetting::get('brand_tagline', 'Cabinet de Conseil en Management Qualité et Conformité') }}<br>
+                <strong>{{ \App\Models\SiteSetting::get('brand_name', 'OBSEQUIUM') }}</strong> - {{ \App\Models\SiteSetting::get('brand_tagline', 'Cabinet de Conseil en Management Qualité et Conformité') }}<br>
                 @if($manager = \App\Models\SiteSetting::get('manager_name'))
                 Gérant : {{ $manager }}<br>
                 @endif
-                Siège social : {{ \App\Models\SiteSetting::get('contact_address', 'Cocody, Abidjan — Côte d’Ivoire') }}<br>
+                Siège social : {{ \App\Models\SiteSetting::get('contact_address', 'Cocody, Abidjan - Côte d’Ivoire') }}<br>
                 Adresse postale : {{ \App\Models\SiteSetting::get('contact_postal', '08 BP 2940 ABIDJAN 08') }}<br>
                 RCCM : {{ \App\Models\SiteSetting::get('rccm', 'CI-ABJ-03-2026-B13-06180') }}<br>
                 Email : <a href="mailto:{{ \App\Models\SiteSetting::get('contact_email') }}">{{ \App\Models\SiteSetting::get('contact_email') }}</a>@if($alt = \App\Models\SiteSetting::get('contact_email_manager')) / <a href="mailto:{{ $alt }}">{{ $alt }}</a>@endif<br>

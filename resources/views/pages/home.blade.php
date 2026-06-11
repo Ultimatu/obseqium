@@ -249,7 +249,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-white mb-3">Formation & Sensibilisation</h3>
                     <p class="text-white/80 text-sm leading-relaxed mb-6">Programmes de formation sur mesure dispensés
-                        par des experts certifiés — présentiel, distanciel ou blended — pour tous les niveaux de votre
+                        par des experts certifiés - présentiel, distanciel ou blended - pour tous les niveaux de votre
                         organisation.</p>
                     <div class="flex items-center gap-2 text-white/90 font-semibold text-sm">
                         En savoir plus

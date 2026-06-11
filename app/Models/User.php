@@ -9,7 +9,6 @@ use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthentication;
 use Filament\Auth\MultiFactor\App\Contracts\HasAppAuthenticationRecovery;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,9 +34,11 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
         'email',
         'password',
         'phone',
-        'company',
         'job_title',
-        'role',
+        'bio',
+        'photo',
+        'linkedin_url',
+        'order',
         'is_active',
     ];
 
@@ -50,16 +51,6 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
             'password' => 'hashed',
             'is_active' => 'boolean',
         ];
-    }
-
-    public function scopeConsultants(Builder $query): Builder
-    {
-        return $query->where('role', '!=', 'client');
-    }
-
-    public function quotes(): HasMany
-    {
-        return $this->hasMany(Quote::class, 'client_id');
     }
 
     public function assignedQuotes(): HasMany
@@ -90,5 +81,15 @@ class User extends Authenticatable implements FilamentUser, HasAppAuthentication
     public function blogPosts(): HasMany
     {
         return $this->hasMany(BlogPost::class, 'author_id');
+    }
+
+    public function projects(): HasMany
+    {
+        return $this->hasMany(Project::class, 'created_by');
+    }
+
+    public function assignedTasks(): HasMany
+    {
+        return $this->hasMany(ProjectTask::class, 'assigned_to');
     }
 }

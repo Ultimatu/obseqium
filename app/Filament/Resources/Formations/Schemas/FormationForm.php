@@ -5,10 +5,9 @@ namespace App\Filament\Resources\Formations\Schemas;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
@@ -19,7 +18,7 @@ class FormationForm
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema
+        return $schema->columns(1)
             ->components([
                 Section::make('Informations générales')
                     ->columns(2)

@@ -86,7 +86,7 @@
       <td>
         {{ $session->start_date->format('d/m/Y') }}
         @if($session->end_date && ! $session->start_date->isSameDay($session->end_date))
-          — {{ $session->end_date->format('d/m/Y') }}
+          - {{ $session->end_date->format('d/m/Y') }}
         @endif
       </td>
     </tr>
@@ -138,7 +138,7 @@
 </div>
 
 <div class="footer">
-  <p>{{ $settings['brand_name'] ?? config('app.name') }} — {{ $settings['contact_email'] ?? config('mail.from.address') }}</p>
+  <p>{{ $settings['brand_name'] ?? config('app.name') }} - {{ $settings['contact_email'] ?? config('mail.from.address') }}</p>
   @if($settings['address'] ?? null)<p>{{ $settings['address'] }}</p>@endif
 </div>
 

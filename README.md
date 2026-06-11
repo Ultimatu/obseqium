@@ -1,4 +1,4 @@
-# Obsequium QHSE — Site vitrine
+# Obsequium QHSE - Site vitrine
 
 Site vitrine du cabinet conseil & formation QHSE, construit avec Laravel 13, Filament v5 et Livewire v4.
 
@@ -70,7 +70,7 @@ MAIL_MAILER=smtp
 MAIL_HOST=...
 MAIL_FROM_ADDRESS=contact@votre-domaine.fr
 
-# reCAPTCHA v3 (optionnel — formulaire de devis)
+# reCAPTCHA v3 (optionnel - formulaire de devis)
 # Clés sur https://www.google.com/recaptcha/admin
 RECAPTCHA_SITE_KEY=
 RECAPTCHA_SECRET_KEY=

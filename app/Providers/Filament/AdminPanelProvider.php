@@ -7,10 +7,12 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -34,6 +36,17 @@ class AdminPanelProvider extends PanelProvider
                 'gray' => Color::Slate,
             ])
             ->databaseNotifications()
+            ->navigationGroups([
+                NavigationGroup::make('Commercial')->icon(Heroicon::OutlinedBriefcase)->collapsible(false),
+                NavigationGroup::make('Clients')->icon(Heroicon::OutlinedUsers)->collapsible(false),
+                NavigationGroup::make('Catalogue')->icon(Heroicon::OutlinedAcademicCap)->collapsible(false),
+                NavigationGroup::make('Contenu')->icon(Heroicon::OutlinedSquares2x2)->collapsible(false),
+                // Projets et tâches sont regroupés dans une même section pour simplifier la navigation
+                NavigationGroup::make('Projets')->icon(Heroicon::OutlinedFolderOpen)->collapsible(false),
+                NavigationGroup::make('Blog')->icon(Heroicon::OutlinedNewspaper)->collapsible(false),
+                NavigationGroup::make('Site Web')->icon(Heroicon::OutlinedGlobeAlt)->collapsible(false),
+                NavigationGroup::make('Administration')->icon(Heroicon::OutlinedCog6Tooth)->collapsible(false),
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
